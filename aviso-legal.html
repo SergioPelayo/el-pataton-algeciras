@@ -10,7 +10,7 @@
   <meta name="description" content="Aviso Legal e información identificativa de El Patatón Algeciras (Av. Venecia, 1)." />
   <link rel="icon" type="image/svg+xml" href="assets/logo-pataton.svg" />
   <link rel="alternate icon" type="image/png" href="assets/logo-pataton.png" />
-  <link rel="stylesheet" href="styles.css?v=20261101-8" />
+  <link rel="stylesheet" href="styles.css?v=20261101-9" />
   <style>
     .legal-page-main {
       max-width: 820px;
@@ -18,63 +18,68 @@
       padding: 3.5rem 1.5rem 5rem;
     }
     .legal-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(244, 196, 48, 0.18);
-      border-radius: 16px;
+      background: #FFFDF9;
+      border: var(--border-ink);
+      box-shadow: var(--shadow-hard);
       padding: 2.25rem;
     }
     .legal-card h1 {
       font-family: var(--font-display);
       font-size: clamp(1.8rem, 4vw, 2.5rem);
-      color: var(--foil-bright);
-      margin-bottom: 0.5rem;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
     }
     .legal-card h2 {
       font-family: var(--font-display);
       font-size: 1.25rem;
-      color: var(--butter-gold);
+      color: var(--accent-paprika);
       margin-top: 2rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
     }
     .legal-card p,
     .legal-card li {
-      color: var(--foil-silver);
+      color: var(--ink-muted);
       line-height: 1.7;
       margin-bottom: 0.85rem;
     }
     .legal-card ul {
       padding-left: 1.25rem;
       margin-bottom: 1rem;
+      list-style: disc;
+    }
+    .legal-card a {
+      color: var(--accent-paprika);
+      text-decoration: underline;
+      font-weight: 600;
     }
     .legal-placeholder {
       font-family: var(--font-mono);
-      background: rgba(244, 196, 48, 0.14);
-      color: var(--butter-gold);
+      background: rgba(240, 172, 27, 0.25);
+      color: var(--ink);
       padding: 0.1rem 0.4rem;
-      border-radius: 4px;
+      border: 1px solid var(--ink);
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
   <!-- CUANDO SE APRUEBE: quitar .demo-banner -->
   <div class="demo-banner" role="region" aria-label="Aviso de propuesta">
-    Propuesta de diseño · Demo no oficial pendiente de aprobación por El Patatón
+    PROPUESTA DE DISEÑO · Demo no oficial pendiente de aprobación por El Patatón
   </div>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
+  <!-- CABECERA -->
+  <header class="navbar">
+    <div class="navbar__inner">
       <a href="index.html" class="brand" aria-label="El Patatón Algeciras Inicio">
-        <div class="brand-logo-wrap">
-          <img src="assets/logo-pataton.svg" alt="Logo El Patatón Algeciras" class="brand-logo-img" />
-        </div>
-        <div class="brand-text">
-          <span class="brand-name">EL PATATÓN</span>
-          <span class="brand-sub">ALGECIRAS · DESDE 2005</span>
+        <img src="assets/logo-pataton.svg" alt="Logotipo El Patatón Algeciras desde 2005" class="brand__logo" width="58" height="58" />
+        <div class="brand__text">
+          <span class="brand__name">El Patatón</span>
+          <span class="brand__sub">Algeciras · Desde 2005</span>
         </div>
       </a>
-      <div class="header-cta-group">
-        <a href="index.html" class="btn btn-outline-foil btn-sm">← Volver a Inicio</a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn--paper">← Volver a Inicio</a>
       </div>
     </div>
   </header>
@@ -90,13 +95,13 @@
         <li><strong>Titular / Razón social:</strong> <span class="legal-placeholder">[NOMBRE TITULAR]</span></li>
         <li><strong>NIF / CIF:</strong> <span class="legal-placeholder">[NIF]</span></li>
         <li><strong>Domicilio del establecimiento:</strong> Av. Venecia, 1 — 11205 Algeciras (Cádiz), España</li>
-        <li><strong>Teléfono de contacto:</strong> <a href="tel:+34956658122">956 65 81 22</a></li>
+        <li><strong>Teléfono de contacto:</strong> <a href="tel:956658122">956 65 81 22</a></li>
         <li><strong>Correo electrónico:</strong> <span class="legal-placeholder">[EMAIL DE CONTACTO]</span></li>
       </ul>
 
       <h2>2. Objeto y funcionamiento del sitio web</h2>
       <p>Este sitio web tiene carácter meramente informativo y facilita la consulta de la carta de productos de <strong>El Patatón</strong>, así como una herramienta local en el navegador del usuario para anotar su comanda o calcular el reparto del importe entre comensales antes de realizar el pedido por teléfono o en el propio establecimiento.</p>
-      <p>La preparación de la comanda en la web o su envío a un grupo de WhatsApp entre amigos <strong>no constituye un pedido en firme ni una reserva automática</strong>; todos los pedidos se confirman directamente por teléfono en el <a href="tel:+34956658122">956 65 81 22</a> o en el mostrador del local.</p>
+      <p>La preparación de la comanda en la web o su envío a un grupo de WhatsApp entre amigos <strong>no constituye un pedido en firme ni una reserva automática</strong>; todos los pedidos se confirman directamente por teléfono en el <a href="tel:956658122">956 65 81 22</a> o en el mostrador del local.</p>
 
       <h2>3. Propiedad intelectual e industrial</h2>
       <p>Los textos, diseños, logotipos, carta de productos y código fuente que componen este sitio web están protegidos por la normativa de propiedad intelectual e industrial. Queda prohibida su reproducción, distribución o transformación con fines comerciales sin la autorización expresa del titular.</p>
@@ -110,16 +115,14 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <p>© 2005–2026 El Patatón Algeciras · Av. Venecia, 1 · Tel. <a href="tel:+34956658122">956 65 81 22</a></p>
-        <p class="footer-tagline">
-          <a href="index.html">Volver a la carta</a> ·
-          <a href="aviso-legal.html">Aviso Legal</a> ·
-          <a href="privacidad.html">Política de Privacidad</a>
-        </p>
-      </div>
+  <footer class="footer">
+    <div class="footer__bottom">
+      <span>© 2005 – 2026 EL PATATÓN ALGECIRAS · AV. VENECIA, 1 · TEL. 956 65 81 22</span>
+      <span>
+        <a href="index.html" style="text-decoration: underline;">Volver a Inicio</a> ·
+        <a href="aviso-legal.html" style="text-decoration: underline;">Aviso Legal</a> ·
+        <a href="privacidad.html" style="text-decoration: underline;">Política de Privacidad</a>
+      </span>
     </div>
   </footer>
 </body>
