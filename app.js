@@ -983,6 +983,7 @@ function renderBuilderControls() {
 function updateTicketReceipt() {
   const baseNameEl = document.getElementById('ticket-base-name');
   const customPriceEl = document.getElementById('ticket-custom-price');
+  const btnCustomPriceEl = document.getElementById('btn-custom-price-label');
   const detailsEl = document.getElementById('ticket-SaucesAndToppings');
   const cartCountEl = document.getElementById('ticket-cart-count');
   const cartListEl = document.getElementById('ticket-cart-list');
@@ -995,6 +996,9 @@ function updateTicketReceipt() {
   const customCalc = calculateCustomPotatoPricing();
   baseNameEl.textContent = customCalc.tariffName;
   customPriceEl.textContent = formatPrice(customCalc.totalPrice);
+  if (btnCustomPriceEl) {
+    btnCustomPriceEl.textContent = formatPrice(customCalc.totalPrice);
+  }
 
   const allChosenToppings = [...builderState.toppings, ...builderState.specials];
   detailsEl.innerHTML = `
@@ -1004,8 +1008,10 @@ function updateTicketReceipt() {
 
   cartCountEl.textContent = String(orderCart.length);
 
+  const grandTotal = orderCart.reduce((acc, item) => acc + item.price, 0);
+
   if (orderCart.length === 0) {
-    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem;">(Aún no has añadido platos a la lista; pulsa «+ Añadir» en la carta o carga un combo de grupo arriba)</li>`;
+    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem; padding: 0.35rem 0;">Tu carro está vacío (0,00 €). Pulsa <strong>«+ Añadir»</strong> en cualquier plato de la carta o pulsa el botón amarillo del configurador para meter platos aquí.</li>`;
   } else {
     cartListEl.innerHTML = orderCart.map((item, idx) => `
       <li class="ticket-cart-item">
@@ -1014,7 +1020,7 @@ function updateTicketReceipt() {
             <strong>1x ${item.title}</strong>
             <div class="ticket-cart-item__right">
               <span>${formatPrice(item.price)}</span>
-              <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar">[x]</button>
+              <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar plato">[x]</button>
             </div>
           </div>
           ${item.details ? `<div class="ticket-cart-item__sub">${item.details}</div>` : ''}
@@ -1052,10 +1058,6 @@ function updateTicketReceipt() {
     });
   }
 
-  const grandTotal = orderCart.length > 0
-    ? orderCart.reduce((acc, item) => acc + item.price, 0)
-    : customCalc.totalPrice;
-
   totalPriceEl.textContent = formatPrice(grandTotal);
 
   if (bizumPeopleEl) {
@@ -1075,7 +1077,7 @@ function updateTicketReceipt() {
   if (floatTotal) floatTotal.textContent = formatPrice(grandTotal);
   if (floatSub) {
     if (orderCart.length === 0) {
-      floatSub.textContent = 'Ver ticket en configuración';
+      floatSub.textContent = '0 platos en tu carro';
     } else if (orderCart.length === 1) {
       floatSub.textContent = '1 plato añadido al ticket';
     } else {

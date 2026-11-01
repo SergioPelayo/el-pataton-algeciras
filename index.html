@@ -315,6 +315,16 @@
           </div>
 
           <div class="builder-group__footer-btn">
+            <!-- Vista previa en vivo de la patata que estás configurando (antes de añadirla al ticket) -->
+            <div class="ticket-live-preview">
+              <div class="ticket-receipt__section-label" style="margin-top: 0;">VISTA PREVIA DE TU PATATA AL GUSTO:</div>
+              <div class="ticket-receipt__line">
+                <strong id="ticket-base-name">Nº 18. Patata al Gusto</strong>
+                <strong id="ticket-custom-price">7,00 €</strong>
+              </div>
+              <div class="ticket-live-preview__details" id="ticket-SaucesAndToppings"></div>
+            </div>
+
             <div class="custom-foil-name-row">
               <label for="custom-foil-owner" class="custom-foil-label">ROTULAR NOMBRE EN EL PAPEL DE PLATA (OPCIONAL):</label>
               <input
@@ -326,7 +336,7 @@
               />
             </div>
             <button type="button" id="btn-add-custom-to-order" class="btn btn--butter" style="width: 100%;">
-              + Añadir esta Patata Configurada al Ticket de Pedido
+              + Añadir esta Patata al Gusto al Ticket (<span id="btn-custom-price-label">7,00 €</span>)
             </button>
           </div>
         </div>
@@ -368,22 +378,12 @@
             </div>
           </div>
 
-          <!-- Vista previa en vivo de la patata que estás configurando -->
-          <div class="ticket-live-preview">
-            <div class="ticket-receipt__section-label" style="margin-top: 0;">PATATA EN CONFIGURACIÓN ACTUAL:</div>
-            <div class="ticket-receipt__line">
-              <strong id="ticket-base-name">Nº 18. Patata al Gusto</strong>
-              <strong id="ticket-custom-price">7,00 €</strong>
-            </div>
-            <div class="ticket-live-preview__details" id="ticket-SaucesAndToppings"></div>
-          </div>
-
           <!-- SERVICIO EXCLUSIVO 3: ROTULADO EN PAPEL DE PLATA POR COMENSAL -->
           <div class="ticket-receipt__section-label">
-            2. PLATOS Y ROTULADO EN PAPEL ALBAL (<span id="ticket-cart-count">0</span>):
+            2. PLATOS EN TU CARRO / TICKET (<span id="ticket-cart-count">0</span>):
           </div>
           <p class="ticket-foil-helper">
-            Pon de quién es cada patata para que cocina lo escriba por fuera en el papel de plata y no tengáis que abrirlas todas buscando la vuestra:
+            Pon de quién es cada patata para que cocina lo escriba por fuera en el papel de plata y puedas borrar cualquier plato con <strong>[x]</strong>:
           </p>
           <ul id="ticket-cart-list" class="ticket-receipt__list ticket-receipt__cart"></ul>
 
@@ -403,7 +403,7 @@
 
           <div class="ticket-receipt__total">
             <span>TOTAL PEDIDO</span>
-            <span id="ticket-price">7,00 €</span>
+            <span id="ticket-price">0,00 €</span>
           </div>
 
           <div class="ticket-receipt__actions">
@@ -718,9 +718,9 @@
     </span>
     <span class="floating-cart__info">
       <span class="floating-cart__label">TU PEDIDO · VER TICKET</span>
-      <span id="floating-cart-sub" class="floating-cart__sub">1 patata en configuración</span>
+      <span id="floating-cart-sub" class="floating-cart__sub">0 platos en tu carro</span>
     </span>
-    <span id="floating-cart-total" class="floating-cart__total">7,00 €</span>
+    <span id="floating-cart-total" class="floating-cart__total">0,00 €</span>
   </button>
 
   <script src="app.js"></script>
