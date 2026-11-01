@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Patatón Algeciras — Patatas Asadas Gigantes en Av. Venecia</title>
+  <meta name="description" content="Las auténticas patatas asadas gigantes de Algeciras. Asadas al horno en papel de aluminio y rellenas hasta arriba. Av. Venecia, 1 — Pedidos al 956 65 81 22." />
+  <link rel="canonical" href="https://elpataton.com/" />
+
+  <!-- Tipografías con carácter editorial (sin aspecto genérico) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR DE ESTADO EN TIEMPO REAL -->
+  <div class="top-bar">
+    <div class="top-bar__status">
+      <span id="live-status-dot" class="status-dot"></span>
+      <span id="live-status-text">HORNO DE AV. VENECIA • MIÉRCOLES A DOMINGO (20:00 – 00:00)</span>
+    </div>
+    <div class="top-bar__right">
+      <span>📍 Av. Venecia, 1 · 11205 Algeciras</span>
+      <a href="tel:956658122" class="top-bar__link">📞 956 65 81 22</a>
+      <a href="https://www.facebook.com/isabel.orozco.50159/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="top-bar__link">Facebook Oficial ↗</a>
+    </div>
+  </div>
+
+  <!-- CABECERA / NAVEGACIÓN -->
+  <header class="navbar">
+    <div class="navbar__inner">
+      <a href="#" class="brand" aria-label="El Patatón Algeciras Inicio">
+        <div class="brand__stamp">P</div>
+        <div class="brand__text">
+          <span class="brand__name">El Patatón</span>
+          <span class="brand__sub">Algeciras · Av. Venecia</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#el-horno">El Horno</a>
+        <a href="#la-carta">La Carta</a>
+        <a href="#al-gusto">Hazla a tu Gusto</a>
+        <a href="#comunidad">El Barrio</a>
+        <a href="#donde-estamos">Horario y Mapa</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://www.facebook.com/isabel.orozco.50159/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="btn btn--paper" title="Síguenos en Facebook">
+          <span>Facebook</span>
+        </a>
+        <a href="tel:956658122" class="btn btn--primary">
+          <span>📞 Pedir: 956 65 81 22</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO EDITORIAL ASIMÉTRICO -->
+    <section class="hero">
+      <div class="hero__content">
+        <div class="hero__kicker">
+          <span>🔥 CLÁSICO DE ALGECIRAS · ISABEL OROZCO &amp; EQUIPO</span>
+        </div>
+
+        <h1 class="hero__title">
+          Aquí la patata no es guarnición.<br />
+          <em>Es un monumento.</em>
+        </h1>
+
+        <p class="hero__lead">
+          En <strong>El Patatón de Avenida Venecia</strong> llevamos años haciendo las cosas sin atajos: patatas seleccionadas de tamaño descomunal, asadas lentamente en su papel de aluminio hasta quedar tiernas como mantequilla, abiertas al corte y <strong>cargadas hasta que cuesta cerrarlas</strong>.
+        </p>
+
+        <div class="hero__cta-group">
+          <a href="#la-carta" class="btn btn--primary btn--lg">Ver la Carta Completa</a>
+          <a href="#al-gusto" class="btn btn--butter btn--lg">Armar mi Patatón al Gusto</a>
+        </div>
+
+        <div class="hero__facts">
+          <div class="fact-item">
+            <div class="fact-item__num">+900 g</div>
+            <div class="fact-item__label">Peso medio rellena</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-item__num">100% Horno</div>
+            <div class="fact-item__label">Asado lento tradicional</div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-item__num">Av. Venecia</div>
+            <div class="fact-item__label">Recogida, local y domicilio</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="floating-badge">
+          PAPEL ALBAL ARDIENDO<br />
+          MANTEQUILLA AL CORTE
+        </div>
+
+        <div class="photo-card">
+          <div class="photo-card__img-wrap">
+            <img src="assets/hero-pataton.jpg" alt="Patata asada gigante de El Patatón Algeciras abierta en papel de aluminio con queso fundido, jamón, bacon, maíz y salsa" />
+          </div>
+          <div class="photo-card__caption">
+            <span><strong>FIG. 01</strong> — EL PATATÓN COMPLETO RECIÉN ABIERTO</span>
+            <span>ALGECIRAS (CÁDIZ)</span>
+          </div>
+        </div>
+
+        <div class="floating-ticket">
+          <span>ESPECIALIDAD DE LA CASA</span>
+          <strong class="floating-ticket__price">Desde 3,50 € a 11,50 €</strong>
+          <span>Para cenar a lo grande o compartir</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CINTA MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span class="marquee__item">PATATAS ASADAS GIGANTES EN ALGECIRAS</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">PATATA AL ROQUEFORT</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">PATATA KEBAB</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">EL PATATÓN CON TODO</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">KEBABS Y PERRITOS CALIENTES</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">AVENIDA VENECIA · TEL. 956 65 81 22</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">PATATAS ASADAS GIGANTES EN ALGECIRAS</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">PATATA AL ROQUEFORT</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">PATATA KEBAB</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">EL PATATÓN CON TODO</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">KEBABS Y PERRITOS CALIENTES</span><span class="marquee__sep">✦</span>
+        <span class="marquee__item">AVENIDA VENECIA · TEL. 956 65 81 22</span><span class="marquee__sep">✦</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN EL HORNO / ARTESANÍA DE BARRIO -->
+    <section id="el-horno" class="craft-section">
+      <div class="craft-grid">
+        <div class="anatomy-board" aria-label="Esquema de preparación de El Patatón">
+          <div class="anatomy-board__header">
+            <span>ESQUEMA TÉCNICO // CAPA POR CAPA</span>
+            <span>CALIBRE GIGANTE</span>
+          </div>
+
+          <div class="anatomy-board__layers">
+            <div class="layer-card layer-card--top">
+              <div class="layer-card__tag">CAPA 04 · CORONACIÓN</div>
+              <div class="layer-card__title">Salsas al Gusto hasta Arriba</div>
+              <p>Roquefort fundido, Alioli, Brava picante, Salsa Blanca Kebab, Rosa o Mayonesa coronando la mezcla.</p>
+            </div>
+
+            <div class="layer-card layer-card--mid">
+              <div class="layer-card__tag">CAPA 03 · EL RELLENO</div>
+              <div class="layer-card__title">Sin escatimar en cantidades</div>
+              <p>Jamón en tacos, lomo adobado, bacon, carne de kebab, pollo relleno, atún, maíz, aceitunas, zanahoria y abundante queso.</p>
+            </div>
+
+            <div class="layer-card layer-card--core">
+              <div class="layer-card__tag">CAPA 02 · EL CORTE EN CRUZ</div>
+              <div class="layer-card__title">Mantequilla fundida y Sal Gorda</div>
+              <p>Se abre en caliente y se trabaja el interior con mantequilla o aceite, ajo y perejil para que todo quede cremoso.</p>
+            </div>
+
+            <div class="layer-card layer-card--base">
+              <div class="layer-card__tag">CAPA 01 · LA BASE</div>
+              <div class="layer-card__title">Patata Gigante en Papel de Aluminio</div>
+              <p>Asada lentamente en horno hasta que la piel tuesta y el corazón queda tierno. Conserva el calor hasta llegar a tu casa.</p>
+            </div>
+          </div>
+
+          <div class="anatomy-board__footer">
+            <span>PESO FINAL EN BOLSA: <strong>850 g – 1.100 g APROX.</strong></span>
+            <span>AV. VENECIA, 1 · ALGECIRAS</span>
+          </div>
+        </div>
+
+        <div class="craft-copy">
+          <span class="section-tag">01 / CÓMO LAS HACEMOS</span>
+          <h2 class="section-title">Sin congelados ni prisas: el ritual del papel de plata.</h2>
+          <p class="hero__lead" style="margin-bottom: 1rem;">
+            Quien es de Algeciras sabe perfectamente lo que pesa una bolsa de <strong>El Patatón</strong> cuando la recoges en el mostrador. No hay truco moderno que supere a un buen horno y mano generosa con el relleno.
+          </p>
+
+          <div class="craft-steps">
+            <article class="craft-step">
+              <span class="craft-step__num">PASO 01</span>
+              <div>
+                <h3>Calibre especial y horas de horno</h3>
+                <p>Escogemos patatas de gran calibre que aguantan horas de calor envolvente. Por fuera la piel queda tostada; por dentro, pura crema.</p>
+              </div>
+            </article>
+
+            <article class="craft-step">
+              <span class="craft-step__num">PASO 02</span>
+              <div>
+                <h3>El corte en cruz, sal gorda y mantequilla</h3>
+                <p>En cuanto pides la tuya, abrimos el aluminio humeante, machacamos ligeramente el interior con mantequilla o aceite, ajo y perejil para que funda con el calor propio.</p>
+              </div>
+            </article>
+
+            <article class="craft-step">
+              <span class="craft-step__num">PASO 03</span>
+              <div>
+                <h3>Relleno sin escatimar hasta arriba</h3>
+                <p>Desde la mítica de Roquefort con lomo, bacon y pollo hasta la Patata Kebab o el Patatón Completo con todo. Aquí nadie se queda con hambre.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN LA CARTA -->
+    <section id="la-carta" class="menu-section">
+      <div class="menu-container">
+        <div class="menu-header">
+          <div>
+            <span class="section-tag">02 / NUESTRA CARTA DE SIEMPRE</span>
+            <h2 class="section-title" style="margin-bottom: 0.35rem;">Lo que sale del mostrador cada noche</h2>
+            <p style="color: var(--ink-muted); font-size: 0.96rem;">Precios orientativos de carta. Puedes pedir para recoger llamando al <strong>956 65 81 22</strong> o a domicilio.</p>
+          </div>
+
+          <div class="menu-filters" role="tablist" aria-label="Filtrar carta por categoría">
+            <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Todas (12)</button>
+            <button class="filter-btn" data-filter="clasicas" role="tab" aria-selected="false">Clásicas de Siempre</button>
+            <button class="filter-btn" data-filter="especiales" role="tab" aria-selected="false">Especiales &amp; Potentes</button>
+            <button class="filter-btn" data-filter="bocatas" role="tab" aria-selected="false">Kebabs &amp; Perritos</button>
+          </div>
+        </div>
+
+        <div id="menu-grid" class="menu-grid">
+          <!-- Renderizado dinámico y accesible desde app.js con respaldo estático inicial -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN INTERACTIVA: ARMA TU PATATA AL GUSTO -->
+    <section id="al-gusto" class="builder-section">
+      <div>
+        <span class="section-tag">03 / SIMULADOR DE COMANDA</span>
+        <h2 class="section-title">¿La prefieres a tu manera? Haz tu Patata al Gusto.</h2>
+        <p style="color: var(--ink-muted); max-width: 65ch;">
+          Marca la salsa y los ingredientes que te apetezcan hoy. Te preparamos el <strong>ticket de comanda</strong> al instante con el cálculo de peso aproximado para que solo tengas que leerlo al llamar al <strong>956 65 81 22</strong> o guardarlo en tu móvil.
+        </p>
+      </div>
+
+      <div class="builder-layout">
+        <!-- Controles de ingredientes -->
+        <div class="builder-controls">
+          <div class="builder-group">
+            <div class="builder-group__header">
+              <h3 class="builder-group__title">1. Elige el Formato de Base</h3>
+              <span class="builder-group__hint">Obligatorio · 1 opción</span>
+            </div>
+            <div id="base-chips" class="chip-grid"></div>
+          </div>
+
+          <div class="builder-group">
+            <div class="builder-group__header">
+              <h3 class="builder-group__title">2. Elige tus Salsas</h3>
+              <span class="builder-group__hint">Hasta 2 salsas incluidas</span>
+            </div>
+            <div id="sauce-chips" class="chip-grid"></div>
+          </div>
+
+          <div class="builder-group">
+            <div class="builder-group__header">
+              <h3 class="builder-group__title">3. Rellenos y Extras</h3>
+              <span class="builder-group__hint">Combina a tu gusto</span>
+            </div>
+            <div id="topping-chips" class="chip-grid"></div>
+          </div>
+        </div>
+
+        <!-- Ticket Térmico de Comanda en Vivo -->
+        <aside class="ticket-receipt" aria-live="polite">
+          <div class="ticket-receipt__head">
+            <div class="ticket-receipt__shop">EL PATATÓN · ALGECIRAS</div>
+            <div class="ticket-receipt__meta">AV. VENECIA, 1 · TEL: 956 65 81 22</div>
+            <div class="ticket-receipt__meta" id="ticket-timestamp">COMANDA #ALG-204</div>
+          </div>
+
+          <div class="ticket-receipt__line">
+            <span>BASE SELECCIONADA:</span>
+            <strong id="ticket-base-name">Patata al Gusto</strong>
+          </div>
+
+          <div class="ticket-receipt__section-label">SALSAS:</div>
+          <ul id="ticket-sauces-list" class="ticket-receipt__list"></ul>
+
+          <div class="ticket-receipt__section-label">INGREDIENTES DEL RELLENO:</div>
+          <ul id="ticket-toppings-list" class="ticket-receipt__list"></ul>
+
+          <div class="ticket-receipt__weight">
+            <span>⚖️ PESO ESTIMADO EN BOLSA:</span>
+            <strong id="ticket-weight">~880 g</strong>
+          </div>
+
+          <div class="ticket-receipt__total">
+            <span>TOTAL ESTIMADO</span>
+            <span id="ticket-price">10,50 €</span>
+          </div>
+
+          <div class="ticket-receipt__actions">
+            <a href="tel:956658122" class="btn btn--primary" style="width: 100%;">
+              📞 Llamar y Dictar Comanda (956 65 81 22)
+            </a>
+            <button type="button" id="btn-copy-ticket" class="btn btn--paper" style="width: 100%;">
+              📋 Copiar Comanda para WhatsApp / Notas
+            </button>
+            <div id="copy-feedback" class="copy-feedback"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECCIÓN COMUNIDAD & FACEBOOK OFICIAL -->
+    <section id="comunidad" class="community-section">
+      <div class="community-inner">
+        <div class="community-top">
+          <div>
+            <span class="section-tag" style="color: var(--accent-butter);">04 / LA FAMILIA DEL PATATÓN</span>
+            <h2 class="section-title">Un clásico de las noches de Algeciras.</h2>
+            <p style="color: rgba(245, 239, 228, 0.8); max-width: 54ch; font-size: 1.05rem;">
+              En Facebook avisamos de horarios especiales, festivos, sorteos y novedades recién salidas del horno. Si has cenado alguna vez en un banco o en casa abriendo ese papel albal que quema los dedos, ya eres de la casa.
+            </p>
+          </div>
+
+          <div class="fb-card">
+            <div class="fb-card__header">
+              <div class="fb-icon-box">f</div>
+              <div>
+                <div class="fb-card__title">El Patatón Algeciras · Isabel Orozco</div>
+                <div class="fb-card__handle">facebook.com/isabel.orozco.50159</div>
+              </div>
+            </div>
+            <p>
+              Sigue nuestra página en Facebook para enterarte al momento de aperturas en puentes, fiestas de Algeciras y fotos reales de nuestras patatas recién hechas.
+            </p>
+            <a href="https://www.facebook.com/isabel.orozco.50159/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="btn btn--fb" style="width: 100%;">
+              Visitar Facebook de El Patatón ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div>
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__quote">
+                “De toda la vida en Algeciras. Pides una patata al Roquefort o una Kebab y literalmente pesa casi un kilo. Con una cenamos dos personas de sobra.”
+              </p>
+            </div>
+            <div class="review-card__author">
+              <span>CLIENTE HABITUAL · AV. VENECIA</span>
+              <span>RESEÑA LOCAL</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div>
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__quote">
+                “La Patata a la Mantequilla y el Patatón con todo no tienen rival. Ingredientes hasta arriba, bien calentita en su papel de plata y trato cercano de barrio.”
+              </p>
+            </div>
+            <div class="review-card__author">
+              <span>VECINA DE SAN JOSÉ ARTESANO</span>
+              <span>PEDIDO PARA LLEVAR</span>
+            </div>
+          </article>
+
+          <article class="review-card">
+            <div>
+              <div class="review-card__stars">★★★★★</div>
+              <p class="review-card__quote">
+                “Además de las patatas asadas, los perritos calientes especiales por 3,50€ y el kebab de pollo están de escándalo. Relación cantidad-precio imbatible.”
+              </p>
+            </div>
+            <div class="review-card__author">
+              <span>CLIENTE EN JUST EAT / LOCAL</span>
+              <span>ALGECIRAS</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN HORARIOS, MAPA Y PLATAFORMAS DE PEDIDO -->
+    <section id="donde-estamos" class="visit-section">
+      <div class="visit-grid">
+        <div class="info-panel">
+          <div>
+            <span class="section-tag">05 / DÓNDE Y CUÁNDO</span>
+            <h2 class="section-title">Ven a por ella o pídela sin moverte del sofá.</h2>
+            <p style="color: var(--ink-muted); margin-bottom: 1rem;">
+              Estamos en <strong>Avenida Venecia, 1 (Bloque 1, Local)</strong>, 11205 Algeciras, Cádiz. Puedes llamarnos por teléfono para encargar y recoger sin esperas, o pedir a domicilio.
+            </p>
+
+            <table class="hours-table" aria-label="Horario de apertura">
+              <tbody>
+                <tr>
+                  <td>Lunes y Martes</td>
+                  <td class="hours-closed">Cerrado (Descanso)</td>
+                </tr>
+                <tr>
+                  <td>Miércoles y Jueves</td>
+                  <td>20:00 – 00:00</td>
+                </tr>
+                <tr>
+                  <td>Viernes y Sábado</td>
+                  <td>20:00 – 00:00</td>
+                </tr>
+                <tr>
+                  <td>Domingo</td>
+                  <td>20:00 – 00:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <a href="tel:956658122" class="btn btn--primary btn--lg" style="width: 100%; margin-bottom: 0.5rem;">
+              📞 Llamar al Local: 956 65 81 22
+            </a>
+
+            <div class="delivery-platforms">
+              <div class="delivery-platforms__title">También disponibles en reparto a domicilio y redes:</div>
+              <div class="platform-buttons">
+                <a href="https://www.just-eat.es/restaurants-el-pataton-algeciras" target="_blank" rel="noopener noreferrer" class="btn btn--paper">
+                  🛵 Pedir en Just Eat ↗
+                </a>
+                <a href="https://www.ubereats.com/es/store/el-pataton/X84x5ZeqTvW8qZp71J_Q3w" target="_blank" rel="noopener noreferrer" class="btn btn--paper">
+                  🥡 Pedir en Uber Eats ↗
+                </a>
+                <a href="https://www.facebook.com/isabel.orozco.50159/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="btn btn--fb">
+                  📘 Facebook Oficial ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-panel">
+          <div class="map-panel__header">
+            <span>📍 AVENIDA VENECIA, 1 · 11205 ALGECIRAS (CÁDIZ)</span>
+            <span>COORD: 36.1436° N, 5.4538° W</span>
+          </div>
+          <iframe
+            class="map-embed"
+            title="Mapa de ubicación de El Patatón en Avenida Venecia, Algeciras"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-5.4625%2C36.1375%2C-5.4445%2C36.1495&amp;layer=mapnik&amp;marker=36.1435%2C-5.4535">
+          </iframe>
+          <div class="map-panel__footer">
+            <div>
+              <strong>Av. Venecia, 1 (Bloque 1, Portal 3)</strong><br />
+              <span style="color: var(--ink-muted); font-size: 0.82rem;">Zona Av. Venecia / San José Artesano · Fácil aparcamiento</span>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=El+Pataton+Avenida+Venecia+Algeciras" target="_blank" rel="noopener noreferrer" class="btn btn--butter">
+              Abrir en Google Maps ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <div class="brand" style="margin-bottom: 0.75rem;">
+          <div class="brand__stamp">P</div>
+          <div class="brand__text">
+            <span class="brand__name" style="color: var(--bg-paper);">El Patatón</span>
+            <span class="brand__sub" style="color: var(--accent-butter);">Algeciras · Desde Av. Venecia</span>
+          </div>
+        </div>
+        <p style="max-width: 42ch; color: rgba(245, 239, 228, 0.72); font-size: 0.9rem;">
+          Especialistas en patatas asadas gigantes rellenas al gusto, kebabs y perritos calientes en Algeciras.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-butter); margin-bottom: 0.65rem;">CONTACTO DIRECTO</div>
+          <ul style="list-style: none; display: grid; gap: 0.45rem; font-size: 0.9rem;">
+            <li><a href="tel:956658122">📞 956 65 81 22</a></li>
+            <li>📍 Av. Venecia, 1 · 11205 Algeciras</li>
+            <li><a href="https://www.facebook.com/isabel.orozco.50159/?locale=es_LA" target="_blank" rel="noopener noreferrer">📘 Facebook (Isabel Orozco) ↗</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-butter); margin-bottom: 0.65rem;">SECCIONES</div>
+          <ul style="list-style: none; display: grid; gap: 0.45rem; font-size: 0.9rem;">
+            <li><a href="#el-horno">El Horno</a></li>
+            <li><a href="#la-carta">Carta y Precios</a></li>
+            <li><a href="#al-gusto">Armar Patata al Gusto</a></li>
+            <li><a href="#donde-estamos">Horario y Mapa</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© El Patatón Algeciras (elpataton.com) · Isabel Orozco</span>
+      <span>Hecho con mimo para la gente de Algeciras 🥔🔥</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
