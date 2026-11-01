@@ -2112,3 +2112,156 @@ body.is-unwrapping .hero__visual {
   }
 }
 
+/* ==========================================================================
+   CARRITO / TICKET FLOTANTE SIEMPRE ACCESIBLE
+   ========================================================================== */
+.floating-cart {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: var(--bg-charcoal);
+  color: var(--bg-paper);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0px var(--accent-paprika);
+  padding: 0.7rem 1.05rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  text-align: left;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.floating-cart:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px var(--accent-butter);
+}
+
+.floating-cart:active {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0px var(--accent-paprika);
+}
+
+.floating-cart.has-items {
+  border-color: var(--accent-butter);
+  box-shadow: 5px 5px 0px var(--accent-butter);
+}
+
+.floating-cart.is-bumping {
+  animation: cartBump 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cartBump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.08) translateY(-4px); }
+  70% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.floating-cart__icon-wrap {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: #231D1A;
+  border: 1.5px solid rgba(245, 239, 228, 0.3);
+  display: grid;
+  place-items: center;
+  color: var(--accent-butter);
+  flex-shrink: 0;
+}
+
+.floating-cart__badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 5px;
+  background: var(--accent-paprika);
+  color: #FFF;
+  border: 1.5px solid var(--bg-charcoal);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.floating-cart.has-items .floating-cart__badge {
+  background: var(--accent-butter);
+  color: var(--ink);
+}
+
+.floating-cart__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.floating-cart__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent-butter);
+  text-transform: uppercase;
+}
+
+.floating-cart__sub {
+  font-size: 0.78rem;
+  color: rgba(245, 239, 228, 0.85);
+  white-space: nowrap;
+}
+
+.floating-cart__total {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--accent-paprika);
+  color: #FFF;
+  padding: 0.38rem 0.65rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  margin-left: 0.25rem;
+  white-space: nowrap;
+}
+
+/* Destello visual del ticket térmico cuando se pulsa el carrito flotante */
+.ticket-receipt.is-highlighted {
+  animation: ticketFlash 1.5s ease;
+}
+
+@keyframes ticketFlash {
+  0% { box-shadow: var(--shadow-hard); }
+  25% { box-shadow: 0 0 0 5px var(--accent-butter), 10px 10px 0px var(--accent-paprika); transform: translateY(-3px); }
+  100% { box-shadow: var(--shadow-hard); transform: translateY(0); }
+}
+
+@media (max-width: 680px) {
+  body {
+    padding-bottom: 5.2rem;
+  }
+
+  .floating-cart {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    box-shadow: 4px 4px 0px var(--accent-paprika);
+  }
+
+  .floating-cart__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .floating-cart__sub {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+

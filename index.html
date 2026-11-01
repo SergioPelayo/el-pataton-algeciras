@@ -117,8 +117,8 @@
     <nav class="nav-mobile-strip" aria-label="Navegación móvil rápida">
       <a href="#la-carta">La Carta (42)</a>
       <a href="#al-gusto">Hazla al Gusto</a>
+      <a href="#zona-ticket">Tu Ticket</a>
       <a href="#el-horno">El Horno</a>
-      <a href="#comunidad">Facebook</a>
       <a href="#donde-estamos">Horario y Mapa</a>
     </nav>
   </header>
@@ -302,7 +302,7 @@
         </div>
 
         <!-- Ticket Térmico de Comanda en Vivo -->
-        <aside class="ticket-receipt" aria-live="polite">
+        <aside id="zona-ticket" class="ticket-receipt" aria-live="polite">
           <div class="ticket-receipt__head">
             <img src="assets/logo-pataton.svg" alt="El Patatón desde 2005" class="ticket-receipt__logo" width="56" height="56" />
             <div class="ticket-receipt__shop">EL PATATÓN · ALGECIRAS</div>
@@ -619,6 +619,29 @@
       <span>Avenida Venecia, 1 · 11205 Algeciras (Cádiz)</span>
     </div>
   </footer>
+
+  <!-- CARRITO / TICKET FLOTANTE SIEMPRE ACCESIBLE -->
+  <button
+    type="button"
+    id="floating-cart-btn"
+    class="floating-cart"
+    aria-label="Ver tu carrito y ticket de pedido"
+  >
+    <span class="floating-cart__icon-wrap" aria-hidden="true">
+      <svg class="floating-cart__svg" viewBox="0 0 28 28" width="22" height="22" fill="none">
+        <path d="M5 4H23V24L20 22L17 24L14 22L11 24L8 22L5 24V4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="rgba(242, 169, 34, 0.15)"/>
+        <line x1="9" y1="9.5" x2="19" y2="9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9" y1="13.5" x2="19" y2="13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="9" y1="17.5" x2="14.5" y2="17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span id="floating-cart-badge" class="floating-cart__badge">0</span>
+    </span>
+    <span class="floating-cart__info">
+      <span class="floating-cart__label">TU PEDIDO · VER TICKET</span>
+      <span id="floating-cart-sub" class="floating-cart__sub">1 patata en configuración</span>
+    </span>
+    <span id="floating-cart-total" class="floating-cart__total">7,00 €</span>
+  </button>
 
   <script src="app.js"></script>
 </body>

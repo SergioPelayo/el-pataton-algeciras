@@ -714,8 +714,20 @@ function renderMenu() {
       }, 1100);
 
       updateTicketReceipt();
+      triggerFloatingCartBump();
     });
   });
+}
+
+function triggerFloatingCartBump() {
+  const floatBtn = document.getElementById('floating-cart-btn');
+  if (!floatBtn) return;
+  floatBtn.classList.remove('is-bumping');
+  void floatBtn.offsetWidth; // Reflow para reiniciar animación
+  floatBtn.classList.add('is-bumping');
+  setTimeout(() => {
+    floatBtn.classList.remove('is-bumping');
+  }, 550);
 }
 
 function setupMenuFilters() {
@@ -943,6 +955,27 @@ function updateTicketReceipt() {
     : customCalc.totalPrice;
 
   totalPriceEl.textContent = formatPrice(grandTotal);
+
+  // Actualizar también el Carrito / Ticket Flotante siempre accesible
+  const floatBtn = document.getElementById('floating-cart-btn');
+  const floatBadge = document.getElementById('floating-cart-badge');
+  const floatSub = document.getElementById('floating-cart-sub');
+  const floatTotal = document.getElementById('floating-cart-total');
+
+  if (floatBadge) floatBadge.textContent = String(orderCart.length);
+  if (floatTotal) floatTotal.textContent = formatPrice(grandTotal);
+  if (floatSub) {
+    if (orderCart.length === 0) {
+      floatSub.textContent = 'Ver ticket en configuración';
+    } else if (orderCart.length === 1) {
+      floatSub.textContent = '1 plato añadido al ticket';
+    } else {
+      floatSub.textContent = `${orderCart.length} platos añadidos al ticket`;
+    }
+  }
+  if (floatBtn) {
+    floatBtn.classList.toggle('has-items', orderCart.length > 0);
+  }
 }
 
 function setupTicketActions() {
@@ -950,6 +983,20 @@ function setupTicketActions() {
   const copyBtn = document.getElementById('btn-copy-ticket');
   const clearBtn = document.getElementById('btn-clear-cart');
   const feedback = document.getElementById('copy-feedback');
+  const floatCartBtn = document.getElementById('floating-cart-btn');
+  const ticketAside = document.getElementById('zona-ticket');
+
+  if (floatCartBtn && ticketAside) {
+    floatCartBtn.addEventListener('click', () => {
+      ticketAside.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      ticketAside.classList.remove('is-highlighted');
+      void ticketAside.offsetWidth;
+      ticketAside.classList.add('is-highlighted');
+      setTimeout(() => {
+        ticketAside.classList.remove('is-highlighted');
+      }, 1600);
+    });
+  }
 
   if (addCustomBtn) {
     addCustomBtn.addEventListener('click', () => {
@@ -961,6 +1008,7 @@ function setupTicketActions() {
         price: customCalc.totalPrice
       });
       updateTicketReceipt();
+      triggerFloatingCartBump();
       if (feedback) {
         feedback.textContent = 'Patata configurada añadida al ticket de pedido.';
         setTimeout(() => { feedback.textContent = ''; }, 3000);
