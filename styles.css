@@ -2264,4 +2264,255 @@ body.is-unwrapping .hero__visual {
   }
 }
 
+/* ==========================================================================
+   SERVICIOS EXCLUSIVOS: ASISTENTE DE ANTOJOS, ROTULADO ALBAL, HORNADA Y BIZUM
+   ========================================================================== */
+.craving-bar {
+  background: var(--bg-charcoal);
+  color: var(--bg-paper);
+  border: var(--border-ink);
+  box-shadow: var(--shadow-hard-sm);
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 1.75rem;
+}
+
+.craving-bar__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.craving-bar__tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-butter);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.craving-bar__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--bg-paper);
+}
+
+.craving-bar__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.craving-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.48rem 0.8rem;
+  background: #231D1A;
+  color: var(--bg-paper);
+  border: 1.5px solid rgba(245, 239, 228, 0.35);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.craving-chip:hover {
+  border-color: var(--accent-butter);
+  transform: translateY(-1px);
+}
+
+.craving-chip.is-active {
+  background: var(--accent-butter);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 2px 2px 0px var(--accent-paprika);
+}
+
+.craving-chip--combo {
+  background: var(--accent-paprika);
+  color: #FFF;
+  border-color: #FFF;
+}
+
+.craving-chip--combo:hover {
+  background: var(--accent-butter);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.custom-foil-name-row {
+  margin-bottom: 0.75rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.custom-foil-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.custom-foil-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid var(--ink);
+  background: #FFFDF8;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.ticket-service-box {
+  background: var(--bg-paper);
+  border: 1.5px solid var(--ink);
+  padding: 0.7rem 0.8rem;
+  margin-bottom: 0.85rem;
+}
+
+.ticket-service-box__title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-paprika);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+.ticket-service-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ticket-service-field {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.ticket-select {
+  width: 100%;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid var(--ink);
+  background: #FFF;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ticket-foil-helper {
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.45rem;
+  line-height: 1.35;
+}
+
+.ticket-foil-tag-row {
+  margin-top: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(242, 169, 34, 0.14);
+  border: 1px dashed rgba(21, 18, 16, 0.35);
+  padding: 0.22rem 0.45rem;
+}
+
+.ticket-foil-tag-label {
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.ticket-foil-tag-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid rgba(21, 18, 16, 0.35);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-paprika);
+  padding: 0.1rem 0.2rem;
+}
+
+.ticket-foil-tag-input:focus {
+  outline: none;
+  border-bottom-color: var(--accent-paprika);
+  background: #FFF;
+}
+
+.ticket-bizum-box {
+  margin-top: 0.9rem;
+  background: #1C1815;
+  color: var(--bg-paper);
+  border: 1.5px solid var(--ink);
+  padding: 0.7rem 0.8rem;
+}
+
+.ticket-bizum-box__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-butter);
+  border-bottom: 1px dashed rgba(245, 239, 228, 0.25);
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.ticket-bizum-split-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--bg-paper);
+}
+
+.bizum-step-btn {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--accent-butter);
+  background: transparent;
+  color: var(--accent-butter);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.bizum-step-btn:hover {
+  background: var(--accent-butter);
+  color: var(--ink);
+}
+
+.bizum-equal-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+}
+
+.bizum-named-list {
+  margin-top: 0.45rem;
+  padding-top: 0.4rem;
+  border-top: 1px dotted rgba(245, 239, 228, 0.22);
+  display: grid;
+  gap: 0.22rem;
+  font-size: 0.72rem;
+}
+
+.bizum-named-item {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(245, 239, 228, 0.9);
+}
+
+
 

@@ -245,6 +245,26 @@
           </div>
         </div>
 
+        <!-- SERVICIO EXCLUSIVO 1: RECOMENDADOR POR ANTOJO Y COMBOS CON 1 CLIC -->
+        <div class="craving-bar" aria-label="Recomendador rápido del horno y combos">
+          <div class="craving-bar__head">
+            <span class="craving-bar__tag">SERVICIO EXCLUSIVO // ASISTENTE DE ANTOJOS Y PEÑAS</span>
+            <span class="craving-bar__title">¿Dudas entre los 30 números? Filtra por tu antojo o carga un combo directo al ticket:</span>
+          </div>
+          <div class="craving-bar__chips">
+            <button type="button" class="craving-chip" data-craving="queso">Fundido y Quesero (Nº 3 / Nº 4)</button>
+            <button type="button" class="craving-chip" data-craving="mar">Del Mar: Pulpo y Gambas (Nº 11 / Nº 14)</button>
+            <button type="button" class="craving-chip" data-craving="carnivoro">Carnívoro y Kebab (Nº 10 / Nº 15 / Nº 17)</button>
+            <button type="button" class="craving-chip" data-craving="picante">Con Chispa / Brava (Nº 6 / Nº 13)</button>
+            <button type="button" class="craving-chip craving-chip--combo" id="btn-combo-pareja">
+              + Cargar «Combo Pareja» (2 Patatas + 2 Bebidas · 18,00 €)
+            </button>
+            <button type="button" class="craving-chip craving-chip--combo" id="btn-combo-amigos">
+              + Cargar «Peña 4 Amigos» c/ Nombres en el Albal (31,50 €)
+            </button>
+          </div>
+        </div>
+
         <div id="menu-grid" class="menu-grid"></div>
       </div>
     </section>
@@ -295,6 +315,16 @@
           </div>
 
           <div class="builder-group__footer-btn">
+            <div class="custom-foil-name-row">
+              <label for="custom-foil-owner" class="custom-foil-label">ROTULAR NOMBRE EN EL PAPEL DE PLATA (OPCIONAL):</label>
+              <input
+                type="text"
+                id="custom-foil-owner"
+                class="custom-foil-input"
+                placeholder="Ej. Carlos, Isa, Niño (sin cebolla)..."
+                maxlength="28"
+              />
+            </div>
             <button type="button" id="btn-add-custom-to-order" class="btn btn--butter" style="width: 100%;">
               + Añadir esta Patata Configurada al Ticket de Pedido
             </button>
@@ -307,7 +337,35 @@
             <img src="assets/logo-pataton.svg" alt="El Patatón desde 2005" class="ticket-receipt__logo" width="56" height="56" />
             <div class="ticket-receipt__shop">EL PATATÓN · ALGECIRAS</div>
             <div class="ticket-receipt__meta">DESDE 2005 · AV. VENECIA, 1 · TEL: 956 65 81 22</div>
-            <div class="ticket-receipt__meta" id="ticket-timestamp">TICKET DE COMANDA EN VIVO</div>
+            <div class="ticket-receipt__meta" id="ticket-timestamp">COMANDA INTELIGENTE · REF #PAT-2026</div>
+          </div>
+
+          <!-- SERVICIO EXCLUSIVO 2: RESERVA DE HORNADA Y MODALIDAD -->
+          <div class="ticket-service-box">
+            <div class="ticket-service-box__title">1. RESERVA DE HORNADA (SIN ESPERAS EN AV. VENECIA)</div>
+            <div class="ticket-service-grid">
+              <label class="ticket-service-field">
+                <span>MODALIDAD:</span>
+                <select id="ticket-pickup-mode" class="ticket-select">
+                  <option value="Recoger en Local (Av. Venecia, 1)">Recoger sin cola (Av. Venecia, 1)</option>
+                  <option value="Entrega a Domicilio">Entrega a Domicilio</option>
+                </select>
+              </label>
+              <label class="ticket-service-field">
+                <span>HORA DE SALIDA DEL HORNO:</span>
+                <select id="ticket-oven-slot" class="ticket-select">
+                  <option value="Lo antes posible (~20 min)">Lo antes posible (~20 min)</option>
+                  <option value="Hornada 20:30 (Horno fluido)">Hornada 20:30 (Horno fluido)</option>
+                  <option value="Hornada 21:00 (Horno fluido)">Hornada 21:00 (Horno fluido)</option>
+                  <option value="Hornada 21:30 (Hora punta)">Hornada 21:30 (Hora punta)</option>
+                  <option value="Hornada 22:00 (Hora punta)">Hornada 22:00 (Hora punta)</option>
+                  <option value="Hornada 22:30 (Media)">Hornada 22:30 (Media)</option>
+                  <option value="Hornada 23:00 (Fluido)">Hornada 23:00 (Fluido)</option>
+                  <option value="Hornada 23:30 (Fluido)">Hornada 23:30 (Fluido)</option>
+                  <option value="Hornada 00:00 (Madrugada)">Hornada 00:00 (Madrugada)</option>
+                </select>
+              </label>
+            </div>
           </div>
 
           <!-- Vista previa en vivo de la patata que estás configurando -->
@@ -320,9 +378,28 @@
             <div class="ticket-live-preview__details" id="ticket-SaucesAndToppings"></div>
           </div>
 
-          <!-- Lista de productos añadidos al pedido completo -->
-          <div class="ticket-receipt__section-label">PLATOS AÑADIDOS A TU PEDIDO (<span id="ticket-cart-count">0</span>):</div>
+          <!-- SERVICIO EXCLUSIVO 3: ROTULADO EN PAPEL DE PLATA POR COMENSAL -->
+          <div class="ticket-receipt__section-label">
+            2. PLATOS Y ROTULADO EN PAPEL ALBAL (<span id="ticket-cart-count">0</span>):
+          </div>
+          <p class="ticket-foil-helper">
+            Pon de quién es cada patata para que cocina lo escriba por fuera en el papel de plata y no tengáis que abrirlas todas buscando la vuestra:
+          </p>
           <ul id="ticket-cart-list" class="ticket-receipt__list ticket-receipt__cart"></ul>
+
+          <!-- SERVICIO EXCLUSIVO 4: CALCULADORA DE BIZUM / REPARTO EN GRUPO -->
+          <div id="ticket-bizum-box" class="ticket-bizum-box">
+            <div class="ticket-bizum-box__head">
+              <span>3. REPARTO BIZUM ENTRE AMIGOS</span>
+              <div class="ticket-bizum-split-ctrl">
+                <span>Personas:</span>
+                <button type="button" class="bizum-step-btn" id="bizum-minus" aria-label="Menos personas">-</button>
+                <strong id="bizum-people-count">2</strong>
+                <button type="button" class="bizum-step-btn" id="bizum-plus" aria-label="Más personas">+</button>
+              </div>
+            </div>
+            <div id="ticket-bizum-breakdown" class="ticket-bizum-breakdown"></div>
+          </div>
 
           <div class="ticket-receipt__total">
             <span>TOTAL PEDIDO</span>
@@ -331,8 +408,11 @@
 
           <div class="ticket-receipt__actions">
             <a href="tel:956658122" class="btn btn--primary" style="width: 100%;">
-              Llamar y Dictar Pedido (956 65 81 22)
+              Llamar y Dictar Comanda (956 65 81 22)
             </a>
+            <button type="button" id="btn-whatsapp-group" class="btn btn--butter" style="width: 100%;">
+              Compartir Pedido y Cuenta Bizum por WhatsApp
+            </button>
             <button type="button" id="btn-copy-ticket" class="btn btn--paper" style="width: 100%;">
               Copiar Comanda Completa
             </button>

@@ -590,6 +590,15 @@ const orderCart = [];
 
 let activeCategoryFilter = 'all';
 let activeSearchQuery = '';
+let activeCravingFilter = '';
+let bizumPeopleCount = 2;
+
+const CRAVING_IDS = {
+  queso: [3, 4, 5, 22],
+  mar: [11, 14, 8, 20],
+  carnivoro: [9, 10, 15, 17, 24, 28, 30],
+  picante: [6, 13, 15, 23]
+};
 
 function formatPrice(num) {
   return num.toFixed(2).replace('.', ',') + ' €';
@@ -635,8 +644,12 @@ function renderMenu() {
   const q = activeSearchQuery.trim().toLowerCase();
 
   const filtered = MENU_ITEMS.filter(item => {
-    const matchCat = activeCategoryFilter === 'all' || item.category === activeCategoryFilter;
-    if (!matchCat) return false;
+    if (activeCravingFilter && CRAVING_IDS[activeCravingFilter]) {
+      if (!CRAVING_IDS[activeCravingFilter].includes(item.id)) return false;
+    } else {
+      const matchCat = activeCategoryFilter === 'all' || item.category === activeCategoryFilter;
+      if (!matchCat) return false;
+    }
     if (!q) return true;
     return (
       item.name.toLowerCase().includes(q) ||
@@ -704,7 +717,8 @@ function renderMenu() {
       orderCart.push({
         title: finalName,
         details: prod.desc || '',
-        price: finalPrice
+        price: finalPrice,
+        foilOwner: ''
       });
 
       const originalText = btn.textContent;
@@ -730,20 +744,83 @@ function triggerFloatingCartBump() {
   }, 550);
 }
 
+function scrollToTicketWithFlash() {
+  const ticketAside = document.getElementById('zona-ticket');
+  if (!ticketAside) return;
+  ticketAside.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  ticketAside.classList.remove('is-highlighted');
+  void ticketAside.offsetWidth;
+  ticketAside.classList.add('is-highlighted');
+  setTimeout(() => {
+    ticketAside.classList.remove('is-highlighted');
+  }, 1600);
+}
+
 function setupMenuFilters() {
   const buttons = document.querySelectorAll('.filter-btn');
+  const cravingButtons = document.querySelectorAll('[data-craving]');
+
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => {
         b.classList.remove('active');
         b.setAttribute('aria-selected', 'false');
       });
+      cravingButtons.forEach(cb => cb.classList.remove('is-active'));
+      activeCravingFilter = '';
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
       activeCategoryFilter = btn.dataset.filter;
       renderMenu();
     });
   });
+
+  cravingButtons.forEach(cbtn => {
+    cbtn.addEventListener('click', () => {
+      const craving = cbtn.dataset.craving;
+      if (activeCravingFilter === craving) {
+        activeCravingFilter = '';
+        cbtn.classList.remove('is-active');
+      } else {
+        activeCravingFilter = craving;
+        cravingButtons.forEach(cb => cb.classList.remove('is-active'));
+        cbtn.classList.add('is-active');
+      }
+      renderMenu();
+    });
+  });
+
+  const comboParejaBtn = document.getElementById('btn-combo-pareja');
+  if (comboParejaBtn) {
+    comboParejaBtn.addEventListener('click', () => {
+      orderCart.push(
+        { title: 'Nº 4. Patata al Roquefort', details: 'Patata asada, mantequilla, sal, pimienta, jamón, queso y salsa roquefort', price: 7.50, foilOwner: 'Persona 1' },
+        { title: 'Nº 17. Patata Kebab', details: 'Patata asada, mantequilla, sal, pimienta, pollo kebab, queso y salsa yogurt', price: 8.00, foilOwner: 'Persona 2' },
+        { title: 'Coca-Cola lata', details: 'Lata refrigerada 330ml', price: 1.50, foilOwner: 'Persona 1' },
+        { title: 'Coca-Cola Zero', details: 'Lata refrigerada 330ml', price: 1.50, foilOwner: 'Persona 2' }
+      );
+      bizumPeopleCount = 2;
+      updateTicketReceipt();
+      triggerFloatingCartBump();
+      scrollToTicketWithFlash();
+    });
+  }
+
+  const comboAmigosBtn = document.getElementById('btn-combo-amigos');
+  if (comboAmigosBtn) {
+    comboAmigosBtn.addEventListener('click', () => {
+      orderCart.push(
+        { title: 'Nº 4. Patata al Roquefort', details: 'Jamón, queso y salsa roquefort', price: 7.50, foilOwner: 'Carlos' },
+        { title: 'Nº 14. Patata Gallega', details: 'Pulpo, aceite de oliva y pimentón', price: 8.00, foilOwner: 'Isa' },
+        { title: 'Nº 17. Patata Kebab (en PATATÓN +1€)', details: 'Pollo kebab, queso y salsa yogurt', price: 9.00, foilOwner: 'Javi' },
+        { title: 'Nº 6. Patata Brava', details: 'Pollo relleno, queso y salsa brava', price: 7.50, foilOwner: 'Marta' }
+      );
+      bizumPeopleCount = 4;
+      updateTicketReceipt();
+      triggerFloatingCartBump();
+      scrollToTicketWithFlash();
+    });
+  }
 
   const searchInput = document.getElementById('menu-search-input');
   if (searchInput) {
@@ -910,6 +987,8 @@ function updateTicketReceipt() {
   const cartCountEl = document.getElementById('ticket-cart-count');
   const cartListEl = document.getElementById('ticket-cart-list');
   const totalPriceEl = document.getElementById('ticket-price');
+  const bizumPeopleEl = document.getElementById('bizum-people-count');
+  const bizumBreakdownEl = document.getElementById('ticket-bizum-breakdown');
 
   if (!baseNameEl) return;
 
@@ -926,17 +1005,30 @@ function updateTicketReceipt() {
   cartCountEl.textContent = String(orderCart.length);
 
   if (orderCart.length === 0) {
-    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem;">(Aún no has pulsado «+ Añadir» en ningún plato de la carta; se calcula la patata en configuración actual)</li>`;
+    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem;">(Aún no has añadido platos a la lista; pulsa «+ Añadir» en la carta o carga un combo de grupo arriba)</li>`;
   } else {
     cartListEl.innerHTML = orderCart.map((item, idx) => `
       <li class="ticket-cart-item">
-        <div>
-          <strong>1x ${item.title}</strong>
+        <div style="flex: 1; min-width: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.4rem;">
+            <strong>1x ${item.title}</strong>
+            <div class="ticket-cart-item__right">
+              <span>${formatPrice(item.price)}</span>
+              <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar">[x]</button>
+            </div>
+          </div>
           ${item.details ? `<div class="ticket-cart-item__sub">${item.details}</div>` : ''}
-        </div>
-        <div class="ticket-cart-item__right">
-          <span>${formatPrice(item.price)}</span>
-          <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar">[x]</button>
+          <div class="ticket-foil-tag-row">
+            <span class="ticket-foil-tag-label">ROTULAR ALBAL:</span>
+            <input
+              type="text"
+              class="ticket-foil-tag-input"
+              data-foil-idx="${idx}"
+              value="${item.foilOwner || ''}"
+              placeholder="¿De quién es? (ej. Carlos)"
+              maxlength="24"
+            />
+          </div>
         </div>
       </li>
     `).join('');
@@ -948,6 +1040,16 @@ function updateTicketReceipt() {
         updateTicketReceipt();
       });
     });
+
+    cartListEl.querySelectorAll('[data-foil-idx]').forEach(inp => {
+      inp.addEventListener('input', (e) => {
+        const idx = Number(inp.dataset.foilIdx);
+        if (orderCart[idx]) {
+          orderCart[idx].foilOwner = e.target.value;
+          updateBizumSection(grandTotal);
+        }
+      });
+    });
   }
 
   const grandTotal = orderCart.length > 0
@@ -955,6 +1057,13 @@ function updateTicketReceipt() {
     : customCalc.totalPrice;
 
   totalPriceEl.textContent = formatPrice(grandTotal);
+
+  if (bizumPeopleEl) {
+    bizumPeopleEl.textContent = String(bizumPeopleCount);
+  }
+  if (bizumBreakdownEl) {
+    updateBizumSection(grandTotal);
+  }
 
   // Actualizar también el Carrito / Ticket Flotante siempre accesible
   const floatBtn = document.getElementById('floating-cart-btn');
@@ -978,23 +1087,135 @@ function updateTicketReceipt() {
   }
 }
 
+function updateBizumSection(grandTotal) {
+  const bizumBreakdownEl = document.getElementById('ticket-bizum-breakdown');
+  if (!bizumBreakdownEl) return;
+
+  const perPersonEqual = grandTotal / Math.max(1, bizumPeopleCount);
+
+  // Agrupar por nombre escrito en el papel de plata (si hay nombres)
+  const byOwner = {};
+  let unnamedTotal = 0;
+  orderCart.forEach(item => {
+    const cleanName = (item.foilOwner || '').trim();
+    if (cleanName) {
+      byOwner[cleanName] = (byOwner[cleanName] || 0) + item.price;
+    } else {
+      unnamedTotal += item.price;
+    }
+  });
+
+  const ownerNames = Object.keys(byOwner);
+  let html = `
+    <div class="bizum-equal-line">
+      <span>A escote entre ${bizumPeopleCount} personas:</span>
+      <strong>${formatPrice(perPersonEqual)} / pers.</strong>
+    </div>
+  `;
+
+  if (ownerNames.length > 0) {
+    html += `<div class="bizum-named-list">`;
+    ownerNames.forEach(name => {
+      html += `
+        <div class="bizum-named-item">
+          <span>Albal «${name}»:</span>
+          <strong>Bizum de ${formatPrice(byOwner[name])}</strong>
+        </div>
+      `;
+    });
+    if (unnamedTotal > 0) {
+      html += `
+        <div class="bizum-named-item">
+          <span>Para compartir / sin nombre:</span>
+          <strong>${formatPrice(unnamedTotal)}</strong>
+        </div>
+      `;
+    }
+    html += `</div>`;
+  }
+
+  bizumBreakdownEl.innerHTML = html;
+}
+
+function buildOrderSummaryLines() {
+  const pickupMode = document.getElementById('ticket-pickup-mode')?.value || 'Recoger en Local (Av. Venecia, 1)';
+  const ovenSlot = document.getElementById('ticket-oven-slot')?.value || 'Lo antes posible (~20 min)';
+
+  const lines = [
+    'PEDIDO OFICIAL — EL PATATÓN ALGECIRAS (956 65 81 22)',
+    `Modalidad: ${pickupMode}`,
+    `Hornada solicitada: ${ovenSlot}`,
+    '-----------------------------------'
+  ];
+
+  if (orderCart.length > 0) {
+    orderCart.forEach((item, i) => {
+      const ownerTag = item.foilOwner && item.foilOwner.trim()
+        ? ` [ROTULAR EN ALBAL: "${item.foilOwner.trim().toUpperCase()}"]`
+        : '';
+      lines.push(`${i + 1}. ${item.title}${ownerTag} — ${formatPrice(item.price)}`);
+      if (item.details) lines.push(`   (${item.details})`);
+    });
+  } else {
+    const customCalc = calculateCustomPotatoPricing();
+    const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+    const customOwner = document.getElementById('custom-foil-owner')?.value.trim();
+    const ownerTag = customOwner ? ` [ROTULAR EN ALBAL: "${customOwner.toUpperCase()}"]` : '';
+    lines.push(`1. ${customCalc.tariffName}${ownerTag} — ${formatPrice(customCalc.totalPrice)}`);
+    lines.push(`   Salsas: ${builderState.sauces.join(', ') || 'Ninguna'}`);
+    lines.push(`   Ingredientes: ${allChosenToppings.join(', ') || 'Solo base'}`);
+  }
+
+  const totalText = document.getElementById('ticket-price')?.textContent || '7,00 €';
+  lines.push('-----------------------------------');
+  lines.push(`TOTAL PEDIDO: ${totalText}`);
+
+  // Añadir desglose Bizum si hay varios comensales
+  const byOwner = {};
+  orderCart.forEach(item => {
+    const cleanName = (item.foilOwner || '').trim();
+    if (cleanName) byOwner[cleanName] = (byOwner[cleanName] || 0) + item.price;
+  });
+  const ownerKeys = Object.keys(byOwner);
+  if (ownerKeys.length > 0) {
+    lines.push('CUENTA BIZUM POR PERSONA:');
+    ownerKeys.forEach(k => {
+      lines.push(`- ${k}: ${formatPrice(byOwner[k])}`);
+    });
+  }
+
+  return lines;
+}
+
 function setupTicketActions() {
   const addCustomBtn = document.getElementById('btn-add-custom-to-order');
   const copyBtn = document.getElementById('btn-copy-ticket');
+  const whatsappBtn = document.getElementById('btn-whatsapp-group');
   const clearBtn = document.getElementById('btn-clear-cart');
   const feedback = document.getElementById('copy-feedback');
   const floatCartBtn = document.getElementById('floating-cart-btn');
-  const ticketAside = document.getElementById('zona-ticket');
+  const bizumMinus = document.getElementById('bizum-minus');
+  const bizumPlus = document.getElementById('bizum-plus');
 
-  if (floatCartBtn && ticketAside) {
-    floatCartBtn.addEventListener('click', () => {
-      ticketAside.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      ticketAside.classList.remove('is-highlighted');
-      void ticketAside.offsetWidth;
-      ticketAside.classList.add('is-highlighted');
-      setTimeout(() => {
-        ticketAside.classList.remove('is-highlighted');
-      }, 1600);
+  if (floatCartBtn) {
+    floatCartBtn.addEventListener('click', scrollToTicketWithFlash);
+  }
+
+  if (bizumMinus) {
+    bizumMinus.addEventListener('click', () => {
+      if (bizumPeopleCount > 1) {
+        bizumPeopleCount--;
+        updateTicketReceipt();
+      }
+    });
+  }
+
+  if (bizumPlus) {
+    bizumPlus.addEventListener('click', () => {
+      if (bizumPeopleCount < 20) {
+        bizumPeopleCount++;
+        updateTicketReceipt();
+      }
     });
   }
 
@@ -1002,15 +1223,20 @@ function setupTicketActions() {
     addCustomBtn.addEventListener('click', () => {
       const customCalc = calculateCustomPotatoPricing();
       const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+      const ownerInput = document.getElementById('custom-foil-owner');
+      const foilOwner = ownerInput ? ownerInput.value.trim() : '';
+
       orderCart.push({
         title: customCalc.tariffName,
         details: `Salsas: ${builderState.sauces.join(', ') || 'Sin salsa'} | Ing.: ${allChosenToppings.join(', ') || 'Solo base'}`,
-        price: customCalc.totalPrice
+        price: customCalc.totalPrice,
+        foilOwner
       });
+      if (ownerInput) ownerInput.value = '';
       updateTicketReceipt();
       triggerFloatingCartBump();
       if (feedback) {
-        feedback.textContent = 'Patata configurada añadida al ticket de pedido.';
+        feedback.textContent = 'Patata configurada añadida al ticket con su etiqueta de papel albal.';
         setTimeout(() => { feedback.textContent = ''; }, 3000);
       }
     });
@@ -1023,26 +1249,20 @@ function setupTicketActions() {
     });
   }
 
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', () => {
+      const lines = buildOrderSummaryLines();
+      const url = `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  }
+
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
-      const lines = ['PEDIDO — EL PATATÓN ALGECIRAS (956 65 81 22)'];
-      if (orderCart.length > 0) {
-        orderCart.forEach((item, i) => {
-          lines.push(`${i + 1}. ${item.title} — ${formatPrice(item.price)}`);
-          if (item.details) lines.push(`   (${item.details})`);
-        });
-      } else {
-        const customCalc = calculateCustomPotatoPricing();
-        const allChosenToppings = [...builderState.toppings, ...builderState.specials];
-        lines.push(`- ${customCalc.tariffName} (${formatPrice(customCalc.totalPrice)})`);
-        lines.push(`- Salsas/Condimentos: ${builderState.sauces.join(', ') || 'Ninguna'}`);
-        lines.push(`- Ingredientes: ${allChosenToppings.join(', ') || 'Solo base'}`);
-      }
-      lines.push(`TOTAL ESTIMADO: ${document.getElementById('ticket-price')?.textContent || ''}`);
-
+      const lines = buildOrderSummaryLines();
       try {
         await navigator.clipboard.writeText(lines.join('\n'));
-        feedback.textContent = 'Comanda copiada al portapapeles.';
+        feedback.textContent = 'Comanda completa y desglose Bizum copiados al portapapeles.';
         setTimeout(() => { feedback.textContent = ''; }, 4000);
       } catch {
         feedback.textContent = 'Comanda lista en pantalla para llamar al 956 65 81 22.';
