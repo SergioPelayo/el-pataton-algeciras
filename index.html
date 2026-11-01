@@ -10,7 +10,7 @@
   <meta name="description" content="Más de 20 años en Algeciras con ingredientes frescos y recetas propias. Carta de 30 números + 12 bebidas (42 productos) en Av. Venecia, 1." />
   <link rel="icon" type="image/svg+xml" href="assets/logo-pataton.svg" />
   <link rel="alternate icon" type="image/png" href="assets/logo-pataton.png" />
-  <link rel="stylesheet" href="styles.css?v=20261101-9" />
+  <link rel="stylesheet" href="styles.css?v=20261101-10" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -2027,6 +2027,51 @@
     <span id="floating-cart-total" class="floating-cart__total">0,00 €</span>
   </button>
 
-  <script src="app.js?v=20261101-8"></script>
+  <!-- VISOR / LIGHTBOX DE IMÁGENES EN GRANDE -->
+  <div
+    id="product-lightbox"
+    class="product-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightbox-title"
+    hidden
+  >
+    <div class="product-lightbox__backdrop" data-lightbox-close></div>
+    <div class="product-lightbox__dialog">
+      <div class="product-lightbox__topbar">
+        <div class="product-lightbox__meta">
+          <span id="lightbox-cat" class="product-lightbox__cat">Patatas Clásicas</span>
+          <span id="lightbox-code" class="product-lightbox__code">REF // Nº 01</span>
+        </div>
+        <button type="button" id="lightbox-close" class="product-lightbox__close" aria-label="Cerrar imagen ampliada">
+          ✕ Cerrar
+        </button>
+      </div>
+
+      <div class="product-lightbox__stage">
+        <button type="button" id="lightbox-prev" class="product-lightbox__nav product-lightbox__nav--prev" aria-label="Ver plato anterior">
+          ‹
+        </button>
+        <img id="lightbox-img" src="" alt="" class="product-lightbox__img" />
+        <button type="button" id="lightbox-next" class="product-lightbox__nav product-lightbox__nav--next" aria-label="Ver plato siguiente">
+          ›
+        </button>
+      </div>
+
+      <div class="product-lightbox__body">
+        <div class="product-lightbox__header">
+          <h3 id="lightbox-title" class="product-lightbox__title">Nº 1. Patata Vegetal</h3>
+          <span id="lightbox-price" class="product-lightbox__price">7,50 €</span>
+        </div>
+        <p id="lightbox-desc" class="product-lightbox__desc"></p>
+        <div class="product-lightbox__actions">
+          <button type="button" id="lightbox-add-normal" class="btn btn--primary menu-card__btn">+ Añadir · 7,50 €</button>
+          <button type="button" id="lightbox-add-pataton" class="btn btn--butter menu-card__btn">+ Patatón · 8,50 €</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js?v=20261101-10"></script>
 </body>
 </html>

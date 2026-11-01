@@ -734,36 +734,189 @@ function renderMenu() {
   }
 }
 
+let currentLightboxProductId = null;
+
+function addMenuProductToCart(id, makePataton, triggerBtn) {
+  const prod = MENU_ITEMS.find(m => m.id === id);
+  if (!prod) return;
+
+  const finalName = makePataton ? `${prod.name} (en PATATÓN +1€)` : prod.name;
+  const finalPrice = makePataton ? prod.price + 1.0 : prod.price;
+
+  orderCart.push({
+    title: finalName,
+    details: prod.desc || '',
+    price: finalPrice,
+    foilOwner: ''
+  });
+
+  if (triggerBtn) {
+    const originalText = triggerBtn.dataset.origLabel || triggerBtn.textContent;
+    triggerBtn.dataset.origLabel = originalText;
+    triggerBtn.textContent = '✓ Añadido';
+    setTimeout(() => {
+      triggerBtn.textContent = triggerBtn.dataset.origLabel || originalText;
+    }, 1100);
+  }
+
+  updateTicketReceipt();
+  triggerFloatingCartBump();
+}
+
+function getVisibleProductIds() {
+  const grid = document.getElementById('menu-grid');
+  if (!grid) return MENU_ITEMS.map(m => m.id);
+  const visibleCards = Array.from(grid.querySelectorAll('.menu-card')).filter(c => !c.hidden);
+  if (visibleCards.length === 0) return MENU_ITEMS.map(m => m.id);
+  return visibleCards.map(c => Number(c.dataset.id));
+}
+
+function openProductLightbox(id) {
+  const modal = document.getElementById('product-lightbox');
+  const prod = MENU_ITEMS.find(m => m.id === id);
+  if (!modal || !prod) return;
+
+  currentLightboxProductId = prod.id;
+
+  const imgEl = document.getElementById('lightbox-img');
+  const catEl = document.getElementById('lightbox-cat');
+  const codeEl = document.getElementById('lightbox-code');
+  const titleEl = document.getElementById('lightbox-title');
+  const priceEl = document.getElementById('lightbox-price');
+  const descEl = document.getElementById('lightbox-desc');
+  const btnNormal = document.getElementById('lightbox-add-normal');
+  const btnPataton = document.getElementById('lightbox-add-pataton');
+
+  if (imgEl) {
+    imgEl.src = prod.img;
+    imgEl.alt = prod.name;
+  }
+  if (catEl) catEl.textContent = prod.categoryLabel;
+  if (codeEl) codeEl.textContent = `REF // ${prod.code}`;
+  if (titleEl) titleEl.textContent = prod.name;
+  if (priceEl) priceEl.textContent = formatPrice(prod.price);
+  if (descEl) descEl.textContent = prod.desc;
+
+  if (btnNormal) {
+    const label = `+ Añadir · ${formatPrice(prod.price)}`;
+    btnNormal.textContent = label;
+    btnNormal.dataset.origLabel = label;
+  }
+  if (btnPataton) {
+    if (prod.canPataton) {
+      const patatonLabel = `+ Patatón · ${formatPrice(prod.price + 1.0)}`;
+      btnPataton.textContent = patatonLabel;
+      btnPataton.dataset.origLabel = patatonLabel;
+      btnPataton.hidden = false;
+    } else {
+      btnPataton.hidden = true;
+    }
+  }
+
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductLightbox() {
+  const modal = document.getElementById('product-lightbox');
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+function stepProductLightbox(direction) {
+  if (currentLightboxProductId === null) return;
+  const ids = getVisibleProductIds();
+  if (ids.length === 0) return;
+  const idx = ids.indexOf(currentLightboxProductId);
+  const nextIdx = idx === -1 ? 0 : (idx + direction + ids.length) % ids.length;
+  openProductLightbox(ids[nextIdx]);
+}
+
 function setupMenuCardActions() {
   const grid = document.getElementById('menu-grid');
-  if (!grid) return;
-
-  grid.querySelectorAll('[data-add-id]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = Number(btn.dataset.addId);
-      const makePataton = btn.dataset.pataton === '1';
-      const prod = MENU_ITEMS.find(m => m.id === id);
-      if (!prod) return;
-
-      const finalName = makePataton ? `${prod.name} (en PATATÓN +1€)` : prod.name;
-      const finalPrice = makePataton ? prod.price + 1.0 : prod.price;
-
-      orderCart.push({
-        title: finalName,
-        details: prod.desc || '',
-        price: finalPrice,
-        foilOwner: ''
+  if (grid) {
+    grid.querySelectorAll('[data-add-id]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.addId);
+        const makePataton = btn.dataset.pataton === '1';
+        addMenuProductToCart(id, makePataton, btn);
       });
-
-      const originalText = btn.textContent;
-      btn.textContent = '✓ Añadido';
-      setTimeout(() => {
-        btn.textContent = originalText;
-      }, 1100);
-
-      updateTicketReceipt();
-      triggerFloatingCartBump();
     });
+
+    grid.querySelectorAll('.menu-card__photo-wrap').forEach(photoWrap => {
+      const card = photoWrap.closest('.menu-card');
+      if (!card) return;
+      const id = Number(card.dataset.id);
+      photoWrap.setAttribute('role', 'button');
+      photoWrap.setAttribute('tabindex', '0');
+      photoWrap.setAttribute('aria-label', 'Ver foto del producto en grande');
+      photoWrap.addEventListener('click', () => openProductLightbox(id));
+      photoWrap.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openProductLightbox(id);
+        }
+      });
+    });
+  }
+
+  // También permitir ampliar la foto principal del Hero (Nº 24 Patatón Completo con Todo)
+  const heroPhotoWrap = document.querySelector('.photo-card__img-wrap');
+  if (heroPhotoWrap) {
+    heroPhotoWrap.setAttribute('role', 'button');
+    heroPhotoWrap.setAttribute('tabindex', '0');
+    heroPhotoWrap.setAttribute('aria-label', 'Ver foto de Nº 24 Patatón Completo con Todo en grande');
+    heroPhotoWrap.addEventListener('click', () => openProductLightbox(24));
+    heroPhotoWrap.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openProductLightbox(24);
+      }
+    });
+  }
+
+  // Eventos del modal Lightbox
+  const modal = document.getElementById('product-lightbox');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  const btnNormal = document.getElementById('lightbox-add-normal');
+  const btnPataton = document.getElementById('lightbox-add-pataton');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeProductLightbox);
+  if (modal) {
+    modal.querySelectorAll('[data-lightbox-close]').forEach(el => {
+      el.addEventListener('click', closeProductLightbox);
+    });
+  }
+  if (prevBtn) prevBtn.addEventListener('click', () => stepProductLightbox(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => stepProductLightbox(1));
+
+  if (btnNormal) {
+    btnNormal.addEventListener('click', () => {
+      if (currentLightboxProductId !== null) {
+        addMenuProductToCart(currentLightboxProductId, false, btnNormal);
+      }
+    });
+  }
+  if (btnPataton) {
+    btnPataton.addEventListener('click', () => {
+      if (currentLightboxProductId !== null) {
+        addMenuProductToCart(currentLightboxProductId, true, btnPataton);
+      }
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!modal || modal.hidden) return;
+    if (e.key === 'Escape') {
+      closeProductLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      stepProductLightbox(-1);
+    } else if (e.key === 'ArrowRight') {
+      stepProductLightbox(1);
+    }
   });
 }
 
