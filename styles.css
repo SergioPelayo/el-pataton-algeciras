@@ -77,8 +77,20 @@ button {
 }
 
 /* ==========================================================================
-   TOP TICKER / CINTA DE HORNO
+   TOP TICKER / CINTA DE HORNO & AVISO DE DEMOSTRACIÓN
    ========================================================================== */
+.demo-banner {
+  background: var(--accent-butter);
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 0.35rem 1rem;
+}
+
 .top-bar {
   background: var(--bg-charcoal);
   color: var(--bg-paper);
