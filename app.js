@@ -35,7 +35,7 @@ const MENU_ITEMS = [
     category: 'clasicas',
     categoryLabel: 'Patatas Clásicas',
     featured: true,
-    badge: 'MUY PEDIDA',
+    badge: 'MUY PEDIDA', // <!-- CONFIRMAR CON ISA Y CRISTINA -->
     name: 'Nº 3. Patata a la Mantequilla',
     price: 7.50,
     canPataton: true,
@@ -49,7 +49,7 @@ const MENU_ITEMS = [
     category: 'clasicas',
     categoryLabel: 'Patatas Clásicas',
     featured: true,
-    badge: 'TOP VENTAS',
+    badge: 'TOP VENTAS', // <!-- CONFIRMAR CON ISA Y CRISTINA -->
     name: 'Nº 4. Patata al Roquefort',
     price: 7.50,
     canPataton: true,
@@ -123,7 +123,7 @@ const MENU_ITEMS = [
     category: 'clasicas',
     categoryLabel: 'Patatas Clásicas',
     featured: true,
-    badge: 'CARNÍVORA',
+    badge: 'CARNÍVORA', // <!-- CONFIRMAR CON ISA Y CRISTINA -->
     name: 'Nº 10. Patata Ibérica',
     price: 7.50,
     canPataton: true,
@@ -213,7 +213,7 @@ const MENU_ITEMS = [
     category: 'especiales',
     categoryLabel: 'Patatas Especiales',
     featured: true,
-    badge: 'FAVORITA',
+    badge: 'FAVORITA', // <!-- CONFIRMAR CON ISA Y CRISTINA -->
     name: 'Nº 17. Patata Kebab',
     price: 8.00,
     canPataton: true,
@@ -572,8 +572,8 @@ const BUILDER_TOPPINGS = [
 
 // Grupo 3: Los 4 Ingredientes Especiales / Extras oficiales
 const BUILDER_SPECIALS = [
-  { id: 'Gambas', name: 'Gambas', extra: 0.20 },
-  { id: 'Kebab', name: 'Kebab', extra: 0.25 },
+  { id: 'Gambas', name: 'Gambas', extra: 0.20 }, // <!-- CONFIRMAR CON ISA Y CRISTINA -->
+  { id: 'Kebab', name: 'Kebab', extra: 0.25 }, // <!-- CONFIRMAR CON ISA Y CRISTINA -->
   { id: 'Pulpo', name: 'Pulpo', extra: 0.00 },
   { id: 'Huevo Cocido', name: 'Huevo Cocido', extra: 0.00 }
 ];
@@ -592,6 +592,58 @@ let activeCategoryFilter = 'all';
 let activeSearchQuery = '';
 let activeCravingFilter = '';
 let bizumPeopleCount = 2;
+
+const STORAGE_KEY_CART = 'elpataton_orderCart';
+const STORAGE_KEY_BIZUM = 'elpataton_bizumPeopleCount';
+
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEY_CART, JSON.stringify(orderCart));
+    localStorage.setItem(STORAGE_KEY_BIZUM, String(bizumPeopleCount));
+  } catch (err) {
+    // Continuar sin fallo si localStorage no está disponible
+  }
+}
+
+function loadCartFromStorage() {
+  try {
+    const rawCart = localStorage.getItem(STORAGE_KEY_CART);
+    if (rawCart) {
+      const parsedCart = JSON.parse(rawCart);
+      if (Array.isArray(parsedCart)) {
+        orderCart.length = 0;
+        parsedCart.forEach(item => {
+          if (item && typeof item.title === 'string' && typeof item.price === 'number') {
+            orderCart.push({
+              title: String(item.title),
+              details: typeof item.details === 'string' ? item.details : '',
+              price: Number(item.price),
+              foilOwner: typeof item.foilOwner === 'string' ? item.foilOwner : ''
+            });
+          }
+        });
+      }
+    }
+    const rawBizum = localStorage.getItem(STORAGE_KEY_BIZUM);
+    if (rawBizum !== null) {
+      const parsedCount = parseInt(rawBizum, 10);
+      if (!Number.isNaN(parsedCount) && parsedCount >= 1 && parsedCount <= 20) {
+        bizumPeopleCount = parsedCount;
+      }
+    }
+  } catch (err) {
+    // Continuar sin fallo si localStorage no está disponible
+  }
+}
 
 const CRAVING_IDS = {
   queso: [3, 4, 5, 22],
@@ -663,7 +715,7 @@ function renderMenu() {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; background: #FFFDF9; border: var(--border-ink);">
         <p style="font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 0.5rem;">No hemos encontrado platos con esa búsqueda.</p>
-        <p style="color: var(--ink-muted); font-size: 0.9rem;">Prueba buscando otro ingrediente (ej. Roquefort, Kebab, Pulpo, Gambas) o pulsa en «Todas (42)».</p>
+        <p style="color: var(--ink-muted); font-size: 0.9rem;">Prueba buscando otro ingrediente (ej. Roquefort, Kebab, Pulpo, Gambas) o pulsa en «30 números + 12 bebidas (42 productos)».</p>
       </div>
     `;
     return;
@@ -793,7 +845,7 @@ function setupMenuFilters() {
   const buildMenuExampleItem = (id, foilOwner, asPataton = false) => {
     const found = MENU_ITEMS.find(m => m.id === id);
     if (!found) return null;
-    const isPatatonUpgrade = asPataton && found.hasPatatonOption;
+    const isPatatonUpgrade = asPataton && found.canPataton;
     return {
       title: isPatatonUpgrade ? `${found.name} (en PATATÓN +1€)` : found.name,
       details: found.desc || '',
@@ -865,7 +917,7 @@ function calculateCustomPotatoPricing() {
   const numNormal = builderState.toppings.length;
   const hasSpecials = builderState.specials.length > 0;
 
-  // Extras con recargo adicional (Gambas +0.20, Kebab +0.25)
+  // <!-- CONFIRMAR CON ISA Y CRISTINA: los recargos de Gambas +0,20 € y Kebab +0,25 € -->
   const extraFees = builderState.specials.reduce((sum, spId) => {
     const sp = BUILDER_SPECIALS.find(s => s.id === spId);
     return sum + (sp ? sp.extra : 0);
@@ -875,6 +927,7 @@ function calculateCustomPotatoPricing() {
   let basePrice = 7.00;
 
   if (isPataton) {
+    // <!-- CONFIRMAR CON ISA Y CRISTINA: la regla de calculateCustomPotatoPricing() que marca "Completa con Todo" a partir de 12 ingredientes + 1 especial -->
     if (numNormal >= 12 && hasSpecials) {
       tariffName = 'Nº 24. Patatón Completo con Todo';
       basePrice = 9.50;
@@ -886,6 +939,7 @@ function calculateCustomPotatoPricing() {
       basePrice = 8.50;
     }
   } else {
+    // <!-- CONFIRMAR CON ISA Y CRISTINA: la regla de calculateCustomPotatoPricing() que marca "Completa con Todo" a partir de 12 ingredientes + 1 especial -->
     if (numNormal >= 12 && hasSpecials) {
       tariffName = 'Nº 21. Patata Completa con Todo';
       basePrice = 8.50;
@@ -1032,9 +1086,11 @@ function updateTicketReceipt() {
 
   const allChosenToppings = [...builderState.toppings, ...builderState.specials];
   detailsEl.innerHTML = `
-    <div style="margin-top: 0.35rem;"><strong>Salsas/Cond.:</strong> ${builderState.sauces.length ? builderState.sauces.join(', ') : 'Ninguna'}</div>
-    <div style="margin-top: 0.25rem;"><strong>Ingredientes (${allChosenToppings.length}):</strong> ${allChosenToppings.length ? allChosenToppings.join(', ') : 'Solo base'}</div>
+    <div style="margin-top: 0.35rem;"><strong>Salsas/Cond.:</strong> ${builderState.sauces.length ? escapeHtml(builderState.sauces.join(', ')) : 'Ninguna'}</div>
+    <div style="margin-top: 0.25rem;"><strong>Ingredientes (${allChosenToppings.length}):</strong> ${allChosenToppings.length ? escapeHtml(allChosenToppings.join(', ')) : 'Solo base'}</div>
   `;
+
+  saveCartToStorage();
 
   cartCountEl.textContent = String(orderCart.length);
 
@@ -1047,20 +1103,20 @@ function updateTicketReceipt() {
       <li class="ticket-cart-item">
         <div style="flex: 1; min-width: 0;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.4rem;">
-            <strong>1x ${item.title}</strong>
+            <strong>1x ${escapeHtml(item.title)}</strong>
             <div class="ticket-cart-item__right">
               <span>${formatPrice(item.price)}</span>
               <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar plato">[x]</button>
             </div>
           </div>
-          ${item.details ? `<div class="ticket-cart-item__sub">${item.details}</div>` : ''}
+          ${item.details ? `<div class="ticket-cart-item__sub">${escapeHtml(item.details)}</div>` : ''}
           <div class="ticket-foil-tag-row">
             <span class="ticket-foil-tag-label">ROTULAR ALBAL:</span>
             <input
               type="text"
               class="ticket-foil-tag-input"
               data-foil-idx="${idx}"
-              value="${item.foilOwner || ''}"
+              value="${escapeHtml(item.foilOwner || '')}"
               placeholder="¿De quién es? (ej. Carlos)"
               maxlength="24"
             />
@@ -1082,6 +1138,7 @@ function updateTicketReceipt() {
         const idx = Number(inp.dataset.foilIdx);
         if (orderCart[idx]) {
           orderCart[idx].foilOwner = e.target.value;
+          saveCartToStorage();
           updateBizumSection(grandTotal);
         }
       });
@@ -1150,7 +1207,7 @@ function updateBizumSection(grandTotal) {
     ownerNames.forEach(name => {
       html += `
         <div class="bizum-named-item">
-          <span>Albal «${name}»:</span>
+          <span>Albal «${escapeHtml(name)}»:</span>
           <strong>Bizum de ${formatPrice(byOwner[name])}</strong>
         </div>
       `;
@@ -1176,7 +1233,7 @@ function buildOrderSummaryLines() {
   const lines = [
     'PEDIDO OFICIAL — EL PATATÓN ALGECIRAS (956 65 81 22)',
     `Modalidad: ${pickupMode}`,
-    `Hornada solicitada: ${ovenSlot}`,
+    `Hora solicitada: ${ovenSlot}`,
     '-----------------------------------'
   ];
 
@@ -1334,6 +1391,7 @@ function setupFoilEntrance() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadCartFromStorage();
   setupFoilEntrance();
   updateLiveOvenStatus();
   renderMenu();
