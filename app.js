@@ -676,86 +676,68 @@ function updateLiveOvenStatus() {
 
   if (isEveningOpen || isLateNightOpen) {
     dot.classList.add('is-open');
-    text.textContent = 'ABIERTO AHORA EN AV. VENECIA · PEDIDOS HASTA LAS 02:00';
+    text.textContent = 'Abierto ahora en Av. Venecia · Pedidos hasta las 02:00';
   } else if (day === 0 && timeFloat >= 2.0) {
     dot.classList.remove('is-open');
-    text.textContent = 'DOMINGO CERRADO POR DESCANSO · VOLVEMOS EL LUNES A LAS 20:00';
+    text.textContent = 'Domingo cerrado por descanso · Volvemos el lunes a las 20:00';
   } else {
     dot.classList.remove('is-open');
-    text.textContent = 'PREPARANDO HORNOS HOY · ABRIMOS DE 20:00 A 02:00 EN AV. VENECIA';
+    text.textContent = 'Preparando hornos hoy · Abrimos de 20:00 a 02:00 en Av. Venecia';
   }
 }
 
 /* ==========================================================================
-   2. RENDERIZADO DE LAS 42 TARJETAS CON SUS FOTOS REALES Y BUSCADOR
+   2. FILTRADO Y BÚSQUEDA SOBRE LAS 42 TARJETAS ESTÁTICAS EN EL HTML (SEO)
    ========================================================================== */
 function renderMenu() {
   const grid = document.getElementById('menu-grid');
   if (!grid) return;
 
   const q = activeSearchQuery.trim().toLowerCase();
+  const cards = grid.querySelectorAll('.menu-card');
+  const emptyState = document.getElementById('menu-empty-state');
+  let visibleCount = 0;
 
-  const filtered = MENU_ITEMS.filter(item => {
+  cards.forEach(card => {
+    const id = Number(card.dataset.id);
+    const cat = card.dataset.category || '';
+    const item = MENU_ITEMS.find(m => m.id === id);
+
+    let matches = true;
+
     if (activeCravingFilter && CRAVING_IDS[activeCravingFilter]) {
-      if (!CRAVING_IDS[activeCravingFilter].includes(item.id)) return false;
-    } else {
-      const matchCat = activeCategoryFilter === 'all' || item.category === activeCategoryFilter;
-      if (!matchCat) return false;
+      if (!CRAVING_IDS[activeCravingFilter].includes(id)) {
+        matches = false;
+      }
+    } else if (activeCategoryFilter !== 'all' && cat !== activeCategoryFilter) {
+      matches = false;
     }
-    if (!q) return true;
-    return (
-      item.name.toLowerCase().includes(q) ||
-      item.desc.toLowerCase().includes(q) ||
-      item.code.toLowerCase().includes(q) ||
-      item.categoryLabel.toLowerCase().includes(q)
-    );
+
+    if (matches && q) {
+      if (item) {
+        matches =
+          item.name.toLowerCase().includes(q) ||
+          item.desc.toLowerCase().includes(q) ||
+          item.code.toLowerCase().includes(q) ||
+          item.categoryLabel.toLowerCase().includes(q);
+      } else {
+        matches = card.textContent.toLowerCase().includes(q);
+      }
+    }
+
+    card.hidden = !matches;
+    if (matches) visibleCount++;
   });
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; background: #FFFDF9; border: var(--border-ink);">
-        <p style="font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 0.5rem;">No hemos encontrado platos con esa búsqueda.</p>
-        <p style="color: var(--ink-muted); font-size: 0.9rem;">Prueba buscando otro ingrediente (ej. Roquefort, Kebab, Pulpo, Gambas) o pulsa en «30 números + 12 bebidas (42 productos)».</p>
-      </div>
-    `;
-    return;
+  if (emptyState) {
+    emptyState.hidden = visibleCount > 0;
   }
+}
 
-  grid.innerHTML = filtered.map(item => `
-    <article class="menu-card ${item.featured ? 'menu-card--featured' : ''}">
-      ${item.badge ? `<span class="menu-card__badge">${item.badge}</span>` : ''}
-      
-      <div class="menu-card__photo-wrap">
-        <img src="${item.img}" alt="${item.name}" loading="lazy" class="menu-card__photo" />
-        <span class="menu-card__cat-pill">${item.categoryLabel}</span>
-      </div>
+function setupMenuCardActions() {
+  const grid = document.getElementById('menu-grid');
+  if (!grid) return;
 
-      <div class="menu-card__body">
-        <div class="menu-card__top">
-          <div>
-            <span class="menu-card__code">REF // ${item.code}</span>
-            <h3 class="menu-card__title">${item.name}</h3>
-          </div>
-          <span class="menu-card__price">${formatPrice(item.price)}</span>
-        </div>
-
-        ${item.desc ? `<p class="menu-card__desc">${item.desc}</p>` : ''}
-
-        <div class="menu-card__actions">
-          <button type="button" class="btn btn--primary menu-card__btn" data-add-id="${item.id}" data-pataton="0">
-            + Añadir al Ticket (${formatPrice(item.price)})
-          </button>
-          ${item.canPataton ? `
-            <button type="button" class="btn btn--butter menu-card__btn" data-add-id="${item.id}" data-pataton="1">
-              + Hacerla PATATÓN (${formatPrice(item.price + 1.0)})
-            </button>
-          ` : ''}
-        </div>
-      </div>
-    </article>
-  `).join('');
-
-  // Listeners para añadir platos directamente al ticket de comanda
   grid.querySelectorAll('[data-add-id]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = Number(btn.dataset.addId);
@@ -774,7 +756,7 @@ function renderMenu() {
       });
 
       const originalText = btn.textContent;
-      btn.textContent = '✓ Añadido a tu Ticket';
+      btn.textContent = '✓ Añadido';
       setTimeout(() => {
         btn.textContent = originalText;
       }, 1100);
@@ -872,7 +854,7 @@ function setupMenuFilters() {
   if (comboParejaBtn) {
     const parejaItems = parejaRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
     const parejaTotal = parejaItems.reduce((sum, item) => sum + item.price, 0);
-    comboParejaBtn.textContent = `+ Cargar ejemplo «Pareja» (2 Patatas + 2 Bebidas · ${formatPrice(parejaTotal)})`;
+    comboParejaBtn.textContent = `+ Ejemplo Pareja (${formatPrice(parejaTotal)})`;
 
     comboParejaBtn.addEventListener('click', () => {
       const itemsToAdd = parejaRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
@@ -888,7 +870,7 @@ function setupMenuFilters() {
   if (comboAmigosBtn) {
     const amigosItems = amigosRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
     const amigosTotal = amigosItems.reduce((sum, item) => sum + item.price, 0);
-    comboAmigosBtn.textContent = `+ Cargar ejemplo «Peña 4 Amigos» c/ Nombres en el Albal (${formatPrice(amigosTotal)})`;
+    comboAmigosBtn.textContent = `+ Ejemplo 4 Amigos (${formatPrice(amigosTotal)})`;
 
     comboAmigosBtn.addEventListener('click', () => {
       const itemsToAdd = amigosRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
@@ -1395,6 +1377,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupFoilEntrance();
   updateLiveOvenStatus();
   renderMenu();
+  setupMenuCardActions();
   setupMenuFilters();
   renderBuilderControls();
   updateTicketReceipt();
