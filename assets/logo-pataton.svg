@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Logotipo oficial El Patatón Algeciras">
+  <!-- Fondo circular blanco y aro exterior negro -->
+  <circle cx="100" cy="100" r="94" fill="#FFFFFF" stroke="#151210" stroke-width="6.5" />
+
+  <!-- Silueta del horno tradicional asador de patatas (3 cajones + chimenea) -->
+  <g fill="#151210">
+    <!-- Chimenea superior -->
+    <rect x="95.5" y="36" width="9" height="11" />
+    <!-- Cuerpo del horno con hombros inclinados -->
+    <polygon points="95.5,46 104.5,46 118,54 118,98 82,98 82,54" />
+  </g>
+
+  <!-- Ventana superior y los 3 cajones del horno (recortes en blanco con tirador) -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="1.6">
+    <!-- Ventanilla superior -->
+    <rect x="92.5" y="53" width="15" height="8.5" />
+    
+    <!-- Cajón 1 -->
+    <rect x="85.5" y="67.5" width="29" height="6.8" />
+    <line x1="93" y1="70.9" x2="107" y2="70.9" stroke-width="1.4" />
+
+    <!-- Cajón 2 -->
+    <rect x="85.5" y="77.5" width="29" height="6.8" />
+    <line x1="93" y1="80.9" x2="107" y2="80.9" stroke-width="1.4" />
+
+    <!-- Cajón 3 -->
+    <rect x="85.5" y="87.5" width="29" height="6.8" />
+    <line x1="93" y1="90.9" x2="107" y2="90.9" stroke-width="1.4" />
+  </g>
+
+  <!-- Tipografía condensada EL PATATÓN -->
+  <text
+    x="100"
+    y="132"
+    text-anchor="middle"
+    fill="#151210"
+    font-family="'Oswald', 'Arial Narrow', 'Plus Jakarta Sans', sans-serif"
+    font-weight="700"
+    font-size="25"
+    letter-spacing="2.2"
+    transform="scale(0.88, 1.12) translate(13.5, -13)">
+    EL PATATÓN
+  </text>
+</svg>

@@ -159,7 +159,7 @@ const builderState = {
 };
 
 /* ==========================================================================
-   1. ESTADO EN VIVO DEL HORNO DE AV. VENECIA
+   1. ESTADO EN VIVO DEL HORNO DE AV. VENECIA (SIN EMOJIS)
    ========================================================================== */
 function updateLiveOvenStatus() {
   const dot = document.getElementById('live-status-dot');
@@ -177,13 +177,13 @@ function updateLiveOvenStatus() {
 
   if (isOpenDay && isOpenHour) {
     dot.classList.add('is-open');
-    text.textContent = '🟢 HORNO ENCENDIDO AHORA EN AV. VENECIA · PEDIDOS HASTA LAS 00:00';
+    text.textContent = 'ABIERTO AHORA EN AV. VENECIA · PEDIDOS HASTA LAS 00:00';
   } else if (!isOpenDay) {
     dot.classList.remove('is-open');
     text.textContent = 'HORNO EN DESCANSO (LUN-MAR) · VOLVEMOS EL MIÉRCOLES A LAS 20:00';
   } else if (timeFloat < 20) {
     dot.classList.remove('is-open');
-    text.textContent = '🔥 CALENTANDO HORNOS HOY · ABRIMOS A LAS 20:00 EN AV. VENECIA';
+    text.textContent = 'PREPARANDO HORNOS HOY · ABRIMOS A LAS 20:00 EN AV. VENECIA';
   } else {
     dot.classList.remove('is-open');
     text.textContent = 'HORARIO DE MIÉRCOLES A DOMINGO DE 20:00 A 00:00 · AV. VENECIA, 1';
@@ -251,8 +251,8 @@ function renderBuilderControls() {
     const selected = builderState.baseId === b.id;
     return `
       <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-base="${b.id}">
-        <span>${selected ? '●' : '○'} ${b.name}</span>
-        <span class="ing-chip__extra">${b.basePrice.toFixed(2).replace('.', ',')}€</span>
+        <span>${b.name}</span>
+        <span class="ing-chip__extra">${b.basePrice.toFixed(2).replace('.', ',')} €</span>
       </button>
     `;
   }).join('');
@@ -262,7 +262,7 @@ function renderBuilderControls() {
     const selected = builderState.sauces.includes(sauce);
     return `
       <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-sauce="${sauce}">
-        <span>${selected ? '✓' : '+'} ${sauce}</span>
+        <span>${sauce}</span>
       </button>
     `;
   }).join('');
@@ -270,10 +270,10 @@ function renderBuilderControls() {
   // Rellenos
   toppingContainer.innerHTML = BUILDER_TOPPINGS.map(top => {
     const selected = builderState.toppings.includes(top.id);
-    const extraLabel = top.extra > 0 ? `<span class="ing-chip__extra">+${top.extra.toFixed(2).replace('.', ',')}€</span>` : '';
+    const extraLabel = top.extra > 0 ? `<span class="ing-chip__extra">+${top.extra.toFixed(2).replace('.', ',')} €</span>` : '';
     return `
       <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-topping="${top.id}">
-        <span>${selected ? '✓' : '+'} ${top.name}</span>
+        <span>${top.name}</span>
         ${extraLabel}
       </button>
     `;
@@ -333,7 +333,7 @@ function updateTicketReceipt() {
   baseNameEl.textContent = baseObj.name;
 
   saucesListEl.innerHTML = builderState.sauces.map(s => `
-    <li><span>• ${s}</span><span>INCL.</span></li>
+    <li><span>— ${s}</span><span>INCL.</span></li>
   `).join('');
 
   const selectedToppings = BUILDER_TOPPINGS.filter(t => builderState.toppings.includes(t.id));
@@ -343,7 +343,7 @@ function updateTicketReceipt() {
   } else {
     toppingsListEl.innerHTML = selectedToppings.map(t => `
       <li>
-        <span>• ${t.name}</span>
+        <span>— ${t.name}</span>
         <span>${t.extra > 0 ? '+' + t.extra.toFixed(2).replace('.', ',') + ' €' : 'INCL.'}</span>
       </li>
     `).join('');
@@ -356,7 +356,7 @@ function updateTicketReceipt() {
   const totalPrice = baseObj.basePrice + extrasCost + extraCountFee;
 
   weightEl.textContent = totalWeight >= 1000
-    ? `~${(totalWeight / 1000).toFixed(2).replace('.', ',')} kg (¡Monumental!)`
+    ? `~${(totalWeight / 1000).toFixed(2).replace('.', ',')} kg`
     : `~${totalWeight} g`;
 
   priceEl.textContent = `${totalPrice.toFixed(2).replace('.', ',')} €`;
@@ -374,16 +374,16 @@ function setupCopyTicket() {
       .map(t => t.name);
 
     const summary = [
-      '🥔 MI COMANDA — EL PATATÓN ALGECIRAS (956 65 81 22)',
-      `• Base: ${baseObj.name}`,
-      `• Salsas: ${builderState.sauces.join(', ')}`,
-      `• Ingredientes: ${selectedToppings.length ? selectedToppings.join(', ') : 'Solo base y salsa'}`,
-      `• Precio aprox.: ${document.getElementById('ticket-price')?.textContent || '10,50 €'}`
+      'COMANDA — EL PATATÓN ALGECIRAS (956 65 81 22)',
+      `- Base: ${baseObj.name}`,
+      `- Salsas: ${builderState.sauces.join(', ')}`,
+      `- Ingredientes: ${selectedToppings.length ? selectedToppings.join(', ') : 'Solo base y salsa'}`,
+      `- Precio aprox.: ${document.getElementById('ticket-price')?.textContent || '10,50 €'}`
     ].join('\n');
 
     try {
       await navigator.clipboard.writeText(summary);
-      feedback.textContent = '✓ ¡Comanda copiada! Lista para pegar o leer al llamar.';
+      feedback.textContent = 'Comanda copiada al portapapeles.';
       setTimeout(() => {
         feedback.textContent = '';
       }, 4000);
