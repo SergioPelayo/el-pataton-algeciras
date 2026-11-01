@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Oswald:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261101-4" />
 </head>
 <body class="is-unwrapping">
 
@@ -315,16 +315,6 @@
           </div>
 
           <div class="builder-group__footer-btn">
-            <!-- Vista previa en vivo de la patata que estás configurando (antes de añadirla al ticket) -->
-            <div class="ticket-live-preview">
-              <div class="ticket-receipt__section-label" style="margin-top: 0;">VISTA PREVIA DE TU PATATA AL GUSTO:</div>
-              <div class="ticket-receipt__line">
-                <strong id="ticket-base-name">Nº 18. Patata al Gusto</strong>
-                <strong id="ticket-custom-price">7,00 €</strong>
-              </div>
-              <div class="ticket-live-preview__details" id="ticket-SaucesAndToppings"></div>
-            </div>
-
             <div class="custom-foil-name-row">
               <label for="custom-foil-owner" class="custom-foil-label">ROTULAR NOMBRE EN EL PAPEL DE PLATA (OPCIONAL):</label>
               <input
@@ -376,6 +366,19 @@
                 </select>
               </label>
             </div>
+          </div>
+
+          <!-- Vista previa en vivo del configurador con botón directo para meter al carro desde PC -->
+          <div class="ticket-live-preview">
+            <div class="ticket-receipt__section-label" style="margin-top: 0;">CONFIGURADOR AL GUSTO (VISTA PREVIA):</div>
+            <div class="ticket-receipt__line">
+              <strong id="ticket-base-name">Nº 18. Patata al Gusto</strong>
+              <strong id="ticket-custom-price">7,00 €</strong>
+            </div>
+            <div class="ticket-live-preview__details" id="ticket-SaucesAndToppings"></div>
+            <button type="button" id="btn-add-custom-from-ticket" class="btn btn--butter" style="width: 100%; margin-top: 0.55rem; font-size: 0.75rem; padding: 0.45rem 0.6rem;">
+              + Meter esta Patata al Gusto en el Carro (<span id="btn-ticket-custom-price">7,00 €</span>)
+            </button>
           </div>
 
           <!-- SERVICIO EXCLUSIVO 3: ROTULADO EN PAPEL DE PLATA POR COMENSAL -->
@@ -723,6 +726,6 @@
     <span id="floating-cart-total" class="floating-cart__total">0,00 €</span>
   </button>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20261101-4"></script>
 </body>
 </html>

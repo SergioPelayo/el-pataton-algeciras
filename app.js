@@ -690,8 +690,8 @@ function renderMenu() {
         ${item.desc ? `<p class="menu-card__desc">${item.desc}</p>` : ''}
 
         <div class="menu-card__actions">
-          <button type="button" class="btn btn--paper menu-card__btn" data-add-id="${item.id}" data-pataton="0">
-            + Añadir (${formatPrice(item.price)})
+          <button type="button" class="btn btn--primary menu-card__btn" data-add-id="${item.id}" data-pataton="0">
+            + Añadir al Ticket (${formatPrice(item.price)})
           </button>
           ${item.canPataton ? `
             <button type="button" class="btn btn--butter menu-card__btn" data-add-id="${item.id}" data-pataton="1">
@@ -722,7 +722,7 @@ function renderMenu() {
       });
 
       const originalText = btn.textContent;
-      btn.textContent = 'Añadido al Ticket';
+      btn.textContent = '✓ Añadido a tu Ticket';
       setTimeout(() => {
         btn.textContent = originalText;
       }, 1100);
@@ -984,6 +984,7 @@ function updateTicketReceipt() {
   const baseNameEl = document.getElementById('ticket-base-name');
   const customPriceEl = document.getElementById('ticket-custom-price');
   const btnCustomPriceEl = document.getElementById('btn-custom-price-label');
+  const btnTicketCustomPriceEl = document.getElementById('btn-ticket-custom-price');
   const detailsEl = document.getElementById('ticket-SaucesAndToppings');
   const cartCountEl = document.getElementById('ticket-cart-count');
   const cartListEl = document.getElementById('ticket-cart-list');
@@ -999,6 +1000,9 @@ function updateTicketReceipt() {
   if (btnCustomPriceEl) {
     btnCustomPriceEl.textContent = formatPrice(customCalc.totalPrice);
   }
+  if (btnTicketCustomPriceEl) {
+    btnTicketCustomPriceEl.textContent = formatPrice(customCalc.totalPrice);
+  }
 
   const allChosenToppings = [...builderState.toppings, ...builderState.specials];
   detailsEl.innerHTML = `
@@ -1011,7 +1015,7 @@ function updateTicketReceipt() {
   const grandTotal = orderCart.reduce((acc, item) => acc + item.price, 0);
 
   if (orderCart.length === 0) {
-    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem; padding: 0.35rem 0;">Tu carro está vacío (0,00 €). Pulsa <strong>«+ Añadir»</strong> en cualquier plato de la carta o pulsa el botón amarillo del configurador para meter platos aquí.</li>`;
+    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem; padding: 0.35rem 0;">Tu carro está vacío (0,00 €). Pulsa <strong>«+ Añadir al Ticket»</strong> en cualquier plato de la carta o el botón amarillo de arriba para meter tu patata al gusto.</li>`;
   } else {
     cartListEl.innerHTML = orderCart.map((item, idx) => `
       <li class="ticket-cart-item">
@@ -1168,7 +1172,7 @@ function buildOrderSummaryLines() {
     lines.push(`   Ingredientes: ${allChosenToppings.join(', ') || 'Solo base'}`);
   }
 
-  const totalText = document.getElementById('ticket-price')?.textContent || '7,00 €';
+  const totalText = document.getElementById('ticket-price')?.textContent || '0,00 €';
   lines.push('-----------------------------------');
   lines.push(`TOTAL PEDIDO: ${totalText}`);
 
@@ -1191,6 +1195,7 @@ function buildOrderSummaryLines() {
 
 function setupTicketActions() {
   const addCustomBtn = document.getElementById('btn-add-custom-to-order');
+  const addCustomFromTicketBtn = document.getElementById('btn-add-custom-from-ticket');
   const copyBtn = document.getElementById('btn-copy-ticket');
   const whatsappBtn = document.getElementById('btn-whatsapp-group');
   const clearBtn = document.getElementById('btn-clear-cart');
@@ -1221,27 +1226,32 @@ function setupTicketActions() {
     });
   }
 
-  if (addCustomBtn) {
-    addCustomBtn.addEventListener('click', () => {
-      const customCalc = calculateCustomPotatoPricing();
-      const allChosenToppings = [...builderState.toppings, ...builderState.specials];
-      const ownerInput = document.getElementById('custom-foil-owner');
-      const foilOwner = ownerInput ? ownerInput.value.trim() : '';
+  const handleAddConfiguredPotato = () => {
+    const customCalc = calculateCustomPotatoPricing();
+    const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+    const ownerInput = document.getElementById('custom-foil-owner');
+    const foilOwner = ownerInput ? ownerInput.value.trim() : '';
 
-      orderCart.push({
-        title: customCalc.tariffName,
-        details: `Salsas: ${builderState.sauces.join(', ') || 'Sin salsa'} | Ing.: ${allChosenToppings.join(', ') || 'Solo base'}`,
-        price: customCalc.totalPrice,
-        foilOwner
-      });
-      if (ownerInput) ownerInput.value = '';
-      updateTicketReceipt();
-      triggerFloatingCartBump();
-      if (feedback) {
-        feedback.textContent = 'Patata configurada añadida al ticket con su etiqueta de papel albal.';
-        setTimeout(() => { feedback.textContent = ''; }, 3000);
-      }
+    orderCart.push({
+      title: customCalc.tariffName,
+      details: `Salsas: ${builderState.sauces.join(', ') || 'Sin salsa'} | Ing.: ${allChosenToppings.join(', ') || 'Solo base'}`,
+      price: customCalc.totalPrice,
+      foilOwner
     });
+    if (ownerInput) ownerInput.value = '';
+    updateTicketReceipt();
+    triggerFloatingCartBump();
+    if (feedback) {
+      feedback.textContent = '✓ Patata al gusto añadida a tu carro.';
+      setTimeout(() => { feedback.textContent = ''; }, 3000);
+    }
+  };
+
+  if (addCustomBtn) {
+    addCustomBtn.addEventListener('click', handleAddConfiguredPotato);
+  }
+  if (addCustomFromTicketBtn) {
+    addCustomFromTicketBtn.addEventListener('click', handleAddConfiguredPotato);
   }
 
   if (clearBtn) {
