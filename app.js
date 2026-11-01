@@ -578,6 +578,44 @@ const BUILDER_SPECIALS = [
   { id: 'Huevo Cocido', name: 'Huevo Cocido', extra: 0.00 }
 ];
 
+// Ficha de producto: salsas que se ofrecen en los platos con «Salsa a elegir»
+// <!-- CONFIRMAR CON ISA Y CRISTINA -->
+const SAUCE_CHOICE_TEXT = 'Salsa a elegir';
+const SHEET_SAUCES = BUILDER_SAUCES.filter(s => !['Sal', 'Pimienta', 'Orégano', 'Comino', 'Tabasco'].includes(s));
+// Categorías cuyos ingredientes se pueden quitar desde la ficha
+const SHEET_CUSTOMIZABLE_CATEGORIES = ['clasicas', 'especiales'];
+
+function productHasSauceChoice(prod) {
+  return SHEET_CUSTOMIZABLE_CATEGORIES.includes(prod.category) && prod.desc.includes(SAUCE_CHOICE_TEXT);
+}
+
+function splitDescIngredients(desc) {
+  return String(desc || '')
+    .replace(/\.$/, '')
+    .split(/,\s*|\s+y\s+/)
+    .map(s => s.trim())
+    .filter(Boolean);
+}
+
+function getProductIngredients(prod) {
+  if (!SHEET_CUSTOMIZABLE_CATEGORIES.includes(prod.category)) return [];
+  return splitDescIngredients(prod.desc).filter(s => s !== SAUCE_CHOICE_TEXT);
+}
+
+function buildProductDetails(prod, options = {}) {
+  const desc = prod.desc || '';
+  const removed = options.removed || [];
+  if (removed.length === 0) {
+    return options.sauce ? desc.replace(SAUCE_CHOICE_TEXT, options.sauce) : desc;
+  }
+  // Rehacer la lista sin los ingredientes quitados para que la cocina no se confunda
+  const kept = splitDescIngredients(desc)
+    .map(s => (s === SAUCE_CHOICE_TEXT && options.sauce ? options.sauce : s))
+    .filter(s => !removed.includes(s));
+  const list = kept.length > 1 ? `${kept.slice(0, -1).join(', ')} y ${kept[kept.length - 1]}` : kept.join('');
+  return `SIN ${removed.join(', ').toUpperCase()} · ${list}.`;
+}
+
 // Estado actual del configurador y carrito
 const builderState = {
   size: 'patata', // 'patata' o 'pataton'
@@ -595,6 +633,7 @@ let bizumPeopleCount = 2;
 
 const STORAGE_KEY_CART = 'elpataton_orderCart';
 const STORAGE_KEY_BIZUM = 'elpataton_bizumPeopleCount';
+const STORAGE_KEY_LAST_ORDER = 'elpataton_lastOrder';
 
 function escapeHtml(str) {
   return String(str ?? '')
@@ -614,6 +653,18 @@ function saveCartToStorage() {
   }
 }
 
+function sanitizeCartItems(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .filter(item => item && typeof item.title === 'string' && typeof item.price === 'number')
+    .map(item => ({
+      title: String(item.title),
+      details: typeof item.details === 'string' ? item.details : '',
+      price: Number(item.price),
+      foilOwner: typeof item.foilOwner === 'string' ? item.foilOwner : ''
+    }));
+}
+
 function loadCartFromStorage() {
   try {
     const rawCart = localStorage.getItem(STORAGE_KEY_CART);
@@ -621,16 +672,7 @@ function loadCartFromStorage() {
       const parsedCart = JSON.parse(rawCart);
       if (Array.isArray(parsedCart)) {
         orderCart.length = 0;
-        parsedCart.forEach(item => {
-          if (item && typeof item.title === 'string' && typeof item.price === 'number') {
-            orderCart.push({
-              title: String(item.title),
-              details: typeof item.details === 'string' ? item.details : '',
-              price: Number(item.price),
-              foilOwner: typeof item.foilOwner === 'string' ? item.foilOwner : ''
-            });
-          }
-        });
+        orderCart.push(...sanitizeCartItems(parsedCart));
       }
     }
     const rawBizum = localStorage.getItem(STORAGE_KEY_BIZUM);
@@ -736,7 +778,7 @@ function renderMenu() {
 
 let currentLightboxProductId = null;
 
-function addMenuProductToCart(id, makePataton, triggerBtn) {
+function addMenuProductToCart(id, makePataton, triggerBtn, options = {}) {
   const prod = MENU_ITEMS.find(m => m.id === id);
   if (!prod) return;
 
@@ -745,9 +787,9 @@ function addMenuProductToCart(id, makePataton, triggerBtn) {
 
   orderCart.push({
     title: finalName,
-    details: prod.desc || '',
+    details: buildProductDetails(prod, options),
     price: finalPrice,
-    foilOwner: ''
+    foilOwner: options.foilOwner || ''
   });
 
   if (triggerBtn) {
@@ -771,50 +813,113 @@ function getVisibleProductIds() {
   return visibleCards.map(c => Number(c.dataset.id));
 }
 
-function openProductLightbox(id) {
+// Estado de la ficha de producto abierta
+const sheetState = {
+  pataton: false,
+  removed: []
+};
+
+function getSheetProduct() {
+  return MENU_ITEMS.find(m => m.id === currentLightboxProductId) || null;
+}
+
+function updateSheetPrice() {
+  const prod = getSheetProduct();
+  if (!prod) return;
+  const price = sheetState.pataton && prod.canPataton ? prod.price + 1.0 : prod.price;
+  const priceEl = document.getElementById('lightbox-price');
+  const addBtn = document.getElementById('lightbox-add');
+  if (priceEl) priceEl.textContent = formatPrice(price);
+  if (addBtn) {
+    const label = `+ Añadir · ${formatPrice(price)}`;
+    addBtn.textContent = label;
+    addBtn.dataset.origLabel = label;
+  }
+}
+
+function renderSheetRemoveChips(prod) {
+  const group = document.getElementById('sheet-remove');
+  const chipsEl = document.getElementById('sheet-remove-chips');
+  if (!group || !chipsEl) return;
+
+  const ingredients = getProductIngredients(prod);
+  group.hidden = ingredients.length === 0;
+  chipsEl.innerHTML = ingredients.map(ing => {
+    const isRemoved = sheetState.removed.includes(ing);
+    return `<button type="button" class="product-sheet__chip${isRemoved ? ' is-removed' : ''}" data-ingredient="${escapeHtml(ing)}" aria-pressed="${isRemoved}">${isRemoved ? 'Sin ' : ''}${escapeHtml(ing)}</button>`;
+  }).join('');
+
+  chipsEl.querySelectorAll('[data-ingredient]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const ing = chip.dataset.ingredient;
+      if (sheetState.removed.includes(ing)) {
+        sheetState.removed = sheetState.removed.filter(r => r !== ing);
+      } else {
+        sheetState.removed.push(ing);
+      }
+      renderSheetRemoveChips(prod);
+    });
+  });
+}
+
+function openProductLightbox(id, preset = {}) {
   const modal = document.getElementById('product-lightbox');
   const prod = MENU_ITEMS.find(m => m.id === id);
   if (!modal || !prod) return;
 
   currentLightboxProductId = prod.id;
+  sheetState.pataton = Boolean(preset.pataton && prod.canPataton);
+  sheetState.removed = [];
 
   const imgEl = document.getElementById('lightbox-img');
   const catEl = document.getElementById('lightbox-cat');
-  const codeEl = document.getElementById('lightbox-code');
   const titleEl = document.getElementById('lightbox-title');
-  const priceEl = document.getElementById('lightbox-price');
   const descEl = document.getElementById('lightbox-desc');
-  const btnNormal = document.getElementById('lightbox-add-normal');
-  const btnPataton = document.getElementById('lightbox-add-pataton');
+  const sizeGroup = document.getElementById('sheet-size');
+  const sauceGroup = document.getElementById('sheet-sauce');
+  const sauceSelect = document.getElementById('sheet-sauce-select');
+  const foilInput = document.getElementById('sheet-foil-owner');
+  const feedbackEl = document.getElementById('sheet-feedback');
 
   if (imgEl) {
     imgEl.src = prod.img;
     imgEl.alt = prod.name;
   }
   if (catEl) catEl.textContent = prod.categoryLabel;
-  if (codeEl) codeEl.textContent = `REF // ${prod.code}`;
   if (titleEl) titleEl.textContent = prod.name;
-  if (priceEl) priceEl.textContent = formatPrice(prod.price);
   if (descEl) descEl.textContent = prod.desc;
+  if (feedbackEl) feedbackEl.textContent = '';
+  if (foilInput) foilInput.value = '';
 
-  if (btnNormal) {
-    const label = `+ Añadir · ${formatPrice(prod.price)}`;
-    btnNormal.textContent = label;
-    btnNormal.dataset.origLabel = label;
+  if (sizeGroup) {
+    sizeGroup.hidden = !prod.canPataton;
+    const normalPriceEl = document.getElementById('sheet-size-normal-price');
+    const patatonPriceEl = document.getElementById('sheet-size-pataton-price');
+    if (normalPriceEl) normalPriceEl.textContent = formatPrice(prod.price);
+    if (patatonPriceEl) patatonPriceEl.textContent = formatPrice(prod.price + 1.0);
+    sizeGroup.querySelectorAll('input[name="sheet-size"]').forEach(radio => {
+      radio.checked = radio.value === (sheetState.pataton ? 'pataton' : 'normal');
+    });
   }
-  if (btnPataton) {
-    if (prod.canPataton) {
-      const patatonLabel = `+ Patatón · ${formatPrice(prod.price + 1.0)}`;
-      btnPataton.textContent = patatonLabel;
-      btnPataton.dataset.origLabel = patatonLabel;
-      btnPataton.hidden = false;
-    } else {
-      btnPataton.hidden = true;
+
+  if (sauceGroup && sauceSelect) {
+    const hasChoice = productHasSauceChoice(prod);
+    sauceGroup.hidden = !hasChoice;
+    if (hasChoice) {
+      sauceSelect.innerHTML = `<option value="">Elige una salsa…</option>` +
+        SHEET_SAUCES.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+      sauceSelect.value = '';
     }
   }
 
+  renderSheetRemoveChips(prod);
+  updateSheetPrice();
+
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
+  if (preset.focusSauce && sauceSelect && !sauceGroup.hidden) {
+    sauceSelect.focus();
+  }
 }
 
 function closeProductLightbox() {
@@ -833,6 +938,30 @@ function stepProductLightbox(direction) {
   openProductLightbox(ids[nextIdx]);
 }
 
+function addSheetProductToCart() {
+  const prod = getSheetProduct();
+  if (!prod) return;
+  const sauceSelect = document.getElementById('sheet-sauce-select');
+  const feedbackEl = document.getElementById('sheet-feedback');
+  const foilInput = document.getElementById('sheet-foil-owner');
+  const addBtn = document.getElementById('lightbox-add');
+
+  const sauce = productHasSauceChoice(prod) && sauceSelect ? sauceSelect.value : '';
+  if (productHasSauceChoice(prod) && !sauce) {
+    if (feedbackEl) feedbackEl.textContent = 'Elige la salsa antes de añadirla.';
+    if (sauceSelect) sauceSelect.focus();
+    return;
+  }
+
+  addMenuProductToCart(prod.id, sheetState.pataton && prod.canPataton, addBtn, {
+    sauce,
+    removed: [...sheetState.removed],
+    foilOwner: foilInput ? foilInput.value.trim() : ''
+  });
+  if (feedbackEl) feedbackEl.textContent = '';
+  setTimeout(closeProductLightbox, 650);
+}
+
 function setupMenuCardActions() {
   const grid = document.getElementById('menu-grid');
   if (grid) {
@@ -840,6 +969,12 @@ function setupMenuCardActions() {
       btn.addEventListener('click', () => {
         const id = Number(btn.dataset.addId);
         const makePataton = btn.dataset.pataton === '1';
+        const prod = MENU_ITEMS.find(m => m.id === id);
+        // Los platos con «Salsa a elegir» abren la ficha para que se elija la salsa
+        if (prod && productHasSauceChoice(prod)) {
+          openProductLightbox(id, { pataton: makePataton, focusSauce: true });
+          return;
+        }
         addMenuProductToCart(id, makePataton, btn);
       });
     });
@@ -850,7 +985,7 @@ function setupMenuCardActions() {
       const id = Number(card.dataset.id);
       photoWrap.setAttribute('role', 'button');
       photoWrap.setAttribute('tabindex', '0');
-      photoWrap.setAttribute('aria-label', 'Ver foto del producto en grande');
+      photoWrap.setAttribute('aria-label', 'Ver el plato y elegir tamaño, salsa o ingredientes');
       photoWrap.addEventListener('click', () => openProductLightbox(id));
       photoWrap.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -881,8 +1016,9 @@ function setupMenuCardActions() {
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
-  const btnNormal = document.getElementById('lightbox-add-normal');
-  const btnPataton = document.getElementById('lightbox-add-pataton');
+  const addBtn = document.getElementById('lightbox-add');
+  const sizeGroup = document.getElementById('sheet-size');
+  const sauceSelect = document.getElementById('sheet-sauce-select');
 
   if (closeBtn) closeBtn.addEventListener('click', closeProductLightbox);
   if (modal) {
@@ -893,23 +1029,27 @@ function setupMenuCardActions() {
   if (prevBtn) prevBtn.addEventListener('click', () => stepProductLightbox(-1));
   if (nextBtn) nextBtn.addEventListener('click', () => stepProductLightbox(1));
 
-  if (btnNormal) {
-    btnNormal.addEventListener('click', () => {
-      if (currentLightboxProductId !== null) {
-        addMenuProductToCart(currentLightboxProductId, false, btnNormal);
-      }
+  if (addBtn) addBtn.addEventListener('click', addSheetProductToCart);
+  if (sizeGroup) {
+    sizeGroup.querySelectorAll('input[name="sheet-size"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        sheetState.pataton = radio.value === 'pataton' && radio.checked;
+        updateSheetPrice();
+      });
     });
   }
-  if (btnPataton) {
-    btnPataton.addEventListener('click', () => {
-      if (currentLightboxProductId !== null) {
-        addMenuProductToCart(currentLightboxProductId, true, btnPataton);
-      }
+  if (sauceSelect) {
+    sauceSelect.addEventListener('change', () => {
+      const feedbackEl = document.getElementById('sheet-feedback');
+      if (feedbackEl) feedbackEl.textContent = '';
     });
   }
 
   document.addEventListener('keydown', e => {
     if (!modal || modal.hidden) return;
+    // No cambiar de plato con las flechas mientras se escribe o se elige salsa
+    const tag = (e.target && e.target.tagName) || '';
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && ['INPUT', 'SELECT', 'TEXTAREA'].includes(tag)) return;
     if (e.key === 'Escape') {
       closeProductLightbox();
     } else if (e.key === 'ArrowLeft') {
@@ -921,14 +1061,73 @@ function setupMenuCardActions() {
 }
 
 function triggerFloatingCartBump() {
-  const floatBtn = document.getElementById('floating-cart-btn');
-  if (!floatBtn) return;
-  floatBtn.classList.remove('is-bumping');
-  void floatBtn.offsetWidth; // Reflow para reiniciar animación
-  floatBtn.classList.add('is-bumping');
-  setTimeout(() => {
-    floatBtn.classList.remove('is-bumping');
-  }, 550);
+  ['floating-cart-btn', 'tabbar-ticket'].forEach(elId => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.classList.remove('is-bumping');
+    void el.offsetWidth; // Reflow para reiniciar animación
+    el.classList.add('is-bumping');
+    setTimeout(() => {
+      el.classList.remove('is-bumping');
+    }, 550);
+  });
+}
+
+/* ==========================================================================
+   «LO DE SIEMPRE»: ÚLTIMO PEDIDO GUARDADO EN ESTE MÓVIL
+   ========================================================================== */
+function saveLastOrder() {
+  try {
+    localStorage.setItem(STORAGE_KEY_LAST_ORDER, JSON.stringify({
+      savedAt: new Date().toISOString(),
+      items: orderCart
+    }));
+  } catch (err) {
+    // Continuar sin fallo si localStorage no está disponible
+  }
+  renderRepeatOrder();
+}
+
+function loadLastOrderItems() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_LAST_ORDER);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return sanitizeCartItems(parsed && parsed.items);
+  } catch (err) {
+    return [];
+  }
+}
+
+function renderRepeatOrder() {
+  const box = document.getElementById('repeat-order');
+  const summaryEl = document.getElementById('repeat-order-summary');
+  if (!box || !summaryEl) return;
+  const items = loadLastOrderItems();
+  if (items.length === 0) {
+    box.hidden = true;
+    return;
+  }
+  const total = items.reduce((acc, item) => acc + item.price, 0);
+  const firstNames = items.slice(0, 2).map(i => i.title.replace(/^Nº \d+\.\s*/, '')).join(' + ');
+  const more = items.length > 2 ? ` y ${items.length - 2} más` : '';
+  summaryEl.textContent = `${firstNames}${more} · ${formatPrice(total)}`;
+  box.hidden = false;
+}
+
+function setupRepeatOrder() {
+  const btn = document.getElementById('btn-repeat-order');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const items = loadLastOrderItems();
+      if (items.length === 0) return;
+      orderCart.push(...items);
+      updateTicketReceipt();
+      triggerFloatingCartBump();
+      scrollToTicketWithFlash();
+    });
+  }
+  renderRepeatOrder();
 }
 
 function scrollToTicketWithFlash() {
@@ -1309,6 +1508,14 @@ function updateTicketReceipt() {
   if (floatBtn) {
     floatBtn.classList.toggle('has-items', orderCart.length > 0);
   }
+
+  // Barra inferior (móvil)
+  const tabbarTicket = document.getElementById('tabbar-ticket');
+  const tabbarCount = document.getElementById('tabbar-ticket-count');
+  const tabbarTotal = document.getElementById('tabbar-ticket-total');
+  if (tabbarCount) tabbarCount.textContent = String(orderCart.length);
+  if (tabbarTotal) tabbarTotal.textContent = orderCart.length ? formatPrice(grandTotal) : 'Ticket';
+  if (tabbarTicket) tabbarTicket.classList.toggle('has-items', orderCart.length > 0);
 }
 
 function updateBizumSection(grandTotal) {
@@ -1415,6 +1622,10 @@ function setupTicketActions() {
   if (floatCartBtn) {
     floatCartBtn.addEventListener('click', scrollToTicketWithFlash);
   }
+  const tabbarTicketBtn = document.getElementById('tabbar-ticket');
+  if (tabbarTicketBtn) {
+    tabbarTicketBtn.addEventListener('click', scrollToTicketWithFlash);
+  }
 
   if (bizumMinus) {
     bizumMinus.addEventListener('click', () => {
@@ -1478,6 +1689,7 @@ function setupTicketActions() {
         return;
       }
       const lines = buildOrderSummaryLines();
+      saveLastOrder();
       const url = `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
       window.open(url, '_blank', 'noopener,noreferrer');
     });
@@ -1492,6 +1704,7 @@ function setupTicketActions() {
         return;
       }
       const lines = buildOrderSummaryLines();
+      saveLastOrder();
       try {
         await navigator.clipboard.writeText(lines.join('\n'));
         feedback.textContent = 'Comanda completa y desglose Bizum copiados al portapapeles.';
@@ -1521,8 +1734,23 @@ function setupFoilEntrance() {
     }, 1100);
   };
 
+  // El albal se abre cuando la página ha cargado de verdad (fuentes y portada),
+  // visible al menos FOIL_MIN_MS y nunca más de FOIL_MAX_MS desde que se abrió la web.
+  const FOIL_MIN_MS = 1000;
+  const FOIL_MAX_MS = 3000;
+  const openWhenReady = () => {
+    const wait = Math.max(0, FOIL_MIN_MS - performance.now());
+    setTimeout(openFoil, wait);
+  };
+
+  const pageLoaded = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise(resolve => window.addEventListener('load', resolve, { once: true }));
+  const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+
   curtain.addEventListener('click', openFoil);
-  setTimeout(openFoil, 1150);
+  Promise.all([pageLoaded, fontsReady]).then(openWhenReady, openWhenReady);
+  setTimeout(openFoil, Math.max(0, FOIL_MAX_MS - performance.now()));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1535,4 +1763,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBuilderControls();
   updateTicketReceipt();
   setupTicketActions();
+  setupRepeatOrder();
 });

@@ -11,7 +11,9 @@
   <link rel="icon" href="favicon.ico" sizes="48x48" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=20261101-11" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#151210" />
+  <link rel="stylesheet" href="styles.css?v=20261101-12" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -562,7 +564,7 @@
 
   <!-- CUANDO SE APRUEBE: quitar .demo-banner -->
   <div class="demo-banner" role="region" aria-label="Aviso de versión de demostración">
-    PROPUESTA DE DISEÑO <span class="demo-banner__version" title="Versión de la plataforma">v0.18.0</span> · Demo no oficial pendiente de aprobación por El Patatón
+    PROPUESTA DE DISEÑO <span class="demo-banner__version" title="Versión de la plataforma">v0.19.0</span> · Demo no oficial pendiente de aprobación por El Patatón
   </div>
 
   <!-- BARRA SUPERIOR DE ESTADO EN TIEMPO REAL -->
@@ -624,6 +626,15 @@
       <div class="hero__content">
         <div class="hero__kicker">
           <span>Especialistas en patatas al horno · Desde 2005 en Algeciras</span>
+        </div>
+
+        <!-- «LO DE SIEMPRE»: último pedido guardado en este móvil (solo si existe) -->
+        <div id="repeat-order" class="repeat-order" hidden>
+          <div class="repeat-order__text">
+            <strong>¿Lo de siempre?</strong>
+            <span id="repeat-order-summary">Tu último pedido</span>
+          </div>
+          <button type="button" id="btn-repeat-order" class="btn btn--paper repeat-order__btn">Repetir pedido</button>
         </div>
 
         <h1 class="hero__title">
@@ -712,8 +723,10 @@
             <span class="section-tag">01 / CARTA OFICIAL · 30 NÚMEROS + 12 BEBIDAS (42 PRODUCTOS)</span>
             <h2 class="section-title" style="margin-bottom: 0.35rem;">Todas nuestras variedades al horno</h2>
             <p style="color: var(--ink-muted); font-size: 0.96rem;">
-              Puedes convertir cualquier <strong>Patata Clásica (7,50 €)</strong> o <strong>Patata Especial (8,00 €)</strong> en tamaño <strong>PATATÓN por solo +1,00 € más</strong>. Pulsa en cualquier plato para añadirlo a tu comanda.
+              Puedes convertir cualquier <strong>Patata Clásica (7,50 €)</strong> o <strong>Patata Especial (8,00 €)</strong> en tamaño <strong>PATATÓN por solo +1,00 € más</strong>. Pulsa en la foto de un plato para elegir tamaño, salsa o quitar ingredientes.
             </p>
+            <!-- CONFIRMAR CON ISA Y CRISTINA: tabla de alérgenos por ingrediente y salsa -->
+            <p class="menu-allergen-note">Alérgenos: pregunta al pedir por teléfono al <a href="tel:956658122">956 65 81 22</a> y te informamos de cada plato.</p>
           </div>
 
           <div class="menu-controls-bar">
@@ -769,7 +782,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 01</span>
                   <h3 class="menu-card__title">Nº 1. Patata Vegetal</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -789,7 +801,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 02</span>
                   <h3 class="menu-card__title">Nº 2. Patata Tradicional</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -811,7 +822,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 03</span>
                   <h3 class="menu-card__title">Nº 3. Patata a la Mantequilla</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -833,7 +843,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 04</span>
                   <h3 class="menu-card__title">Nº 4. Patata al Roquefort</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -853,7 +862,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 05</span>
                   <h3 class="menu-card__title">Nº 5. Patata Completa</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -873,7 +881,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 06</span>
                   <h3 class="menu-card__title">Nº 6. Patata Brava</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -893,7 +900,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 07</span>
                   <h3 class="menu-card__title">Nº 7. Patata Ali-Oli</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -913,7 +919,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 08</span>
                   <h3 class="menu-card__title">Nº 8. Patata Mediterránea</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -933,7 +938,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 09</span>
                   <h3 class="menu-card__title">Nº 9. Patata Frankfurt</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -955,7 +959,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 10</span>
                   <h3 class="menu-card__title">Nº 10. Patata Ibérica</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -975,7 +978,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 11</span>
                   <h3 class="menu-card__title">Nº 11. Patata Marinera</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -995,7 +997,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 12</span>
                   <h3 class="menu-card__title">Nº 12. Patata Tropical</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1015,7 +1016,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 13</span>
                   <h3 class="menu-card__title">Nº 13. Patata Africana</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1036,7 +1036,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 14</span>
                   <h3 class="menu-card__title">Nº 14. Patata Gallega</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1056,7 +1055,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 15</span>
                   <h3 class="menu-card__title">Nº 15. Patata Gaucha</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1076,7 +1074,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 16</span>
                   <h3 class="menu-card__title">Nº 16. Patata Rusa</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1098,7 +1095,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 17</span>
                   <h3 class="menu-card__title">Nº 17. Patata Kebab</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1118,7 +1114,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 18</span>
                   <h3 class="menu-card__title">Nº 18. Patata al Gusto</h3>
                 </div>
                 <span class="menu-card__price">7,00 €</span>
@@ -1137,7 +1132,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 19</span>
                   <h3 class="menu-card__title">Nº 19. Patata al Gusto +</h3>
                 </div>
                 <span class="menu-card__price">7,50 €</span>
@@ -1156,7 +1150,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 20</span>
                   <h3 class="menu-card__title">Nº 20. Patata al Gusto Especial</h3>
                 </div>
                 <span class="menu-card__price">8,00 €</span>
@@ -1176,7 +1169,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 21</span>
                   <h3 class="menu-card__title">Nº 21. Patata Completa con Todo</h3>
                 </div>
                 <span class="menu-card__price">8,50 €</span>
@@ -1195,7 +1187,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 25</span>
                   <h3 class="menu-card__title">Nº 25. Patata Sola</h3>
                 </div>
                 <span class="menu-card__price">3,00 €</span>
@@ -1214,7 +1205,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 26</span>
                   <h3 class="menu-card__title">Nº 26. Patata Simple</h3>
                 </div>
                 <span class="menu-card__price">3,50 €</span>
@@ -1234,7 +1224,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 22</span>
                   <h3 class="menu-card__title">Nº 22. Patatón</h3>
                 </div>
                 <span class="menu-card__price">8,50 €</span>
@@ -1254,7 +1243,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 23</span>
                   <h3 class="menu-card__title">Nº 23. Patatón Especial</h3>
                 </div>
                 <span class="menu-card__price">9,00 €</span>
@@ -1274,7 +1262,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 24</span>
                   <h3 class="menu-card__title">Nº 24. Patatón Completo con Todo</h3>
                 </div>
                 <span class="menu-card__price">9,50 €</span>
@@ -1293,7 +1280,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 27</span>
                   <h3 class="menu-card__title">Nº 27. Kebab de Pollo Simple</h3>
                 </div>
                 <span class="menu-card__price">5,50 €</span>
@@ -1313,7 +1299,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 28</span>
                   <h3 class="menu-card__title">Nº 28. Kebab de Pollo</h3>
                 </div>
                 <span class="menu-card__price">6,50 €</span>
@@ -1332,7 +1317,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 29</span>
                   <h3 class="menu-card__title">Nº 29. Perrito Caliente Simple</h3>
                 </div>
                 <span class="menu-card__price">2,50 €</span>
@@ -1352,7 +1336,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // Nº 30</span>
                   <h3 class="menu-card__title">Nº 30. Perrito Caliente Completo</h3>
                 </div>
                 <span class="menu-card__price">3,00 €</span>
@@ -1371,7 +1354,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-01</span>
                   <h3 class="menu-card__title">Agua 330ml</h3>
                 </div>
                 <span class="menu-card__price">1,00 €</span>
@@ -1390,7 +1372,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-02</span>
                   <h3 class="menu-card__title">Agua 1.5L</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1409,7 +1390,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-03</span>
                   <h3 class="menu-card__title">Coca-Cola lata</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1428,7 +1408,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-04</span>
                   <h3 class="menu-card__title">Coca-Cola Zero</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1447,7 +1426,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-05</span>
                   <h3 class="menu-card__title">KAS Naranja Zero</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1466,7 +1444,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-06</span>
                   <h3 class="menu-card__title">KAS Limón</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1485,7 +1462,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-07</span>
                   <h3 class="menu-card__title">Aquarius Limón</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1504,7 +1480,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-08</span>
                   <h3 class="menu-card__title">Aquarius Naranja</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1523,7 +1498,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-09</span>
                   <h3 class="menu-card__title">Nestea Limón</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1542,7 +1516,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-10</span>
                   <h3 class="menu-card__title">Nestea Maracuyá</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1561,7 +1534,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-11</span>
                   <h3 class="menu-card__title">Cerveza Cruzcampo</h3>
                 </div>
                 <span class="menu-card__price">1,50 €</span>
@@ -1580,7 +1552,6 @@
             <div class="menu-card__body">
               <div class="menu-card__top">
                 <div>
-                  <span class="menu-card__code">REF // BEB-12</span>
                   <h3 class="menu-card__title">Cerveza 1 litro</h3>
                 </div>
                 <span class="menu-card__price">2,20 €</span>
@@ -2034,7 +2005,34 @@
     <span id="floating-cart-total" class="floating-cart__total">0,00 €</span>
   </button>
 
-  <!-- VISOR / LIGHTBOX DE IMÁGENES EN GRANDE -->
+  <!-- BARRA INFERIOR FIJA (SOLO MÓVIL) -->
+  <nav class="tabbar" aria-label="Accesos rápidos">
+    <a href="#" class="tabbar__item">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 11L12 4L20 11V20H14V14H10V20H4V11Z"/></svg>
+      <span>Inicio</span>
+    </a>
+    <a href="#la-carta" class="tabbar__item">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 6H19M5 12H19M5 18H14"/></svg>
+      <span>Carta</span>
+    </a>
+    <a href="#al-gusto" class="tabbar__item">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 4V20M12 4V20M18 4V20"/><circle cx="6" cy="9" r="2" fill="#FFFDF9"/><circle cx="12" cy="15" r="2" fill="#FFFDF9"/><circle cx="18" cy="8" r="2" fill="#FFFDF9"/></svg>
+      <span>Al gusto</span>
+    </a>
+    <button type="button" id="tabbar-ticket" class="tabbar__item" aria-label="Ver tu ticket">
+      <span class="tabbar__icon-wrap">
+        <svg viewBox="0 0 28 28" width="20" height="20" fill="none" aria-hidden="true"><path d="M5 4H23V24L20 22L17 24L14 22L11 24L8 22L5 24V4Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><line x1="9" y1="10" x2="19" y2="10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><line x1="9" y1="15" x2="16" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span id="tabbar-ticket-count" class="tabbar__badge">0</span>
+      </span>
+      <span id="tabbar-ticket-total">Ticket</span>
+    </button>
+    <a href="tel:956658122" class="tabbar__item tabbar__item--call">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 4H9L11 9L8.5 10.5C9.5 12.5 11.5 14.5 13.5 15.5L15 13L20 15V19C20 20 19 21 18 21C10 20.5 3.5 14 3 6C3 5 4 4 5 4Z"/></svg>
+      <span>Pedir</span>
+    </a>
+  </nav>
+
+  <!-- FICHA DE PRODUCTO: FOTO EN GRANDE + TAMAÑO, SALSA, QUITAR, ALBAL Y ALÉRGENOS -->
   <div
     id="product-lightbox"
     class="product-lightbox"
@@ -2048,9 +2046,8 @@
       <div class="product-lightbox__topbar">
         <div class="product-lightbox__meta">
           <span id="lightbox-cat" class="product-lightbox__cat">Patatas Clásicas</span>
-          <span id="lightbox-code" class="product-lightbox__code">REF // Nº 01</span>
         </div>
-        <button type="button" id="lightbox-close" class="product-lightbox__close" aria-label="Cerrar imagen ampliada">
+        <button type="button" id="lightbox-close" class="product-lightbox__close" aria-label="Cerrar ficha del plato">
           ✕ Cerrar
         </button>
       </div>
@@ -2071,14 +2068,53 @@
           <span id="lightbox-price" class="product-lightbox__price">7,50 €</span>
         </div>
         <p id="lightbox-desc" class="product-lightbox__desc"></p>
+
+        <div class="product-sheet">
+          <fieldset id="sheet-size" class="product-sheet__group" hidden>
+            <legend class="product-sheet__legend">Tamaño</legend>
+            <div class="product-sheet__sizes">
+              <label class="product-sheet__size">
+                <input type="radio" name="sheet-size" value="normal" checked />
+                <span>Patata</span>
+                <strong id="sheet-size-normal-price">7,50 €</strong>
+              </label>
+              <label class="product-sheet__size">
+                <input type="radio" name="sheet-size" value="pataton" />
+                <span>Patatón</span>
+                <strong id="sheet-size-pataton-price">8,50 €</strong>
+              </label>
+            </div>
+          </fieldset>
+
+          <div id="sheet-sauce" class="product-sheet__group" hidden>
+            <label for="sheet-sauce-select" class="product-sheet__legend">Elige tu salsa</label>
+            <select id="sheet-sauce-select" class="product-sheet__select"></select>
+          </div>
+
+          <fieldset id="sheet-remove" class="product-sheet__group" hidden>
+            <legend class="product-sheet__legend">¿Quitar algo? <span>(toca para quitar)</span></legend>
+            <div id="sheet-remove-chips" class="product-sheet__chips"></div>
+          </fieldset>
+
+          <div class="product-sheet__group">
+            <label for="sheet-foil-owner" class="product-sheet__legend">¿De quién es? <span>(nombre para el albal, opcional)</span></label>
+            <input type="text" id="sheet-foil-owner" class="product-sheet__input" maxlength="24" placeholder="Carlos" autocomplete="off" />
+          </div>
+
+          <!-- CONFIRMAR CON ISA Y CRISTINA: tabla de alérgenos por ingrediente y salsa -->
+          <p class="product-sheet__allergens">
+            <strong>Alérgenos:</strong> pregunta por los alérgenos de este plato al pedir por teléfono (<a href="tel:956658122">956 65 81 22</a>).
+          </p>
+        </div>
+
         <div class="product-lightbox__actions">
-          <button type="button" id="lightbox-add-normal" class="btn btn--primary menu-card__btn">+ Añadir · 7,50 €</button>
-          <button type="button" id="lightbox-add-pataton" class="btn btn--butter menu-card__btn">+ Patatón · 8,50 €</button>
+          <button type="button" id="lightbox-add" class="btn btn--primary menu-card__btn">+ Añadir · 7,50 €</button>
+          <p id="sheet-feedback" class="product-sheet__feedback" aria-live="polite"></p>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=20261101-11"></script>
+  <script src="app.js?v=20261101-12"></script>
 </body>
 </html>
