@@ -1,165 +1,602 @@
 /* ==========================================================================
-   EL PATATÓN ALGECIRAS — INTERACTIVIDAD DE CARTA Y COMANDA AL GUSTO
+   EL PATATÓN ALGECIRAS — CARTA OFICIAL COMPLETA (42 PRODUCTOS CON FOTOS REALES)
+   Y CONFIGURADOR DE COMANDA FIEL A ELPATATON.COM/PEDIDOS
    ========================================================================== */
 
 const MENU_ITEMS = [
+  // ================= 1. PATATAS CLÁSICAS (7,50 €) =================
   {
-    id: 'PAT-01',
-    category: 'especiales',
-    featured: true,
-    badge: 'LA REINA DE LA CASA',
-    name: 'El Patatón (Completa con Todo)',
-    price: '11,50 €',
-    desc: 'Para los que no quieren dejarse nada fuera. Patata gigante asada al horno con mantequilla, queso fundido, jamón, lomo, bacon, carne kebab, atún, maíz, aceitunas, zanahoria y salsa a elegir.',
-    tags: ['+1 KG Aprox', 'Ideal Compartir', 'Con Todo']
+    id: 1,
+    code: 'Nº 01',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 1. Patata Vegetal',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/76388521294a4e05af44c7c09997235d.webp',
+    desc: 'Mahonesa, Tomate, Maíz, Remolacha, Aceitunas, Tomate Natural, Cebolla y Lechuga.',
+    tags: ['Clásica 7,50 €', 'Opción Patatón +1 €']
   },
   {
-    id: 'PAT-02',
-    category: 'especiales',
-    featured: true,
-    badge: 'TOP VENTAS',
-    name: 'Patata al Roquefort',
-    price: '10,50 €',
-    desc: 'Cremosa salsa roquefort fundida con el calor de la patata, jamón en tacos, lomo adobado, bacon crujiente, maíz dulce, aceitunas, pollo relleno y queso.',
-    tags: ['Salsa Roquefort', 'Pollo Relleno', 'Lomo y Bacon']
+    id: 2,
+    code: 'Nº 02',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 2. Patata Tradicional',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/7c8ea8d84ecc46baa0c5c858a9ce10aa.webp',
+    desc: 'Mahonesa, Tomate, Jamón, Atún, Maíz, Zanahoria, Remolacha, Aceitunas y Queso.',
+    tags: ['Clásica 7,50 €', 'Opción Patatón +1 €']
   },
   {
-    id: 'PAT-03',
-    category: 'especiales',
+    id: 3,
+    code: 'Nº 03',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
     featured: true,
     badge: 'MUY PEDIDA',
-    name: 'Patata Kebab',
-    price: '11,00 €',
-    desc: 'Lo mejor de dos mundos: base de patata gigante al horno rellena de carne de kebab especiada, queso fundido, cebolla crujiente, maíz, lechuga, tomate natural y salsa a elegir.',
-    tags: ['Carne Kebab', 'Cebolla Crujiente', 'Salsa Blanca']
+    name: 'Nº 3. Patata a la Mantequilla',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/fe635409f98844b795e0567dd30a3c94.webp',
+    desc: 'Mantequilla, Jamón, Lomo, Bacon, Aceitunas, Maíz, Zanahoria y Queso.',
+    tags: ['Mantequilla', 'Jamón, Lomo y Bacon']
   },
   {
-    id: 'PAT-04',
+    id: 4,
+    code: 'Nº 04',
     category: 'clasicas',
-    featured: false,
-    name: 'Patata a la Mantequilla',
-    price: '10,00 €',
-    desc: 'La tradicional que nunca falla. Mantequilla fundida al corte, jamón york, lomo, bacon, aceitunas, maíz, zanahoria y abundante queso.',
-    tags: ['Clásica', 'Mantequilla', 'Jamón y Lomo']
+    categoryLabel: 'Patatas Clásicas',
+    featured: true,
+    badge: 'TOP VENTAS',
+    name: 'Nº 4. Patata al Roquefort',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/7ca06624442340e8885ac6f102b80269.webp',
+    desc: 'Salsa Roquefort, Jamón, Lomo, Bacon, Maíz, Aceitunas, Pollo Relleno y Queso.',
+    tags: ['Salsa Roquefort', 'Pollo Relleno']
   },
   {
-    id: 'PAT-05',
+    id: 5,
+    code: 'Nº 05',
     category: 'clasicas',
-    featured: false,
-    name: 'Patata Completa Tradicional',
-    price: '10,00 €',
-    desc: 'Salsa a elegir, jamón en tacos, atún, palitos de cangrejo, zanahoria rallada, aceitunas, maíz dulce y queso rallado.',
-    tags: ['Atún y Cangrejo', 'Fresca y Cremosa']
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 5. Patata Completa',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/5a294e6d2a404637a06ed490ea8ebb3c.webp',
+    desc: 'Salsa a elegir, Jamón, Atún, Palitos de Cangrejo, Zanahoria, Aceitunas, Maíz y Queso.',
+    tags: ['Salsa a elegir', 'Opción Patatón +1 €']
   },
   {
-    id: 'PAT-06',
+    id: 6,
+    code: 'Nº 06',
     category: 'clasicas',
-    featured: false,
-    name: 'Patata al Alioli',
-    price: '10,50 €',
-    desc: 'Con auténtica salsa alioli, jamón, atún, lomo, zanahoria, maíz, aceitunas y queso fundido.',
-    tags: ['Amantes del Ajo', 'Lomo y Atún']
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 6. Patata Brava',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/3abad0e8c1084166b9f7165c2028a7bd.webp',
+    desc: 'Salsa de Tomate Picante, Jamón, Atún, Lomo, Zanahoria, Maíz, Aceitunas y Queso.',
+    tags: ['Toque Picante', 'Opción Patatón +1 €']
   },
   {
-    id: 'PAT-07',
+    id: 7,
+    code: 'Nº 07',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 7. Patata Ali-Oli',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/6d95b95e29ad45bfaba754866959c5d7.webp',
+    desc: 'Salsa Ali-Oli, Jamón, Atún, Zanahoria, Lomo, Maíz, Aceitunas y Queso.',
+    tags: ['Salsa Ali-Oli', 'Opción Patatón +1 €']
+  },
+  {
+    id: 8,
+    code: 'Nº 08',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 8. Patata Mediterránea',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/58039c1aeac244b38fa80c57f53f81de.webp',
+    desc: 'Aceite de Oliva, Atún, Lechuga, Cebolla, Tomate Natural, Maíz, Aceitunas y Queso.',
+    tags: ['Aceite de Oliva', 'Opción Patatón +1 €']
+  },
+  {
+    id: 9,
+    code: 'Nº 09',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    name: 'Nº 9. Patata Frankfurt',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/a4f88f5b1f384a38a6f0ce845e10f944.webp',
+    desc: 'Mahonesa, Tomate, Salchichas, Lomo, Bacon, Aceitunas, Maíz, Lechuga y Queso.',
+    tags: ['Salchichas, Lomo y Bacon', 'Opción Patatón +1 €']
+  },
+  {
+    id: 10,
+    code: 'Nº 10',
+    category: 'clasicas',
+    categoryLabel: 'Patatas Clásicas',
+    featured: true,
+    badge: 'CARNÍVORA',
+    name: 'Nº 10. Patata Ibérica',
+    price: 7.50,
+    canPataton: true,
+    img: 'assets/productos/f9b4cfaef6d84eb3bba9c31282f1adf2.webp',
+    desc: 'Salsa a elegir, Jamón, Lomo, Bacon, Salchichas, Pollo Relleno y Queso.',
+    tags: ['5 Carnes + Queso', 'Salsa a elegir']
+  },
+
+  // ================= 2. PATATAS ESPECIALES (8,00 €) =================
+  {
+    id: 11,
+    code: 'Nº 11',
     category: 'especiales',
-    featured: false,
-    name: 'Patata Brava (Picante)',
-    price: '10,50 €',
-    desc: 'Con ese toque cañero de salsa de tomate picante, jamón, atún, lomo, zanahoria, maíz, aceitunas y queso.',
-    tags: ['Toque Picante', 'Salsa Brava']
+    categoryLabel: 'Patatas Especiales',
+    name: 'Nº 11. Patata Marinera',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/c09f400ccc91414b96aab8f4908c5be4.webp',
+    desc: 'Salsa Rosa, Gambas, Palitos de Cangrejo, Atún, Maíz, Lechuga y Queso.',
+    tags: ['Con Gambas', 'Salsa Rosa']
   },
   {
-    id: 'PAT-08',
+    id: 12,
+    code: 'Nº 12',
     category: 'especiales',
-    featured: false,
-    name: 'Patata Ibérica / Gaucha',
-    price: '10,50 €',
-    desc: 'Cargada de sabor con selección de embutidos y carnes, queso fundido, toque de salsa especial y guarnición clásica de la casa.',
-    tags: ['Sabor Intenso', 'Carnes']
+    categoryLabel: 'Patatas Especiales',
+    name: 'Nº 12. Patata Tropical',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/0658a57d5e074b8781a268be3b4128d9.webp',
+    desc: 'Salsa Rosa, Gambas, Palitos de Cangrejo, Atún, Maíz, Lechuga, Piña y Queso.',
+    tags: ['Gambas y Piña', 'Salsa Rosa']
   },
   {
-    id: 'PAT-09',
-    category: 'clasicas',
-    featured: false,
-    name: 'Patata Tropical / Africana',
-    price: '10,50 €',
-    desc: 'El contraste dulce y salado perfecto con salsa rosa o mayonesa, maíz, piña/guarnición fresca, jamón, pollo y queso.',
-    tags: ['Contraste Suave', 'Salsa Rosa']
+    id: 13,
+    code: 'Nº 13',
+    category: 'especiales',
+    categoryLabel: 'Patatas Especiales',
+    name: 'Nº 13. Patata Africana',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/0d3660bb759241c18bc10eca0f39a86d.webp',
+    desc: 'Salsa Africanita, Kebab, Aceitunas, Maíz, Lechuga, Cebolla y Queso.',
+    tags: ['Salsa Africanita', 'Con Kebab']
   },
   {
-    id: 'PAT-10',
-    category: 'clasicas',
-    featured: false,
-    name: 'Patata Sola Asada al Horno',
-    price: '3,50 €',
-    desc: 'Para disfrutar de la pureza del horno: patata gigante abierta en su papel albal con aceite de oliva, ajo, perejil o pimienta y sal gorda.',
-    tags: ['Sencilla', '100% Horno']
+    id: 14,
+    code: 'Nº 14',
+    category: 'especiales',
+    categoryLabel: 'Patatas Especiales',
+    featured: true,
+    badge: 'CON PULPO',
+    name: 'Nº 14. Patata Gallega',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/5d4919085dbb47d6ad2d9c5a91577cf6.webp',
+    desc: 'Salsa a elegir, Pulpo, Maíz, Tomate Natural, Aceitunas, Lechuga y Queso.',
+    tags: ['Con Pulpo', 'Salsa a elegir']
   },
   {
-    id: 'BOC-01',
-    category: 'bocatas',
-    featured: false,
-    badge: 'OTRO CLÁSICO',
-    name: 'Kebab de Pollo Completo',
-    price: '6,50 €',
-    desc: 'Jugosa carne de kebab de pollo asada, verdura fresca, queso y nuestras salsas especiales. También disponible en formato bocadillo grande.',
-    tags: ['Kebab Pollo', 'Bien Cargado']
+    id: 15,
+    code: 'Nº 15',
+    category: 'especiales',
+    categoryLabel: 'Patatas Especiales',
+    name: 'Nº 15. Patata Gaucha',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/57c7c44b3e104918b20d196849fd6b16.webp',
+    desc: 'Salsa Gaucha, Jamón, Pollo de Kebab, Salchichas, Cebolla Crispy y Queso.',
+    tags: ['Salsa Gaucha', 'Kebab y Cebolla Crispy']
   },
   {
-    id: 'BOC-02',
-    category: 'bocatas',
-    featured: false,
-    name: 'Perrito Caliente Especial',
-    price: '3,50 €',
-    desc: 'El complemento obligatorio de cualquier pedido en El Patatón: pan tierno, salchicha, lluvia de patatas paja crujientes, cebolla, queso y salsas (Simple por 3,00 €).',
-    tags: ['Con Patatas Paja', 'Por solo 3,50 €']
+    id: 16,
+    code: 'Nº 16',
+    category: 'especiales',
+    categoryLabel: 'Patatas Especiales',
+    name: 'Nº 16. Patata Rusa',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/da87a537ed9048fc9d2e6fcaeb590fd8.webp',
+    desc: 'Salsa a elegir, Huevo Cocido, Atún, Maíz, Aceitunas, Zanahoria y Queso.',
+    tags: ['Con Huevo Cocido', 'Salsa a elegir']
+  },
+  {
+    id: 17,
+    code: 'Nº 17',
+    category: 'especiales',
+    categoryLabel: 'Patatas Especiales',
+    featured: true,
+    badge: 'FAVORITA',
+    name: 'Nº 17. Patata Kebab',
+    price: 8.00,
+    canPataton: true,
+    img: 'assets/productos/281e59d4eb8946f7892dab0d7a70941a.webp',
+    desc: 'Salsa a elegir, Kebab, Queso, Cebolla Crispy, Maíz, Lechuga y Tomate Natural.',
+    tags: ['Carne Kebab', 'Cebolla Crispy']
+  },
+
+  // ================= 3. PATATAS AL GUSTO (3,00 € a 8,50 €) =================
+  {
+    id: 18,
+    code: 'Nº 18',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    name: 'Nº 18. Patata al Gusto',
+    price: 7.00,
+    canPataton: false,
+    img: 'assets/productos/0fbb438b5057410ebb05ed546d01e5cf.webp',
+    desc: 'Hasta 5 ingredientes (sin ingredientes especiales). Elige tu salsa e ingredientes.',
+    tags: ['Hasta 5 Ingredientes', 'Personalizable']
+  },
+  {
+    id: 19,
+    code: 'Nº 19',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    name: 'Nº 19. Patata al Gusto +',
+    price: 7.50,
+    canPataton: false,
+    img: 'assets/productos/8ec33570dbee4a0da36dea07c1b6cbd8.webp',
+    desc: 'Más de 5 ingredientes (sin ingredientes especiales). Elige tu salsa e ingredientes.',
+    tags: ['+5 Ingredientes', 'Personalizable']
+  },
+  {
+    id: 20,
+    code: 'Nº 20',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    name: 'Nº 20. Patata al Gusto Especial',
+    price: 8.00,
+    canPataton: false,
+    img: 'assets/productos/633959ad8fd74175892abed72b65b3b3.webp',
+    desc: 'Con ingredientes especiales (gambas, kebab, pulpo o huevo). Elige tu salsa e ingredientes.',
+    tags: ['Con Especiales', 'Gambas / Kebab / Pulpo / Huevo']
+  },
+  {
+    id: 21,
+    code: 'Nº 21',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    featured: true,
+    badge: 'CON TODO',
+    name: 'Nº 21. Patata Completa con Todo',
+    price: 8.50,
+    canPataton: false,
+    img: 'assets/productos/7d7e4377a2914594b4278bf0c020e627.webp',
+    desc: 'La patata más completa. Todos los ingredientes disponibles.',
+    tags: ['Todos los Ingredientes', 'Completa']
+  },
+  {
+    id: 22,
+    code: 'Nº 25',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    name: 'Nº 25. Patata Sola',
+    price: 3.00,
+    canPataton: false,
+    img: 'assets/productos/eb0e4d5bede84134a2cc53906380a1fe.webp',
+    desc: 'Aceite de Oliva y Pimienta. Sin ingredientes adicionales.',
+    tags: ['Aceite y Pimienta', '3,00 €']
+  },
+  {
+    id: 23,
+    code: 'Nº 26',
+    category: 'gusto',
+    categoryLabel: 'Patatas al Gusto',
+    name: 'Nº 26. Patata Simple',
+    price: 3.50,
+    canPataton: false,
+    img: 'assets/productos/e723a248c6774a108f349c1c8f691c64.webp',
+    desc: 'Aceite de Oliva, Ajo y Perejil.',
+    tags: ['Ajo y Perejil', '3,50 €']
+  },
+
+  // ================= 4. PATATÓN (8,50 € a 9,50 €) =================
+  {
+    id: 24,
+    code: 'Nº 22',
+    category: 'pataton',
+    categoryLabel: 'Patatón',
+    featured: true,
+    badge: 'TAMAÑO GIGANTE',
+    name: 'Nº 22. Patatón',
+    price: 8.50,
+    canPataton: false,
+    img: 'assets/productos/6ad2fe78c5274f03bb91a58254b49802.webp',
+    desc: 'Patata más grande. Elige tu salsa e ingredientes.',
+    tags: ['Formato Gigante', 'Al Gusto']
+  },
+  {
+    id: 25,
+    code: 'Nº 23',
+    category: 'pataton',
+    categoryLabel: 'Patatón',
+    featured: true,
+    badge: 'GIGANTE ESPECIAL',
+    name: 'Nº 23. Patatón Especial',
+    price: 9.00,
+    canPataton: false,
+    img: 'assets/productos/ae5588950cc8442b815eb89640c1ba24.webp',
+    desc: 'Patatón con ingredientes especiales (gambas, kebab, pulpo o huevo).',
+    tags: ['Formato Gigante', 'Con Especiales']
+  },
+  {
+    id: 26,
+    code: 'Nº 24',
+    category: 'pataton',
+    categoryLabel: 'Patatón',
+    featured: true,
+    badge: 'LA REINA DESDE 2005',
+    name: 'Nº 24. Patatón Completo con Todo',
+    price: 9.50,
+    canPataton: false,
+    img: 'assets/productos/debc4595b79b481a9b4d854420f7b963.webp',
+    desc: 'El patatón más completo. Todos los ingredientes disponibles.',
+    tags: ['El Más Grande', 'Con Todos los Ingredientes']
+  },
+
+  // ================= 5. KEBAB (5,50 € a 6,50 €) =================
+  {
+    id: 27,
+    code: 'Nº 27',
+    category: 'kebab',
+    categoryLabel: 'Kebab',
+    name: 'Nº 27. Kebab de Pollo Simple',
+    price: 5.50,
+    canPataton: false,
+    img: 'assets/productos/339e4325d9184784b579e135c2608e90.jpeg',
+    desc: 'Kebab de pollo sin ingredientes adicionales.',
+    tags: ['Kebab Pollo', 'Simple']
+  },
+  {
+    id: 28,
+    code: 'Nº 28',
+    category: 'kebab',
+    categoryLabel: 'Kebab',
+    featured: true,
+    badge: 'COMPLETO A ELEGIR',
+    name: 'Nº 28. Kebab de Pollo',
+    price: 6.50,
+    canPataton: false,
+    img: 'assets/productos/9199bae08680436d85ba718679f3476a.jpeg',
+    desc: 'Kebab de pollo con ingredientes y salsas a elegir.',
+    tags: ['Kebab Pollo', 'Ingredientes a elegir']
+  },
+
+  // ================= 6. PERRITO CALIENTE (2,50 € a 3,00 €) =================
+  {
+    id: 29,
+    code: 'Nº 29',
+    category: 'perrito',
+    categoryLabel: 'Perrito Caliente',
+    name: 'Nº 29. Perrito Caliente Simple',
+    price: 2.50,
+    canPataton: false,
+    img: 'assets/productos/glv_perrito_simple.jpg',
+    desc: 'Salchicha simple sin ingredientes adicionales.',
+    tags: ['Perrito Simple', '2,50 €']
+  },
+  {
+    id: 30,
+    code: 'Nº 30',
+    category: 'perrito',
+    categoryLabel: 'Perrito Caliente',
+    featured: true,
+    badge: 'CLÁSICO DEL LOCAL',
+    name: 'Nº 30. Perrito Caliente Completo',
+    price: 3.00,
+    canPataton: false,
+    img: 'assets/productos/glv_perrito_completo.jpg',
+    desc: 'Salchicha con salsa e ingredientes a elegir.',
+    tags: ['Ingredientes a elegir', '3,00 €']
+  },
+
+  // ================= 7. BEBIDAS (1,00 € a 2,20 €) =================
+  {
+    id: 31,
+    code: 'BEB-01',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Agua 330ml',
+    price: 1.00,
+    canPataton: false,
+    img: 'assets/productos/glv_agua330.jpg',
+    desc: 'Botellín de agua mineral 330ml.',
+    tags: ['330ml', '1,00 €']
+  },
+  {
+    id: 32,
+    code: 'BEB-02',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Agua 1.5L',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_agua15.jpg',
+    desc: 'Botella de agua mineral 1,5 litros.',
+    tags: ['1.5L', '1,50 €']
+  },
+  {
+    id: 33,
+    code: 'BEB-03',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Coca-Cola lata',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_cocacola.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 34,
+    code: 'BEB-04',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Coca-Cola Zero',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_cocacola_zero.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 35,
+    code: 'BEB-05',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'KAS Naranja Zero',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_kas_naranja.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 36,
+    code: 'BEB-06',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'KAS Limón',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_kas_limon.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 37,
+    code: 'BEB-07',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Aquarius Limón',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_aquarius_limon.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 38,
+    code: 'BEB-08',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Aquarius Naranja',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_aquarius_naranja.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 39,
+    code: 'BEB-09',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Nestea Limón',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_nestea.jpg',
+    desc: 'Lata refrigerada de 330ml.',
+    tags: ['Lata 330ml', '1,50 €']
+  },
+  {
+    id: 41,
+    code: 'BEB-10',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Nestea Maracuyá',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/cad270be8c6f43958b2aa69462b1e19d.jpg',
+    desc: 'Lata refrigerada.',
+    tags: ['Lata', '1,50 €']
+  },
+  {
+    id: 40,
+    code: 'BEB-11',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Cerveza Cruzcampo',
+    price: 1.50,
+    canPataton: false,
+    img: 'assets/productos/glv_cruzcampo.jpg',
+    desc: 'Lata 330ml (Solo mayores de 18 años).',
+    tags: ['Lata 330ml', '+18 Años']
+  },
+  {
+    id: 42,
+    code: 'BEB-12',
+    category: 'bebidas',
+    categoryLabel: 'Bebidas',
+    name: 'Cerveza 1 litro',
+    price: 2.20,
+    canPataton: false,
+    img: 'assets/productos/1d04ad942a414cec9c6e2eb397005d01.jpg',
+    desc: 'Formato litrona 1 litro (Solo mayores de 18 años).',
+    tags: ['1 Litro', '+18 Años']
   }
 ];
 
-/* Datos para el simulador "Haz tu Patata al Gusto" */
+/* ==========================================================================
+   DATOS EXACTOS DEL CONFIGURADOR (ELPATATON.COM/PEDIDOS)
+   ========================================================================== */
 const BUILDER_BASES = [
-  { id: 'base-gusto', name: 'Patata al Gusto (Estándar)', basePrice: 10.0, weight: 650 },
-  { id: 'base-pataton', name: 'Formato Patatón Extra Grande', basePrice: 11.0, weight: 780 }
+  { id: 'patata', name: 'Tamaño Patata Estándar (Nº 18 / 19 / 20)' },
+  { id: 'pataton', name: 'Tamaño PATATÓN Gigante (Nº 22 / 23 / 24)' }
 ];
 
+// Grupo 1: Los 21 Condimentos y Salsas oficiales
 const BUILDER_SAUCES = [
-  'Mantequilla al corte',
-  'Salsa Alioli',
-  'Salsa Roquefort',
-  'Salsa Kebab Blanca',
-  'Salsa Brava Picante',
-  'Mayonesa',
-  'Salsa Rosa',
-  'Aceite, Ajo y Perejil'
+  'Sal', 'Pimienta', 'Orégano', 'Comino', 'Tabasco', 'Mostaza',
+  'Aceite de Oliva', 'Mantequilla', 'Ketchup', 'Ali-Oli', 'Mahonesa',
+  'Tomate Frito', 'Salsa Gaucha', 'Salsa Africanita', 'Salsa Brava',
+  'Salsa Ranchera', 'Salsa Rosa', 'Salsa Roquefort', 'Salsa Yogurt',
+  'Salsa Cheddar', 'Salsa Barbacoa'
 ];
 
+// Grupo 2: Los 20 Ingredientes normales oficiales
 const BUILDER_TOPPINGS = [
-  { id: 'jamon', name: 'Jamón en tacos', extra: 0, weight: 45 },
-  { id: 'queso', name: 'Queso fundido', extra: 0, weight: 50 },
-  { id: 'bacon', name: 'Bacon crujiente', extra: 0, weight: 40 },
-  { id: 'lomo', name: 'Lomo adobado', extra: 0, weight: 50 },
-  { id: 'kebab', name: 'Carne de Kebab', extra: 0.5, weight: 65 },
-  { id: 'pollo', name: 'Pollo relleno', extra: 0, weight: 50 },
-  { id: 'atun', name: 'Atún', extra: 0, weight: 45 },
-  { id: 'maiz', name: 'Maíz dulce', extra: 0, weight: 30 },
-  { id: 'aceitunas', name: 'Aceitunas', extra: 0, weight: 30 },
-  { id: 'cebolla', name: 'Cebolla crujiente', extra: 0, weight: 25 },
-  { id: 'zanahoria', name: 'Zanahoria', extra: 0, weight: 25 },
-  { id: 'cangrejo', name: 'Palitos de cangrejo', extra: 0, weight: 35 },
-  { id: 'huevo', name: 'Huevo cocido', extra: 0.5, weight: 50 },
-  { id: 'gambas', name: 'Gambas', extra: 0.5, weight: 45 }
+  'Aceitunas Negras', 'Aceitunas', 'Maíz', 'Zanahoria', 'Remolacha',
+  'Lechuga', 'Tomate Natural', 'Cebolla', 'Champiñones', 'Pimientos Asados',
+  'Cebolla Crispy', 'Salchichas', 'Pollo Relleno', 'Jamón', 'Lomo al Horno',
+  'Bacon', 'Atún', 'Palitos de Cangrejo', 'Queso', 'Piña'
 ];
 
-// Estado actual del simulador
+// Grupo 3: Los 4 Ingredientes Especiales / Extras oficiales
+const BUILDER_SPECIALS = [
+  { id: 'Gambas', name: 'Gambas', extra: 0.20 },
+  { id: 'Kebab', name: 'Kebab', extra: 0.25 },
+  { id: 'Pulpo', name: 'Pulpo', extra: 0.00 },
+  { id: 'Huevo Cocido', name: 'Huevo Cocido', extra: 0.00 }
+];
+
+// Estado actual del configurador y carrito
 const builderState = {
-  baseId: 'base-gusto',
-  sauces: ['Mantequilla al corte', 'Salsa Alioli'],
-  toppings: ['jamon', 'queso', 'bacon', 'lomo', 'maiz']
+  size: 'patata', // 'patata' o 'pataton'
+  sauces: ['Sal', 'Mantequilla', 'Salsa Roquefort'],
+  toppings: ['Jamón', 'Lomo al Horno', 'Bacon', 'Pollo Relleno', 'Queso'],
+  specials: []
 };
 
+const orderCart = [];
+
+let activeCategoryFilter = 'all';
+let activeSearchQuery = '';
+
+function formatPrice(num) {
+  return num.toFixed(2).replace('.', ',') + ' €';
+}
+
 /* ==========================================================================
-   1. ESTADO EN VIVO DEL HORNO DE AV. VENECIA (SIN EMOJIS)
+   1. ESTADO EN VIVO DEL HORNO (LUNES A SÁBADO 20:00 – 02:00 · DOMINGO CERRADO)
    ========================================================================== */
 function updateLiveOvenStatus() {
   const dot = document.getElementById('live-status-dot');
@@ -167,58 +604,118 @@ function updateLiveOvenStatus() {
   if (!dot || !text) return;
 
   const now = new Date();
-  const day = now.getDay(); // 0 Dom, 1 Lun, 2 Mar, 3 Mié, 4 Jue, 5 Vie, 6 Sáb
+  const day = now.getDay(); // 0 Dom, 1 Lun .. 6 Sáb
   const hour = now.getHours();
   const mins = now.getMinutes();
   const timeFloat = hour + mins / 60;
 
-  const isOpenDay = day === 0 || day >= 3; // Miércoles (3) a Domingo (0)
-  const isOpenHour = timeFloat >= 20 && timeFloat <= 23.99;
+  // Abierto de Lunes (1) a Sábado (6) de 20:00 a 02:00 (madrugada siguiente)
+  const isEveningOpen = (day >= 1 && day <= 6) && (timeFloat >= 20);
+  const isLateNightOpen = ((day >= 2 && day <= 6) || day === 0) && (timeFloat < 2.0);
 
-  if (isOpenDay && isOpenHour) {
+  if (isEveningOpen || isLateNightOpen) {
     dot.classList.add('is-open');
-    text.textContent = 'ABIERTO AHORA EN AV. VENECIA · PEDIDOS HASTA LAS 00:00';
-  } else if (!isOpenDay) {
+    text.textContent = 'ABIERTO AHORA EN AV. VENECIA · PEDIDOS HASTA LAS 02:00';
+  } else if (day === 0 && timeFloat >= 2.0) {
     dot.classList.remove('is-open');
-    text.textContent = 'HORNO EN DESCANSO (LUN-MAR) · VOLVEMOS EL MIÉRCOLES A LAS 20:00';
-  } else if (timeFloat < 20) {
-    dot.classList.remove('is-open');
-    text.textContent = 'PREPARANDO HORNOS HOY · ABRIMOS A LAS 20:00 EN AV. VENECIA';
+    text.textContent = 'DOMINGO CERRADO POR DESCANSO · VOLVEMOS EL LUNES A LAS 20:00';
   } else {
     dot.classList.remove('is-open');
-    text.textContent = 'HORARIO DE MIÉRCOLES A DOMINGO DE 20:00 A 00:00 · AV. VENECIA, 1';
+    text.textContent = 'PREPARANDO HORNOS HOY · ABRIMOS DE 20:00 A 02:00 EN AV. VENECIA';
   }
 }
 
 /* ==========================================================================
-   2. RENDERIZADO Y FILTRADO DE LA CARTA
+   2. RENDERIZADO DE LAS 42 TARJETAS CON SUS FOTOS REALES Y BUSCADOR
    ========================================================================== */
-function renderMenu(filter = 'all') {
+function renderMenu() {
   const grid = document.getElementById('menu-grid');
   if (!grid) return;
 
-  const filtered = filter === 'all'
-    ? MENU_ITEMS
-    : MENU_ITEMS.filter(item => item.category === filter);
+  const q = activeSearchQuery.trim().toLowerCase();
+
+  const filtered = MENU_ITEMS.filter(item => {
+    const matchCat = activeCategoryFilter === 'all' || item.category === activeCategoryFilter;
+    if (!matchCat) return false;
+    if (!q) return true;
+    return (
+      item.name.toLowerCase().includes(q) ||
+      item.desc.toLowerCase().includes(q) ||
+      item.code.toLowerCase().includes(q) ||
+      item.categoryLabel.toLowerCase().includes(q)
+    );
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; background: #FFFDF9; border: var(--border-ink);">
+        <p style="font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 0.5rem;">No hemos encontrado platos con esa búsqueda.</p>
+        <p style="color: var(--ink-muted); font-size: 0.9rem;">Prueba buscando otro ingrediente (ej. Roquefort, Kebab, Pulpo, Gambas) o pulsa en «Todas (42)».</p>
+      </div>
+    `;
+    return;
+  }
 
   grid.innerHTML = filtered.map(item => `
     <article class="menu-card ${item.featured ? 'menu-card--featured' : ''}">
       ${item.badge ? `<span class="menu-card__badge">${item.badge}</span>` : ''}
-      <div>
+      
+      <div class="menu-card__photo-wrap">
+        <img src="${item.img}" alt="${item.name}" loading="lazy" class="menu-card__photo" />
+        <span class="menu-card__cat-pill">${item.categoryLabel}</span>
+      </div>
+
+      <div class="menu-card__body">
         <div class="menu-card__top">
           <div>
-            <span class="menu-card__code">REF // ${item.id}</span>
+            <span class="menu-card__code">REF // ${item.code}</span>
             <h3 class="menu-card__title">${item.name}</h3>
           </div>
-          <span class="menu-card__price">${item.price}</span>
+          <span class="menu-card__price">${formatPrice(item.price)}</span>
         </div>
-        <p class="menu-card__desc">${item.desc}</p>
-      </div>
-      <div class="menu-card__tags">
-        ${item.tags.map(t => `<span class="tag-pill">${t}</span>`).join('')}
+
+        ${item.desc ? `<p class="menu-card__desc">${item.desc}</p>` : ''}
+
+        <div class="menu-card__actions">
+          <button type="button" class="btn btn--paper menu-card__btn" data-add-id="${item.id}" data-pataton="0">
+            + Añadir (${formatPrice(item.price)})
+          </button>
+          ${item.canPataton ? `
+            <button type="button" class="btn btn--butter menu-card__btn" data-add-id="${item.id}" data-pataton="1">
+              + Hacerla PATATÓN (${formatPrice(item.price + 1.0)})
+            </button>
+          ` : ''}
+        </div>
       </div>
     </article>
   `).join('');
+
+  // Listeners para añadir platos directamente al ticket de comanda
+  grid.querySelectorAll('[data-add-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = Number(btn.dataset.addId);
+      const makePataton = btn.dataset.pataton === '1';
+      const prod = MENU_ITEMS.find(m => m.id === id);
+      if (!prod) return;
+
+      const finalName = makePataton ? `${prod.name} (en PATATÓN +1€)` : prod.name;
+      const finalPrice = makePataton ? prod.price + 1.0 : prod.price;
+
+      orderCart.push({
+        title: finalName,
+        details: prod.desc || '',
+        price: finalPrice
+      });
+
+      const originalText = btn.textContent;
+      btn.textContent = 'Añadido al Ticket';
+      setTimeout(() => {
+        btn.textContent = originalText;
+      }, 1100);
+
+      updateTicketReceipt();
+    });
+  });
 }
 
 function setupMenuFilters() {
@@ -231,33 +728,89 @@ function setupMenuFilters() {
       });
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
-      renderMenu(btn.dataset.filter);
+      activeCategoryFilter = btn.dataset.filter;
+      renderMenu();
     });
   });
+
+  const searchInput = document.getElementById('menu-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      activeSearchQuery = e.target.value || '';
+      renderMenu();
+    });
+  }
 }
 
 /* ==========================================================================
-   3. SIMULADOR INTERACTIVO "HAZ TU PATATA AL GUSTO"
+   3. CONFIGURADOR OFICIAL DE PATATA / PATATÓN AL GUSTO (Nº 18 A Nº 24)
    ========================================================================== */
+function calculateCustomPotatoPricing() {
+  const isPataton = builderState.size === 'pataton';
+  const numNormal = builderState.toppings.length;
+  const hasSpecials = builderState.specials.length > 0;
+
+  // Extras con recargo adicional (Gambas +0.20, Kebab +0.25)
+  const extraFees = builderState.specials.reduce((sum, spId) => {
+    const sp = BUILDER_SPECIALS.find(s => s.id === spId);
+    return sum + (sp ? sp.extra : 0);
+  }, 0);
+
+  let tariffName = '';
+  let basePrice = 7.00;
+
+  if (isPataton) {
+    if (numNormal >= 12 && hasSpecials) {
+      tariffName = 'Nº 24. Patatón Completo con Todo';
+      basePrice = 9.50;
+    } else if (hasSpecials) {
+      tariffName = 'Nº 23. Patatón Especial';
+      basePrice = 9.00;
+    } else {
+      tariffName = 'Nº 22. Patatón al Gusto';
+      basePrice = 8.50;
+    }
+  } else {
+    if (numNormal >= 12 && hasSpecials) {
+      tariffName = 'Nº 21. Patata Completa con Todo';
+      basePrice = 8.50;
+    } else if (hasSpecials) {
+      tariffName = 'Nº 20. Patata al Gusto Especial';
+      basePrice = 8.00;
+    } else if (numNormal > 5) {
+      tariffName = 'Nº 19. Patata al Gusto + (>5 ing.)';
+      basePrice = 7.50;
+    } else {
+      tariffName = 'Nº 18. Patata al Gusto (hasta 5 ing.)';
+      basePrice = 7.00;
+    }
+  }
+
+  return {
+    tariffName,
+    totalPrice: basePrice + extraFees
+  };
+}
+
 function renderBuilderControls() {
   const baseContainer = document.getElementById('base-chips');
   const sauceContainer = document.getElementById('sauce-chips');
   const toppingContainer = document.getElementById('topping-chips');
+  const specialContainer = document.getElementById('special-chips');
 
-  if (!baseContainer || !sauceContainer || !toppingContainer) return;
+  if (!baseContainer || !sauceContainer || !toppingContainer || !specialContainer) return;
 
-  // Bases
+  // 1. Tamaño Base
   baseContainer.innerHTML = BUILDER_BASES.map(b => {
-    const selected = builderState.baseId === b.id;
+    const selected = builderState.size === b.id;
     return `
-      <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-base="${b.id}">
+      <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-size="${b.id}">
         <span>${b.name}</span>
-        <span class="ing-chip__extra">${b.basePrice.toFixed(2).replace('.', ',')} €</span>
       </button>
     `;
   }).join('');
 
-  // Salsas
+  // 2. Condimentos y Salsas (21)
   sauceContainer.innerHTML = BUILDER_SAUCES.map(sauce => {
     const selected = builderState.sauces.includes(sauce);
     return `
@@ -267,22 +820,32 @@ function renderBuilderControls() {
     `;
   }).join('');
 
-  // Rellenos
+  // 3. Ingredientes Normales (20)
   toppingContainer.innerHTML = BUILDER_TOPPINGS.map(top => {
-    const selected = builderState.toppings.includes(top.id);
-    const extraLabel = top.extra > 0 ? `<span class="ing-chip__extra">+${top.extra.toFixed(2).replace('.', ',')} €</span>` : '';
+    const selected = builderState.toppings.includes(top);
     return `
-      <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-topping="${top.id}">
-        <span>${top.name}</span>
+      <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-topping="${top}">
+        <span>${top}</span>
+      </button>
+    `;
+  }).join('');
+
+  // 4. Ingredientes Especiales (4)
+  specialContainer.innerHTML = BUILDER_SPECIALS.map(sp => {
+    const selected = builderState.specials.includes(sp.id);
+    const extraLabel = sp.extra > 0 ? `<span class="ing-chip__extra">+${formatPrice(sp.extra)}</span>` : `<span class="ing-chip__extra">Especial</span>`;
+    return `
+      <button type="button" class="ing-chip ${selected ? 'is-selected' : ''}" data-special="${sp.id}">
+        <span>${sp.name}</span>
         ${extraLabel}
       </button>
     `;
   }).join('');
 
   // Listeners
-  baseContainer.querySelectorAll('[data-base]').forEach(btn => {
+  baseContainer.querySelectorAll('[data-size]').forEach(btn => {
     btn.addEventListener('click', () => {
-      builderState.baseId = btn.dataset.base;
+      builderState.size = btn.dataset.size;
       renderBuilderControls();
       updateTicketReceipt();
     });
@@ -292,13 +855,8 @@ function renderBuilderControls() {
     btn.addEventListener('click', () => {
       const s = btn.dataset.sauce;
       if (builderState.sauces.includes(s)) {
-        if (builderState.sauces.length > 1) {
-          builderState.sauces = builderState.sauces.filter(item => item !== s);
-        }
+        builderState.sauces = builderState.sauces.filter(item => item !== s);
       } else {
-        if (builderState.sauces.length >= 2) {
-          builderState.sauces.shift();
-        }
         builderState.sauces.push(s);
       }
       renderBuilderControls();
@@ -308,11 +866,24 @@ function renderBuilderControls() {
 
   toppingContainer.querySelectorAll('[data-topping]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.dataset.topping;
-      if (builderState.toppings.includes(id)) {
-        builderState.toppings = builderState.toppings.filter(item => item !== id);
+      const t = btn.dataset.topping;
+      if (builderState.toppings.includes(t)) {
+        builderState.toppings = builderState.toppings.filter(item => item !== t);
       } else {
-        builderState.toppings.push(id);
+        builderState.toppings.push(t);
+      }
+      renderBuilderControls();
+      updateTicketReceipt();
+    });
+  });
+
+  specialContainer.querySelectorAll('[data-special]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sp = btn.dataset.special;
+      if (builderState.specials.includes(sp)) {
+        builderState.specials = builderState.specials.filter(item => item !== sp);
+      } else {
+        builderState.specials.push(sp);
       }
       renderBuilderControls();
       updateTicketReceipt();
@@ -321,76 +892,115 @@ function renderBuilderControls() {
 }
 
 function updateTicketReceipt() {
-  const baseObj = BUILDER_BASES.find(b => b.id === builderState.baseId) || BUILDER_BASES[0];
   const baseNameEl = document.getElementById('ticket-base-name');
-  const saucesListEl = document.getElementById('ticket-sauces-list');
-  const toppingsListEl = document.getElementById('ticket-toppings-list');
-  const weightEl = document.getElementById('ticket-weight');
-  const priceEl = document.getElementById('ticket-price');
+  const customPriceEl = document.getElementById('ticket-custom-price');
+  const detailsEl = document.getElementById('ticket-SaucesAndToppings');
+  const cartCountEl = document.getElementById('ticket-cart-count');
+  const cartListEl = document.getElementById('ticket-cart-list');
+  const totalPriceEl = document.getElementById('ticket-price');
 
   if (!baseNameEl) return;
 
-  baseNameEl.textContent = baseObj.name;
+  const customCalc = calculateCustomPotatoPricing();
+  baseNameEl.textContent = customCalc.tariffName;
+  customPriceEl.textContent = formatPrice(customCalc.totalPrice);
 
-  saucesListEl.innerHTML = builderState.sauces.map(s => `
-    <li><span>— ${s}</span><span>INCL.</span></li>
-  `).join('');
+  const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+  detailsEl.innerHTML = `
+    <div style="margin-top: 0.35rem;"><strong>Salsas/Cond.:</strong> ${builderState.sauces.length ? builderState.sauces.join(', ') : 'Ninguna'}</div>
+    <div style="margin-top: 0.25rem;"><strong>Ingredientes (${allChosenToppings.length}):</strong> ${allChosenToppings.length ? allChosenToppings.join(', ') : 'Solo base'}</div>
+  `;
 
-  const selectedToppings = BUILDER_TOPPINGS.filter(t => builderState.toppings.includes(t.id));
+  cartCountEl.textContent = String(orderCart.length);
 
-  if (selectedToppings.length === 0) {
-    toppingsListEl.innerHTML = `<li><span>(Sin rellenos adicionales)</span><span>—</span></li>`;
+  if (orderCart.length === 0) {
+    cartListEl.innerHTML = `<li style="color: var(--ink-muted); font-size: 0.76rem;">(Aún no has pulsado «+ Añadir» en ningún plato de la carta; se calcula la patata en configuración actual)</li>`;
   } else {
-    toppingsListEl.innerHTML = selectedToppings.map(t => `
-      <li>
-        <span>— ${t.name}</span>
-        <span>${t.extra > 0 ? '+' + t.extra.toFixed(2).replace('.', ',') + ' €' : 'INCL.'}</span>
+    cartListEl.innerHTML = orderCart.map((item, idx) => `
+      <li class="ticket-cart-item">
+        <div>
+          <strong>1x ${item.title}</strong>
+          ${item.details ? `<div class="ticket-cart-item__sub">${item.details}</div>` : ''}
+        </div>
+        <div class="ticket-cart-item__right">
+          <span>${formatPrice(item.price)}</span>
+          <button type="button" class="ticket-cart-remove" data-remove-idx="${idx}" title="Quitar">[x]</button>
+        </div>
       </li>
     `).join('');
+
+    cartListEl.querySelectorAll('[data-remove-idx]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.removeIdx);
+        orderCart.splice(idx, 1);
+        updateTicketReceipt();
+      });
+    });
   }
 
-  // Cálculo de peso y precio orientativo
-  const totalWeight = baseObj.weight + selectedToppings.reduce((acc, t) => acc + t.weight, 0);
-  const extrasCost = selectedToppings.reduce((acc, t) => acc + t.extra, 0);
-  const extraCountFee = Math.max(0, selectedToppings.length - 6) * 0.25;
-  const totalPrice = baseObj.basePrice + extrasCost + extraCountFee;
+  const grandTotal = orderCart.length > 0
+    ? orderCart.reduce((acc, item) => acc + item.price, 0)
+    : customCalc.totalPrice;
 
-  weightEl.textContent = totalWeight >= 1000
-    ? `~${(totalWeight / 1000).toFixed(2).replace('.', ',')} kg`
-    : `~${totalWeight} g`;
-
-  priceEl.textContent = `${totalPrice.toFixed(2).replace('.', ',')} €`;
+  totalPriceEl.textContent = formatPrice(grandTotal);
 }
 
-function setupCopyTicket() {
+function setupTicketActions() {
+  const addCustomBtn = document.getElementById('btn-add-custom-to-order');
   const copyBtn = document.getElementById('btn-copy-ticket');
+  const clearBtn = document.getElementById('btn-clear-cart');
   const feedback = document.getElementById('copy-feedback');
-  if (!copyBtn) return;
 
-  copyBtn.addEventListener('click', async () => {
-    const baseObj = BUILDER_BASES.find(b => b.id === builderState.baseId) || BUILDER_BASES[0];
-    const selectedToppings = BUILDER_TOPPINGS
-      .filter(t => builderState.toppings.includes(t.id))
-      .map(t => t.name);
+  if (addCustomBtn) {
+    addCustomBtn.addEventListener('click', () => {
+      const customCalc = calculateCustomPotatoPricing();
+      const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+      orderCart.push({
+        title: customCalc.tariffName,
+        details: `Salsas: ${builderState.sauces.join(', ') || 'Sin salsa'} | Ing.: ${allChosenToppings.join(', ') || 'Solo base'}`,
+        price: customCalc.totalPrice
+      });
+      updateTicketReceipt();
+      if (feedback) {
+        feedback.textContent = 'Patata configurada añadida al ticket de pedido.';
+        setTimeout(() => { feedback.textContent = ''; }, 3000);
+      }
+    });
+  }
 
-    const summary = [
-      'COMANDA — EL PATATÓN ALGECIRAS (956 65 81 22)',
-      `- Base: ${baseObj.name}`,
-      `- Salsas: ${builderState.sauces.join(', ')}`,
-      `- Ingredientes: ${selectedToppings.length ? selectedToppings.join(', ') : 'Solo base y salsa'}`,
-      `- Precio aprox.: ${document.getElementById('ticket-price')?.textContent || '10,50 €'}`
-    ].join('\n');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      orderCart.length = 0;
+      updateTicketReceipt();
+    });
+  }
 
-    try {
-      await navigator.clipboard.writeText(summary);
-      feedback.textContent = 'Comanda copiada al portapapeles.';
-      setTimeout(() => {
-        feedback.textContent = '';
-      }, 4000);
-    } catch {
-      feedback.textContent = 'Comanda lista en pantalla para llamar al 956 65 81 22.';
-    }
-  });
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const lines = ['PEDIDO — EL PATATÓN ALGECIRAS (956 65 81 22)'];
+      if (orderCart.length > 0) {
+        orderCart.forEach((item, i) => {
+          lines.push(`${i + 1}. ${item.title} — ${formatPrice(item.price)}`);
+          if (item.details) lines.push(`   (${item.details})`);
+        });
+      } else {
+        const customCalc = calculateCustomPotatoPricing();
+        const allChosenToppings = [...builderState.toppings, ...builderState.specials];
+        lines.push(`- ${customCalc.tariffName} (${formatPrice(customCalc.totalPrice)})`);
+        lines.push(`- Salsas/Condimentos: ${builderState.sauces.join(', ') || 'Ninguna'}`);
+        lines.push(`- Ingredientes: ${allChosenToppings.join(', ') || 'Solo base'}`);
+      }
+      lines.push(`TOTAL ESTIMADO: ${document.getElementById('ticket-price')?.textContent || ''}`);
+
+      try {
+        await navigator.clipboard.writeText(lines.join('\n'));
+        feedback.textContent = 'Comanda copiada al portapapeles.';
+        setTimeout(() => { feedback.textContent = ''; }, 4000);
+      } catch {
+        feedback.textContent = 'Comanda lista en pantalla para llamar al 956 65 81 22.';
+      }
+    });
+  }
 }
 
 function setupFoilEntrance() {
@@ -418,10 +1028,9 @@ function setupFoilEntrance() {
 document.addEventListener('DOMContentLoaded', () => {
   setupFoilEntrance();
   updateLiveOvenStatus();
-  renderMenu('all');
+  renderMenu();
   setupMenuFilters();
   renderBuilderControls();
   updateTicketReceipt();
-  setupCopyTicket();
+  setupTicketActions();
 });
-
