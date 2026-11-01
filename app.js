@@ -393,7 +393,30 @@ function setupCopyTicket() {
   });
 }
 
+function setupFoilEntrance() {
+  const curtain = document.getElementById('foil-curtain');
+  if (!curtain) {
+    document.body.classList.remove('is-unwrapping');
+    return;
+  }
+
+  let opened = false;
+  const openFoil = () => {
+    if (opened) return;
+    opened = true;
+    curtain.classList.add('is-opened');
+    document.body.classList.remove('is-unwrapping');
+    setTimeout(() => {
+      curtain.remove();
+    }, 1100);
+  };
+
+  curtain.addEventListener('click', openFoil);
+  setTimeout(openFoil, 1150);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  setupFoilEntrance();
   updateLiveOvenStatus();
   renderMenu('all');
   setupMenuFilters();
@@ -401,3 +424,4 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTicketReceipt();
   setupCopyTicket();
 });
+

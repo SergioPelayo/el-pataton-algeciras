@@ -16,7 +16,52 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="is-unwrapping">
+
+  <!-- ANIMACIÓN DE ENTRADA TEMÁTICA: APERTURA DEL PAPEL ALBAL Y HORNO DE 3 CAJONES -->
+  <div id="foil-curtain" class="foil-curtain" aria-hidden="true">
+    <div class="foil-curtain__panel foil-curtain__panel--left"></div>
+    <div class="foil-curtain__panel foil-curtain__panel--right"></div>
+
+    <div class="foil-curtain__seal">
+      <div class="oven-emblem">
+        <svg viewBox="0 0 200 215" width="148" height="158">
+          <!-- Vapor saliendo de la chimenea del horno -->
+          <path class="oven-steam oven-steam--1" d="M96 30 C91 20, 105 14, 98 4" fill="none" stroke="#151210" stroke-width="2.5" stroke-linecap="round" />
+          <path class="oven-steam oven-steam--2" d="M104 32 C109 22, 95 15, 103 6" fill="none" stroke="#C83E2B" stroke-width="2" stroke-linecap="round" />
+
+          <!-- Círculo oficial de El Patatón -->
+          <circle cx="100" cy="112" r="90" fill="#FFFDF9" stroke="#151210" stroke-width="6.5" />
+
+          <!-- Silueta del horno de 3 cajones -->
+          <g fill="#151210">
+            <rect x="95.5" y="48" width="9" height="11" />
+            <polygon points="95.5,58 104.5,58 118,66 118,110 82,110 82,66" />
+          </g>
+
+          <!-- Ventanilla y los 3 cajones que se encienden al calentar -->
+          <rect class="oven-glow oven-glow--top" x="92.5" y="65" width="15" height="8.5" fill="#F0AC1B" stroke="#FFFFFF" stroke-width="1.5" />
+          <rect class="oven-glow oven-glow--d1" x="85.5" y="79.5" width="29" height="6.8" fill="#C83E2B" stroke="#FFFFFF" stroke-width="1.5" />
+          <rect class="oven-glow oven-glow--d2" x="85.5" y="89.5" width="29" height="6.8" fill="#F0AC1B" stroke="#FFFFFF" stroke-width="1.5" />
+          <rect class="oven-glow oven-glow--d3" x="85.5" y="99.5" width="29" height="6.8" fill="#C83E2B" stroke="#FFFFFF" stroke-width="1.5" />
+
+          <text
+            x="100"
+            y="142"
+            text-anchor="middle"
+            fill="#151210"
+            font-family="'Oswald', 'Arial Narrow', sans-serif"
+            font-weight="700"
+            font-size="24"
+            letter-spacing="2.2"
+            transform="scale(0.88, 1.12) translate(13.5, -13)">
+            EL PATATÓN
+          </text>
+        </svg>
+        <div class="foil-curtain__caption">ABRIENDO EL PAPEL ALBAL · AV. VENECIA</div>
+      </div>
+    </div>
+  </div>
 
   <!-- BARRA SUPERIOR DE ESTADO EN TIEMPO REAL (SIN EMOJIS NI ICONOS GENÉRICOS) -->
   <div class="top-bar">
@@ -108,6 +153,12 @@
         <div class="photo-card">
           <div class="photo-card__img-wrap">
             <img src="assets/hero-pataton.jpg" alt="Patata asada gigante de El Patatón Algeciras abierta en papel de aluminio con queso fundido, jamón, bacon, maíz y salsa" />
+            <!-- Vapor sutil saliendo de la patata recién abierta -->
+            <div class="potato-steam" aria-hidden="true">
+              <span class="potato-steam__wisp potato-steam__wisp--1"></span>
+              <span class="potato-steam__wisp potato-steam__wisp--2"></span>
+              <span class="potato-steam__wisp potato-steam__wisp--3"></span>
+            </div>
           </div>
           <div class="photo-card__caption">
             <span><strong>FIG. 01</strong> — PATATÓN RECIÉN ABIERTO EN PAPEL ALBAL</span>
