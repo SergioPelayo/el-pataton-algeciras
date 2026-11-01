@@ -80,15 +80,19 @@ button {
    TOP TICKER / CINTA DE HORNO & AVISO DE DEMOSTRACIÓN
    ========================================================================== */
 .demo-banner {
-  background: var(--accent-butter);
-  color: var(--ink);
-  border-bottom: 1.5px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  background: #2B2826;
+  color: #FFFFFF;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.35;
   text-align: center;
-  padding: 0.35rem 1rem;
+  padding: 0.28rem 0.75rem;
 }
 
 .top-bar {
@@ -154,7 +158,7 @@ button {
    ========================================================================== */
 .navbar {
   position: sticky;
-  top: 0;
+  top: 26px;
   z-index: 100;
   background: rgba(245, 239, 228, 0.94);
   backdrop-filter: blur(8px);
@@ -1253,45 +1257,32 @@ button {
   margin-bottom: 1.25rem;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.review-card {
+.google-reviews-cta {
   background: var(--bg-charcoal-soft);
-  border: 1px solid rgba(245, 239, 228, 0.2);
-  padding: 1.5rem;
+  border: 1.5px solid rgba(245, 239, 228, 0.25);
+  padding: 1.75rem 2rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
 }
 
-.review-card__stars {
-  color: var(--accent-butter);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.75rem;
-}
-
-.review-card__quote {
+.google-reviews-cta__text {
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  line-height: 1.45;
-  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--bg-paper);
+  margin: 0;
 }
 
-.review-card__author {
+.ticket-whatsapp-note {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: rgba(245, 239, 228, 0.65);
-  border-top: 1px dashed rgba(245, 239, 228, 0.18);
-  padding-top: 0.75rem;
-  display: flex;
-  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0.15rem 0 0.35rem;
 }
 
 /* ==========================================================================
@@ -1454,11 +1445,6 @@ button {
 
   .craft-copy {
     order: -1;
-  }
-
-  .reviews-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
   }
 
   .nav-links {
@@ -1846,18 +1832,24 @@ button {
     word-break: break-all;
   }
 
-  .review-card {
-    padding: 1.15rem 1rem;
+  .google-reviews-cta {
+    padding: 1.25rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .review-card__quote {
-    font-size: 0.96rem;
+  .google-reviews-cta__text {
+    font-size: 1.05rem;
   }
 
-  .review-card__author {
-    font-size: 0.68rem;
-    flex-wrap: wrap;
-    gap: 0.25rem;
+  .google-reviews-cta .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .demo-banner {
+    font-size: 0.62rem;
+    padding: 0.24rem 0.5rem;
   }
 
   /* Horario, Mapa y Plataformas */

@@ -790,15 +790,41 @@ function setupMenuFilters() {
     });
   });
 
+  const buildMenuExampleItem = (id, foilOwner, asPataton = false) => {
+    const found = MENU_ITEMS.find(m => m.id === id);
+    if (!found) return null;
+    const isPatatonUpgrade = asPataton && found.hasPatatonOption;
+    return {
+      title: isPatatonUpgrade ? `${found.name} (en PATATÓN +1€)` : found.name,
+      details: found.desc || '',
+      price: isPatatonUpgrade ? found.price + 1.00 : found.price,
+      foilOwner
+    };
+  };
+
+  const parejaRecipe = [
+    { id: 4, foilOwner: 'Persona 1', asPataton: false },
+    { id: 17, foilOwner: 'Persona 2', asPataton: false },
+    { id: 33, foilOwner: 'Persona 1', asPataton: false },
+    { id: 34, foilOwner: 'Persona 2', asPataton: false }
+  ];
+
+  const amigosRecipe = [
+    { id: 4, foilOwner: 'Carlos', asPataton: false },
+    { id: 14, foilOwner: 'Isa', asPataton: false },
+    { id: 17, foilOwner: 'Javi', asPataton: true },
+    { id: 6, foilOwner: 'Marta', asPataton: false }
+  ];
+
   const comboParejaBtn = document.getElementById('btn-combo-pareja');
   if (comboParejaBtn) {
+    const parejaItems = parejaRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
+    const parejaTotal = parejaItems.reduce((sum, item) => sum + item.price, 0);
+    comboParejaBtn.textContent = `+ Cargar ejemplo «Pareja» (2 Patatas + 2 Bebidas · ${formatPrice(parejaTotal)})`;
+
     comboParejaBtn.addEventListener('click', () => {
-      orderCart.push(
-        { title: 'Nº 4. Patata al Roquefort', details: 'Patata asada, mantequilla, sal, pimienta, jamón, queso y salsa roquefort', price: 7.50, foilOwner: 'Persona 1' },
-        { title: 'Nº 17. Patata Kebab', details: 'Patata asada, mantequilla, sal, pimienta, pollo kebab, queso y salsa yogurt', price: 8.00, foilOwner: 'Persona 2' },
-        { title: 'Coca-Cola lata', details: 'Lata refrigerada 330ml', price: 1.50, foilOwner: 'Persona 1' },
-        { title: 'Coca-Cola Zero', details: 'Lata refrigerada 330ml', price: 1.50, foilOwner: 'Persona 2' }
-      );
+      const itemsToAdd = parejaRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
+      orderCart.push(...itemsToAdd);
       bizumPeopleCount = 2;
       updateTicketReceipt();
       triggerFloatingCartBump();
@@ -808,13 +834,13 @@ function setupMenuFilters() {
 
   const comboAmigosBtn = document.getElementById('btn-combo-amigos');
   if (comboAmigosBtn) {
+    const amigosItems = amigosRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
+    const amigosTotal = amigosItems.reduce((sum, item) => sum + item.price, 0);
+    comboAmigosBtn.textContent = `+ Cargar ejemplo «Peña 4 Amigos» c/ Nombres en el Albal (${formatPrice(amigosTotal)})`;
+
     comboAmigosBtn.addEventListener('click', () => {
-      orderCart.push(
-        { title: 'Nº 4. Patata al Roquefort', details: 'Jamón, queso y salsa roquefort', price: 7.50, foilOwner: 'Carlos' },
-        { title: 'Nº 14. Patata Gallega', details: 'Pulpo, aceite de oliva y pimentón', price: 8.00, foilOwner: 'Isa' },
-        { title: 'Nº 17. Patata Kebab (en PATATÓN +1€)', details: 'Pollo kebab, queso y salsa yogurt', price: 9.00, foilOwner: 'Javi' },
-        { title: 'Nº 6. Patata Brava', details: 'Pollo relleno, queso y salsa brava', price: 7.50, foilOwner: 'Marta' }
-      );
+      const itemsToAdd = amigosRecipe.map(r => buildMenuExampleItem(r.id, r.foilOwner, r.asPataton)).filter(Boolean);
+      orderCart.push(...itemsToAdd);
       bizumPeopleCount = 4;
       updateTicketReceipt();
       triggerFloatingCartBump();
@@ -1154,23 +1180,13 @@ function buildOrderSummaryLines() {
     '-----------------------------------'
   ];
 
-  if (orderCart.length > 0) {
-    orderCart.forEach((item, i) => {
-      const ownerTag = item.foilOwner && item.foilOwner.trim()
-        ? ` [ROTULAR EN ALBAL: "${item.foilOwner.trim().toUpperCase()}"]`
-        : '';
-      lines.push(`${i + 1}. ${item.title}${ownerTag} — ${formatPrice(item.price)}`);
-      if (item.details) lines.push(`   (${item.details})`);
-    });
-  } else {
-    const customCalc = calculateCustomPotatoPricing();
-    const allChosenToppings = [...builderState.toppings, ...builderState.specials];
-    const customOwner = document.getElementById('custom-foil-owner')?.value.trim();
-    const ownerTag = customOwner ? ` [ROTULAR EN ALBAL: "${customOwner.toUpperCase()}"]` : '';
-    lines.push(`1. ${customCalc.tariffName}${ownerTag} — ${formatPrice(customCalc.totalPrice)}`);
-    lines.push(`   Salsas: ${builderState.sauces.join(', ') || 'Ninguna'}`);
-    lines.push(`   Ingredientes: ${allChosenToppings.join(', ') || 'Solo base'}`);
-  }
+  orderCart.forEach((item, i) => {
+    const ownerTag = item.foilOwner && item.foilOwner.trim()
+      ? ` [ROTULAR EN ALBAL: "${item.foilOwner.trim().toUpperCase()}"]`
+      : '';
+    lines.push(`${i + 1}. ${item.title}${ownerTag} — ${formatPrice(item.price)}`);
+    if (item.details) lines.push(`   (${item.details})`);
+  });
 
   const totalText = document.getElementById('ticket-price')?.textContent || '0,00 €';
   lines.push('-----------------------------------');
@@ -1263,6 +1279,12 @@ function setupTicketActions() {
 
   if (whatsappBtn) {
     whatsappBtn.addEventListener('click', () => {
+      if (orderCart.length === 0) {
+        if (feedback) {
+          feedback.textContent = 'Añade al menos un plato a tu ticket';
+        }
+        return;
+      }
       const lines = buildOrderSummaryLines();
       const url = `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -1271,6 +1293,12 @@ function setupTicketActions() {
 
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
+      if (orderCart.length === 0) {
+        if (feedback) {
+          feedback.textContent = 'Añade al menos un plato a tu ticket';
+        }
+        return;
+      }
       const lines = buildOrderSummaryLines();
       try {
         await navigator.clipboard.writeText(lines.join('\n'));
