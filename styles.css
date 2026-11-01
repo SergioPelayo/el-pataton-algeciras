@@ -260,6 +260,16 @@ button {
   padding: 0.28rem 0.75rem;
 }
 
+.demo-banner__version {
+  display: inline-block;
+  margin-left: 0.3rem;
+  padding: 0 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+  color: var(--accent-butter, #F2A922);
+  font-weight: 700;
+}
+
 .top-bar {
   background: var(--bg-charcoal);
   color: var(--bg-paper);
