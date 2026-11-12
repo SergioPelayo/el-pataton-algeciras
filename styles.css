@@ -164,27 +164,29 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Colores corporativos: verde, negro y blanco. Los nombres «paprika» (verde principal)
+   y «butter» (verde claro de acento) se mantienen de la paleta anterior. */
 :root {
-  --bg-paper: #F5EFE4;
-  --bg-paper-dark: #EAE0CF;
-  --bg-charcoal: #151210;
-  --bg-charcoal-soft: #211C19;
-  --ink: #151210;
-  --ink-muted: #574E47;
-  --ink-light: #F5EFE4;
+  --bg-paper: #FFFFFF;
+  --bg-paper-dark: #EEF3EE;
+  --bg-charcoal: #121412;
+  --bg-charcoal-soft: #1C211D;
+  --ink: #121412;
+  --ink-muted: #4A514B;
+  --ink-light: #FFFFFF;
   
-  --accent-paprika: #C83E2B;
-  --accent-paprika-dark: #A32D1D;
-  --accent-butter: #F0AC1B;
-  --accent-butter-soft: #FBE4A4;
-  --accent-olive: #2D4732;
+  --accent-paprika: #1E7B3C;
+  --accent-paprika-dark: #155C2C;
+  --accent-butter: #6CC24A;
+  --accent-butter-soft: #DDF1D3;
+  --accent-olive: #14532D;
   --accent-fb: #1877F2;
 
-  --border-ink: 1.5px solid #151210;
-  --border-light: 1px solid rgba(245, 239, 228, 0.18);
-  --shadow-hard: 5px 5px 0px #151210;
-  --shadow-hard-sm: 3px 3px 0px #151210;
-  --shadow-hard-paprika: 5px 5px 0px #C83E2B;
+  --border-ink: 1.5px solid #121412;
+  --border-light: 1px solid rgba(255, 255, 255, 0.18);
+  --shadow-hard: 5px 5px 0px #121412;
+  --shadow-hard-sm: 3px 3px 0px #121412;
+  --shadow-hard-paprika: 5px 5px 0px #1E7B3C;
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -218,8 +220,8 @@ body {
   background-color: var(--bg-paper);
   /* Subtle warm paper grain */
   background-image: 
-    radial-gradient(rgba(21, 18, 16, 0.04) 1px, transparent 0),
-    radial-gradient(rgba(200, 62, 43, 0.025) 1px, transparent 0);
+    radial-gradient(rgba(18, 20, 18, 0.04) 1px, transparent 0),
+    radial-gradient(rgba(30, 123, 60, 0.025) 1px, transparent 0);
   background-size: 28px 28px;
   background-position: 0 0, 14px 14px;
 }
@@ -248,7 +250,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 1200;
-  background: #2B2826;
+  background: #262B27;
   color: #FFFFFF;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   font-family: var(--font-mono);
@@ -266,7 +268,7 @@ button {
   padding: 0 0.35rem;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 3px;
-  color: var(--accent-butter, #F2A922);
+  color: var(--accent-butter, #6CC24A);
   font-weight: 700;
 }
 
@@ -298,7 +300,7 @@ button {
   background: var(--accent-butter);
   display: inline-block;
   flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(240, 172, 27, 0.25);
+  box-shadow: 0 0 0 3px rgba(108, 194, 74, 0.25);
   animation: pulseDot 2s infinite;
 }
 
@@ -337,7 +339,7 @@ button {
   position: sticky;
   top: 26px;
   z-index: 100;
-  background: rgba(245, 239, 228, 0.94);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(8px);
   border-bottom: var(--border-ink);
 }
@@ -364,7 +366,7 @@ button {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  box-shadow: 3px 3px 0px #151210;
+  box-shadow: 3px 3px 0px #121412;
   transition: transform 0.2s ease;
   flex-shrink: 0;
 }
@@ -462,12 +464,12 @@ button {
 
 .btn:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px #151210;
+  box-shadow: 5px 5px 0px #121412;
 }
 
 .btn:active {
   transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px #151210;
+  box-shadow: 1px 1px 0px #121412;
 }
 
 .btn--primary {
@@ -525,7 +527,7 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
-  box-shadow: 2px 2px 0px #151210;
+  box-shadow: 2px 2px 0px #121412;
 }
 
 .hero__title {
@@ -577,7 +579,7 @@ button {
 }
 
 .fact-item {
-  border-right: 1px dashed rgba(21, 18, 16, 0.3);
+  border-right: 1px dashed rgba(18, 20, 18, 0.3);
   padding-right: 0.75rem;
 }
 
@@ -607,10 +609,10 @@ button {
 }
 
 .photo-card {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   padding: 0.85rem 0.85rem 1.15rem;
-  box-shadow: 8px 8px 0px #151210;
+  box-shadow: 8px 8px 0px #121412;
   transform: rotate(1.2deg);
   position: relative;
 }
@@ -762,9 +764,9 @@ button {
 }
 
 .anatomy-board {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
-  box-shadow: 8px 8px 0px #151210;
+  box-shadow: 8px 8px 0px #121412;
   overflow: hidden;
 }
 
@@ -791,7 +793,7 @@ button {
 .layer-card {
   border: var(--border-ink);
   padding: 1rem 1.15rem;
-  box-shadow: 3px 3px 0px #151210;
+  box-shadow: 3px 3px 0px #121412;
   transition: transform 0.15s ease;
 }
 
@@ -800,19 +802,19 @@ button {
 }
 
 .layer-card--top {
-  background: #FFF4D6;
+  background: #EEF8E9;
 }
 
 .layer-card--mid {
-  background: #FFEAE5;
+  background: #E8F5E3;
 }
 
 .layer-card--core {
-  background: #FFFDF9;
+  background: #FFFFFF;
 }
 
 .layer-card--base {
-  background: #E8E3DC;
+  background: #E6EBE6;
 }
 
 .layer-card__tag {
@@ -839,7 +841,7 @@ button {
 }
 
 .anatomy-board__footer {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border-top: var(--border-ink);
   padding: 0.85rem 1.25rem;
   font-family: var(--font-mono);
@@ -857,7 +859,7 @@ button {
 }
 
 .craft-step {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard-sm);
   padding: 1.15rem 1.35rem;
@@ -928,15 +930,15 @@ button {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   padding: 0.75rem 1rem;
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
-  box-shadow: 3px 3px 0px #151210;
+  box-shadow: 3px 3px 0px #121412;
   color: var(--ink);
   outline: none;
 }
 
 .menu-search-input:focus {
-  background: #FFF9E6;
+  background: #EEF8E9;
   box-shadow: 4px 4px 0px var(--accent-paprika);
 }
 
@@ -954,13 +956,13 @@ button {
   border: var(--border-ink);
   background: var(--bg-paper);
   color: var(--ink);
-  box-shadow: 2px 2px 0px #151210;
+  box-shadow: 2px 2px 0px #121412;
   transition: all 0.15s ease;
 }
 
 .filter-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px #151210;
+  box-shadow: 4px 4px 0px #121412;
 }
 
 .filter-btn.active {
@@ -975,7 +977,7 @@ button {
 }
 
 .menu-card {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard-sm);
   display: flex;
@@ -986,11 +988,11 @@ button {
 
 .menu-card:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0px #151210;
+  box-shadow: 6px 6px 0px #121412;
 }
 
 .menu-card--featured {
-  background: #FFF9E6;
+  background: #EEF8E9;
   border-width: 2px;
 }
 
@@ -1007,7 +1009,7 @@ button {
   text-transform: uppercase;
   padding: 0.2rem 0.55rem;
   border: 1.5px solid var(--ink);
-  box-shadow: 2px 2px 0px #151210;
+  box-shadow: 2px 2px 0px #121412;
 }
 
 .menu-card__photo-wrap {
@@ -1016,7 +1018,7 @@ button {
   width: 100%;
   overflow: hidden;
   border-bottom: var(--border-ink);
-  background: #1A1614;
+  background: #181C19;
 }
 
 .menu-card__photo {
@@ -1034,13 +1036,13 @@ button {
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: rgba(21, 18, 16, 0.88);
+  background: rgba(18, 20, 18, 0.88);
   color: var(--bg-paper);
   font-family: var(--font-mono);
   font-size: 0.64rem;
   text-transform: uppercase;
   padding: 0.15rem 0.5rem;
-  border: 1px solid rgba(245, 239, 228, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .menu-card__body {
@@ -1055,7 +1057,7 @@ button {
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.65rem;
-  border-bottom: 1px dashed rgba(21, 18, 16, 0.25);
+  border-bottom: 1px dashed rgba(18, 20, 18, 0.25);
   padding-bottom: 0.65rem;
   margin-bottom: 0.75rem;
 }
@@ -1122,7 +1124,7 @@ button {
 }
 
 .builder-controls {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard);
   padding: 2rem;
@@ -1203,7 +1205,7 @@ button {
 
 /* KITCHEN THERMAL TICKET */
 .ticket-receipt {
-  background: #FFFDF7;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard);
   padding: 1.75rem 1.5rem;
@@ -1245,7 +1247,7 @@ button {
   justify-content: space-between;
   font-size: 0.82rem;
   padding: 0.35rem 0;
-  border-bottom: 1px dotted rgba(21, 18, 16, 0.2);
+  border-bottom: 1px dotted rgba(18, 20, 18, 0.2);
 }
 
 .ticket-receipt__section-label {
@@ -1272,7 +1274,7 @@ button {
 .builder-group__footer-btn {
   margin-top: 1.15rem;
   padding-top: 1rem;
-  border-top: 1px dashed rgba(21, 18, 16, 0.25);
+  border-top: 1px dashed rgba(18, 20, 18, 0.25);
 }
 
 .ticket-live-preview {
@@ -1295,7 +1297,7 @@ button {
   align-items: flex-start;
   gap: 0.5rem;
   padding: 0.45rem 0;
-  border-bottom: 1px dotted rgba(21, 18, 16, 0.22);
+  border-bottom: 1px dotted rgba(18, 20, 18, 0.22);
 }
 
 .ticket-cart-item__sub {
@@ -1315,7 +1317,7 @@ button {
 
 .ticket-cart-remove {
   background: transparent;
-  border: 1px solid rgba(21, 18, 16, 0.35);
+  border: 1px solid rgba(18, 20, 18, 0.35);
   color: var(--accent-paprika);
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -1399,8 +1401,8 @@ button {
 }
 
 .fb-card {
-  background: #1E1916;
-  border: 1.5px solid rgba(245, 239, 228, 0.25);
+  background: #1A1E1B;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   padding: 1.6rem;
   box-shadow: 6px 6px 0px #1877F2;
 }
@@ -1438,13 +1440,13 @@ button {
 
 .fb-card p {
   font-size: 0.94rem;
-  color: rgba(245, 239, 228, 0.82);
+  color: rgba(255, 255, 255, 0.82);
   margin-bottom: 1.25rem;
 }
 
 .google-reviews-cta {
   background: var(--bg-charcoal-soft);
-  border: 1.5px solid rgba(245, 239, 228, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   padding: 1.75rem 2rem;
   display: flex;
   align-items: center;
@@ -1487,7 +1489,7 @@ button {
 }
 
 .info-panel {
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard);
   padding: 2.25rem;
@@ -1505,7 +1507,7 @@ button {
 }
 
 .hours-table tr {
-  border-bottom: 1px dashed rgba(21, 18, 16, 0.25);
+  border-bottom: 1px dashed rgba(18, 20, 18, 0.25);
 }
 
 .hours-table td {
@@ -1571,7 +1573,7 @@ button {
 
 .map-panel__footer {
   padding: 1.15rem 1.35rem;
-  background: #FFFDF9;
+  background: #FFFFFF;
   border-top: var(--border-ink);
   display: flex;
   justify-content: space-between;
@@ -1600,7 +1602,7 @@ button {
   flex-wrap: wrap;
   gap: 2rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(245, 239, 228, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .footer__bottom {
@@ -1612,7 +1614,7 @@ button {
   gap: 1rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: rgba(245, 239, 228, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* ==========================================================================
@@ -1644,7 +1646,7 @@ button {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     background: var(--bg-paper-dark);
-    border-top: 1px solid rgba(21, 18, 16, 0.25);
+    border-top: 1px solid rgba(18, 20, 18, 0.25);
     padding: 0.45rem 0.9rem;
   }
 
@@ -1658,9 +1660,9 @@ button {
     font-weight: 700;
     white-space: nowrap;
     padding: 0.3rem 0.65rem;
-    background: #FFFDF9;
+    background: #FFFFFF;
     border: 1px solid var(--ink);
-    box-shadow: 2px 2px 0px #151210;
+    box-shadow: 2px 2px 0px #121412;
     flex-shrink: 0;
   }
 
@@ -1693,7 +1695,7 @@ button {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.3rem 0.75rem;
-    border-top: 1px dashed rgba(245, 239, 228, 0.2);
+    border-top: 1px dashed rgba(255, 255, 255, 0.2);
     padding-top: 0.28rem;
   }
 
@@ -1711,7 +1713,7 @@ button {
   .brand__logo {
     width: 44px;
     height: 44px;
-    box-shadow: 2px 2px 0px #151210;
+    box-shadow: 2px 2px 0px #121412;
   }
 
   .brand__name {
@@ -1778,7 +1780,7 @@ button {
     width: 100%;
     padding: 0.85rem 1rem;
     font-size: 0.9rem;
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .hero__facts {
@@ -1815,7 +1817,7 @@ button {
 
   .photo-card {
     transform: none;
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
     padding: 0.6rem 0.6rem 0.85rem;
   }
 
@@ -1831,7 +1833,7 @@ button {
     width: 100%;
     margin-top: 0.65rem;
     transform: none;
-    box-shadow: 4px 4px 0px #C83E2B;
+    box-shadow: 4px 4px 0px #1E7B3C;
     padding: 0.75rem 0.9rem;
   }
 
@@ -1875,7 +1877,7 @@ button {
   }
 
   .anatomy-board {
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .anatomy-board__header,
@@ -1946,7 +1948,7 @@ button {
 
   .builder-controls {
     padding: 1.1rem 0.95rem;
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .builder-group {
@@ -1981,7 +1983,7 @@ button {
 
   .ticket-receipt {
     padding: 1.25rem 1rem;
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .ticket-receipt__shop {
@@ -2039,7 +2041,7 @@ button {
   /* Horario, Mapa y Plataformas */
   .info-panel {
     padding: 1.25rem 1rem;
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .hours-table {
@@ -2058,7 +2060,7 @@ button {
   }
 
   .map-panel {
-    box-shadow: 4px 4px 0px #151210;
+    box-shadow: 4px 4px 0px #121412;
   }
 
   .map-panel__header {
@@ -2103,7 +2105,7 @@ button {
   .oven-emblem {
     max-width: calc(100vw - 2rem);
     padding: 1.1rem 1.2rem;
-    box-shadow: 5px 5px 0px #151210;
+    box-shadow: 5px 5px 0px #121412;
   }
 
   .oven-emblem svg {
@@ -2140,19 +2142,19 @@ button {
   background-image:
     linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(190,196,204,0.4) 28%, rgba(255,255,255,0.75) 52%, rgba(160,168,176,0.45) 76%, rgba(245,247,250,0.7) 100%),
     repeating-linear-gradient(65deg, rgba(255,255,255,0.22) 0px, rgba(255,255,255,0.22) 2px, transparent 2px, transparent 9px),
-    repeating-linear-gradient(-45deg, rgba(21,18,16,0.05) 0px, rgba(21,18,16,0.05) 1px, transparent 1px, transparent 12px);
+    repeating-linear-gradient(-45deg, rgba(18, 20, 18,0.05) 0px, rgba(18, 20, 18,0.05) 1px, transparent 1px, transparent 12px);
   transition: transform 0.95s cubic-bezier(0.77, 0, 0.175, 1);
   will-change: transform;
 }
 
 .foil-curtain__panel--left {
-  border-right: 2px dashed #151210;
-  box-shadow: inset -12px 0 24px rgba(21, 18, 16, 0.12);
+  border-right: 2px dashed #121412;
+  box-shadow: inset -12px 0 24px rgba(18, 20, 18, 0.12);
 }
 
 .foil-curtain__panel--right {
-  border-left: 2px dashed #151210;
-  box-shadow: inset 12px 0 24px rgba(21, 18, 16, 0.12);
+  border-left: 2px dashed #121412;
+  box-shadow: inset 12px 0 24px rgba(18, 20, 18, 0.12);
 }
 
 .foil-curtain.is-opened .foil-curtain__panel--left {
@@ -2179,8 +2181,8 @@ button {
 
 .oven-emblem {
   background: var(--bg-paper);
-  border: 2px solid #151210;
-  box-shadow: 8px 8px 0px #151210;
+  border: 2px solid #121412;
+  box-shadow: 8px 8px 0px #121412;
   padding: 1.5rem 2rem 1.25rem;
   text-align: center;
   transform: rotate(-1.5deg);
@@ -2193,7 +2195,7 @@ button {
   letter-spacing: 0.08em;
   color: var(--ink);
   margin-top: 0.65rem;
-  border-top: 1.5px solid #151210;
+  border-top: 1.5px solid #121412;
   padding-top: 0.5rem;
 }
 
@@ -2262,7 +2264,7 @@ body.is-unwrapping .hero__visual {
   bottom: 18%;
   width: 90px;
   height: 160px;
-  background: radial-gradient(ellipse at center, rgba(255, 253, 248, 0.42) 0%, rgba(255, 253, 248, 0) 70%);
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0) 70%);
   filter: blur(12px);
   border-radius: 50%;
   opacity: 0;
@@ -2352,8 +2354,8 @@ body.is-unwrapping .hero__visual {
   position: relative;
   width: 40px;
   height: 40px;
-  background: #231D1A;
-  border: 1.5px solid rgba(245, 239, 228, 0.3);
+  background: #1C211D;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   display: grid;
   place-items: center;
   color: var(--accent-butter);
@@ -2400,7 +2402,7 @@ body.is-unwrapping .hero__visual {
 
 .floating-cart__sub {
   font-size: 0.78rem;
-  color: rgba(245, 239, 228, 0.85);
+  color: rgba(255, 255, 255, 0.85);
   white-space: nowrap;
 }
 
@@ -2498,9 +2500,9 @@ body.is-unwrapping .hero__visual {
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.48rem 0.8rem;
-  background: #231D1A;
+  background: #1C211D;
   color: var(--bg-paper);
-  border: 1.5px solid rgba(245, 239, 228, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -2546,7 +2548,7 @@ body.is-unwrapping .hero__visual {
   width: 100%;
   padding: 0.55rem 0.75rem;
   border: 1.5px solid var(--ink);
-  background: #FFFDF8;
+  background: #FFFFFF;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   color: var(--ink);
@@ -2610,8 +2612,8 @@ body.is-unwrapping .hero__visual {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(242, 169, 34, 0.14);
-  border: 1px dashed rgba(21, 18, 16, 0.35);
+  background: rgba(108, 194, 74, 0.14);
+  border: 1px dashed rgba(18, 20, 18, 0.35);
   padding: 0.22rem 0.45rem;
 }
 
@@ -2626,7 +2628,7 @@ body.is-unwrapping .hero__visual {
   flex: 1;
   min-width: 0;
   border: none;
-  border-bottom: 1px solid rgba(21, 18, 16, 0.35);
+  border-bottom: 1px solid rgba(18, 20, 18, 0.35);
   background: transparent;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -2643,7 +2645,7 @@ body.is-unwrapping .hero__visual {
 
 .ticket-bizum-box {
   margin-top: 0.9rem;
-  background: #1C1815;
+  background: #1A1E1B;
   color: var(--bg-paper);
   border: 1.5px solid var(--ink);
   padding: 0.7rem 0.8rem;
@@ -2657,7 +2659,7 @@ body.is-unwrapping .hero__visual {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--accent-butter);
-  border-bottom: 1px dashed rgba(245, 239, 228, 0.25);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
   padding-bottom: 0.45rem;
   margin-bottom: 0.45rem;
 }
@@ -2697,7 +2699,7 @@ body.is-unwrapping .hero__visual {
 .bizum-named-list {
   margin-top: 0.45rem;
   padding-top: 0.4rem;
-  border-top: 1px dotted rgba(245, 239, 228, 0.22);
+  border-top: 1px dotted rgba(255, 255, 255, 0.22);
   display: grid;
   gap: 0.22rem;
   font-size: 0.72rem;
@@ -2706,7 +2708,7 @@ body.is-unwrapping .hero__visual {
 .bizum-named-item {
   display: flex;
   justify-content: space-between;
-  color: rgba(245, 239, 228, 0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* ==========================================================================
@@ -2722,13 +2724,13 @@ body.is-unwrapping .hero__visual {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background: rgba(21, 18, 16, 0.86);
-  color: #FFFDF9;
+  background: rgba(18, 20, 18, 0.86);
+  color: #FFFFFF;
   font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 700;
   padding: 0.16rem 0.48rem;
-  border: 1px solid rgba(245, 239, 228, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   pointer-events: none;
   opacity: 0.82;
   transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
@@ -2757,7 +2759,7 @@ body.is-unwrapping .hero__visual {
 .product-lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(15, 13, 11, 0.85);
+  background: rgba(12, 14, 12, 0.85);
   backdrop-filter: blur(5px);
 }
 
@@ -2766,9 +2768,9 @@ body.is-unwrapping .hero__visual {
   z-index: 1;
   width: min(100%, 720px);
   max-height: 92vh;
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: 2px solid var(--ink);
-  box-shadow: 8px 8px 0px #151210;
+  box-shadow: 8px 8px 0px #121412;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -2817,14 +2819,14 @@ body.is-unwrapping .hero__visual {
 .product-lightbox__code {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: rgba(245, 239, 228, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .product-lightbox__close {
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 700;
-  background: #FFFDF9;
+  background: #FFFFFF;
   color: var(--ink);
   border: 1.5px solid var(--ink);
   padding: 0.3rem 0.7rem;
@@ -2835,12 +2837,12 @@ body.is-unwrapping .hero__visual {
 
 .product-lightbox__close:hover {
   background: var(--accent-paprika);
-  color: #FFFDF9;
+  color: #FFFFFF;
 }
 
 .product-lightbox__stage {
   position: relative;
-  background: #14110F;
+  background: #111411;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2863,10 +2865,10 @@ body.is-unwrapping .hero__visual {
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  background: rgba(255, 253, 249, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--ink);
   border: 2px solid var(--ink);
-  box-shadow: 3px 3px 0px #151210;
+  box-shadow: 3px 3px 0px #121412;
   font-family: var(--font-mono);
   font-size: 1.4rem;
   font-weight: 700;
@@ -2959,7 +2961,7 @@ body.is-unwrapping .hero__visual {
   gap: 0.75rem;
   margin: 0 0 1rem;
   padding: 0.7rem 0.85rem;
-  background: #FFFDF9;
+  background: #FFFFFF;
   border: var(--border-ink);
   box-shadow: var(--shadow-hard-sm);
   max-width: 34rem;
@@ -3041,7 +3043,7 @@ body.is-unwrapping .hero__visual {
   gap: 0.5rem;
   padding: 0.6rem 0.75rem;
   border: 1.5px solid var(--ink);
-  background: #FFFDF9;
+  background: #FFFFFF;
   cursor: pointer;
   font-size: 0.9rem;
 }
@@ -3072,7 +3074,7 @@ body.is-unwrapping .hero__visual {
   min-height: 2.6rem;
   padding: 0.5rem 0.65rem;
   border: 1.5px solid var(--ink);
-  background: #FFFDF9;
+  background: #FFFFFF;
   color: var(--ink);
   font: inherit;
   font-size: 1rem; /* 16px: evita el zoom automático de iOS */
@@ -3090,7 +3092,7 @@ body.is-unwrapping .hero__visual {
   padding: 0.3rem 0.65rem;
   border: 1px solid var(--ink);
   border-radius: 999px;
-  background: #FFFDF9;
+  background: #FFFFFF;
   color: var(--ink);
   cursor: pointer;
 }
@@ -3098,7 +3100,7 @@ body.is-unwrapping .hero__visual {
 .product-sheet__chip.is-removed {
   background: var(--accent-paprika);
   border-color: var(--accent-paprika-dark);
-  color: #FFFDF9;
+  color: #FFFFFF;
   text-decoration: line-through;
 }
 
@@ -3162,7 +3164,7 @@ body.is-unwrapping .hero__visual {
     padding: 0.35rem 0.2rem;
     background: none;
     border: 0;
-    color: rgba(245, 239, 228, 0.85);
+    color: rgba(255, 255, 255, 0.85);
     font: inherit;
     font-size: 0.68rem;
     font-weight: 700;
@@ -3209,7 +3211,7 @@ body.is-unwrapping .hero__visual {
 
   .tabbar__item--call {
     background: var(--accent-paprika);
-    color: #FFFDF9;
+    color: #FFFFFF;
   }
 
   .tabbar__item--call:active {
@@ -3229,7 +3231,7 @@ body.is-unwrapping .hero__visual {
   bottom: -1.25rem;
   margin: 0 -1.25rem -1.25rem;
   padding: 0.75rem 1.25rem 1rem;
-  background: #FFFDF9;
+  background: #FFFFFF;
   border-top: 1.5px solid var(--ink);
 }
 
